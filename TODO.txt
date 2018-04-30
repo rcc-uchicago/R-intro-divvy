@@ -19,3 +19,5 @@
 * Add outline slides.
 
 * Add setup step to run sessionInfo().
+
+* Test R code on midway2.

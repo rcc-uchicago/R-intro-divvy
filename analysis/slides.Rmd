@@ -38,8 +38,9 @@ Your may choose to...
 
 + Follow what I do on the projector.
 
-*I can't guarantee that all examples will work exactly the same on
-your laptop.*
+**Note:** If you use the RCC cluster I'm assuming you know how to set
+up an interactive computing session with appropriate amount of time
+and memory, and display graphics. (I can help with this.)
 
 Software we will use today
 ==========================
@@ -55,23 +56,89 @@ Outline of workshop
 
 *Add outline here.*
 
+Outline of initial setup
+========================
+
+*Add outline of initial setup here.*
+
+Initial setup
+=============
+
++ WiFi
+
++ Power outlets
+
++ YubiKeys
+
++ Pace, questions (e.g., keyboard shortcuts).
+
 Download or "clone" git repository
 ==================================
 
-The first step is to download the workshop packet to your computer
-or the RCC cluster. Go to:
+The first step is to download the workshop packet onto your computer
+or onto the RCC cluster. Go to:
 
-+ [github.com/rcc-uchicago/r-intro-divvy-2][github-repo]
++ [**github.com/rcc-uchicago/R-intro-divvy-2**][github-repo]
 
-To download, click green **Clone or download** button.
+To download, click green **"Clone or download"** button.
 
-Or, if you have git, you can run this command:
+Or, if you have **git**, you can run this command:
 
 ```{bash download-repo, eval=FALSE}
 git clone https://github.com/rcc-uchicago/
   R-intro-divvy-2.git
 ```
 
-(Note the URL in the git command should not have contain any spaces.)
+(Note the URL in the git command should not contain any spaces.)
 
-[github-repo]: https://github.com/rcc-uchicago/r-intro-divvy-2
+What's in the workshop packet
+=============================
+
+```
+R-intro-divvy-2
+  /analysis # Scripts implementing data analyses.
+  /code     # Additional R code used in analyses.
+  /data     # Original ("raw") data.
+  /docs     # Additional workshop materials.
+  /output   # Processed data & results files.
+```
+
+Open the slides on your computer
+================================
+
+The PDF is useful for copying & pasting code from the slides.
+
++ The PDF is in the [**"docs"**](../docs) folder of the workshop packet.
+
++ You can also view the PDF by clicking the **"docs"** item in the file
+  listing on the GitHub webpage.
+
+Download the Divvy data
+=======================
+
++ Download the 2016 & 2017 data files from here:
+
+    + [**www.divvybikes.com/system-data**][divvy-data]
+
++ Download them to the [**"data"**](../data) folder.
+
++ You should have 4 ZIP files:
+
+    ```
+    Divvy_Trips_2016_Q1Q2.zip
+    Divvy_Trips_2016_Q3Q4.zip
+    Divvy_Trips_2017_Q1Q2.zip
+    Divvy_Trips_2017_Q3Q4.zip
+    ```
+
++ Unzip all of these files.
+
++ After unziping these files, you should have **15** CSV files.
+
+[github-repo]: https://github.com/rcc-uchicago/R-intro-divvy-2
+[divvy-data]: https://www.divvybikes.com/system-data
+
+Outline of workshop
+===================
+
+*Add outline of workshop here.*
