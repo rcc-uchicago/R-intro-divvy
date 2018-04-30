@@ -566,7 +566,16 @@ Outline of workshop
 
 *Add outline here.*
 
-Import all the  Divvy data
+Import and merge the 2016 & 2017 Divvy data
+===========================================
+
+```{r import-all-divvy-data}
+trip.files   <- Sys.glob("../data/Divvy_Trips*.csv")
+station.file <- "../data/Divvy_Stations_2017_Q3Q4.csv"
+divvy <- read.divvy.data(station.file,trip.files)
+```
+
+
 
 Where to go from here
 =====================
