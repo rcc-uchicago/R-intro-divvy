@@ -1,5 +1,3 @@
-* Add license info.
-
 * Mention the bikedata package.
 
 * Mention the workflowr demo using Divvy data.
@@ -12,4 +10,5 @@
 
 * Give instructions for downloading the data.
 
+* Send email to workshop participants.
 

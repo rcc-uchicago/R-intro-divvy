@@ -32,18 +32,17 @@ on. An RCC account is helpful, but not required.
 ## Other information
 
 + This workshop attempts to apply elements of the
-[Software Carpentry approach](http://software-carpentry.org/lessons).
+[Software Carpentry approach][swc].
 See also
-[this article](http://dx.doi.org/10.12688/f1000research.3-62.v2).
+[this article][swc-lessons-learned].
 Please also take a look at the [Code of Conduct](conduct.md), and
 the [license information](LICENSE.md).
 
 + To generate PDFs of the slides from the R Markdown source, run `make
 slides.pdf` in the [docs](docs) directory. For this to work, you will
-need to to install the
-[rmarkdown](https://cran.r-project.org/package=rmarkdown) package in
-R, as well as the packages used in [slides.Rmd](code/slides.Rmd). For
-more details, see the [Makefile](docs/Makefile).
+need to to install the [rmarkdown][rmarkdown] package in R, as well as
+the packages used in [slides.Rmd](code/slides.Rmd). For more details,
+see the [Makefile](docs/Makefile).
 
 + See also the [instructor notes](NOTES.md).
 
@@ -54,3 +53,8 @@ These materials were developed by
 [University of Chicago](https://www.uchicago.edu). Thank you to
 [Matthew Stephens](http://stephenslab.uchicago.edu) for his support
 and guidance.
+
+[swc]: http://software-carpentry.org/lessons
+[swc-lessons-learned]: http://dx.doi.org/10.12688/f1000research.3-62.v2
+[rmarkdown]: https://cran.r-project.org/package=rmarkdown
+
