@@ -1,0 +1,5 @@
+* Add license info.
+
+* Mention the bikedata package.
+
+* Mention the workflowr demo using Divvy data.
