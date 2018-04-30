@@ -444,11 +444,47 @@ iin R is more complicated, so for now I will only point out that the
 `lubridate` package has lots of useful functions for working with
 dates & times.
 
-Save your session
-=================
+Take a closer look at the trips from U of C
+===========================================
 
-It is important to periodically save the state of your R environment
-just in case you accidentally quit or the program crashes; e.g.,
+Having imported and prepared the data in R, let's take a close look
+at the trip data departing from the central Divvy station the
+University of Chicago campus.
+
+```{r get-uc-trips}
+uofstn   <- "University Ave & 57th St"
+uc.trips <- subset(trips,from_station_name == uofstn)
+nrow(uc.trips)
+```
+
+How do the ages of the riders at U of C compare to citywide riders?
+
+```{r inspect-uc-trips-1}
+summary(uc.trips$birthyear)
+summary(trips$birthyear)
+```
+
+Inspect further the U of C trip data
+====================================
+
+It is also fun to look at the final destinations of all the riders who
+started from 57th & University:
+
+```{r inspect-uc-trips-2}
+counts <- table(uc.trips$to_station_name)
+counts <- counts[counts > 0]
+sort(counts,decreasing = TRUE)
+```
+
+What is the destination for most riders? How many times did people
+bike all the way to Millenium Park in Fall 2017?
+
+Save your code & session state
+==============================
+
+It is important to periodically save your code and save the state of
+your R environment just in case you accidentally quit or the program
+crashes; e.g.,
 
 ```{r save-session-1, eval=FALSE}
 save.image("../output/myanalysis.RData")
