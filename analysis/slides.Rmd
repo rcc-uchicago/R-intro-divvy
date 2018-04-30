@@ -223,7 +223,7 @@ Load the most recent station data into an R "data frame":
 
 ```{r read-station-data}
 stations <-
-  read.csv(file = "../data/Divvy_Stations_2017_Q3Q4.csv",
+  read.csv("../data/Divvy_Stations_2017_Q3Q4.csv",
            stringsAsFactors = FALSE)
 ```
 
@@ -257,7 +257,7 @@ summary(stations)
 ```
 
 *What do we learn about the station data from running these
-commands?*
+commands? Did we reveal any issues with these data?*
 
 Take a closer look at the "dpcapacity" column
 =============================================
@@ -272,8 +272,8 @@ table(x)
 quantile(x,seq(0,1,0.1))
 ```
 
-*What can we say about the number of docks per station from running
-these commands?*
+*What did we learn about the Divvy stations from running these
+commands?*
 
 Take an even closer look at dpcapacity data
 ===========================================
@@ -317,6 +317,10 @@ x <- factor(stations$city)
 class(x)
 summary(x)
 ```
+
+*What did we learn about the Divvy stations from running these
+commands? What issue did we discover in the station data? How could we
+fix this issue?*
 
 Import the Divvy trip data into R
 =================================
