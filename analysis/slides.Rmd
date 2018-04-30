@@ -349,8 +349,9 @@ station data into R. Let's now use the same function to load the most
 recent available trip data:
 
 ```{r read-trip-data}
-trips <- read.csv("../data/Divvy_Trips_2017_Q4.csv",
-                  stringsAsFactors = FALSE)
+trips <-
+  read.csv("../data/Divvy_Trips_2017_Q4.csv",
+           stringsAsFactors = FALSE)
 ```
 
 You may find that this command look longer to run than
@@ -393,6 +394,23 @@ use it like other data frames:
 ```{r read-trip-data-better-2}
 class(trips) <- "data.frame"
 ```
+
+More about packages in R
+========================
+
++ CRAN is the official package source (cran.r-project.org).
+
++ Other major sources: Bioconductor, GitHub.
+
++ *What packages are already installed?*
+  `rownames(installed.packages())`.
+
++ *Where are the packages?* `.libPaths()`.
+
++ *How to learn more about a package?* `help(package = data.table)`.
+
++ "Vignettes" are also a great way to learn about a package, e.g.,
+  `vignette("datatable-intro")`
 
 A first glance at the trips data
 ================================
@@ -453,7 +471,8 @@ University of Chicago campus.
 
 ```{r get-uc-trips}
 uofstn   <- "University Ave & 57th St"
-uc.trips <- subset(trips,from_station_name == uofstn)
+uc.trips <-
+  subset(trips,from_station_name == uofstn)
 nrow(uc.trips)
 ```
 
@@ -463,6 +482,8 @@ How do the ages of the riders at U of C compare to citywide riders?
 summary(uc.trips$birthyear)
 summary(trips$birthyear)
 ```
+
+*What are the NA's?*
 
 Inspect further the U of C trip data
 ====================================
@@ -490,19 +511,10 @@ crashes; e.g.,
 save.image("../output/myanalysis.RData")
 ```
 
-More about packages in R
-========================
+Outline of workshop
+===================
 
-+ CRAN is the official package source (https://cran.r-project.org).
-
-+ Other important sources: Bioconductor, GitHub.
-
-+ What packages are already installed? Run `installed.packages()`.
-
-+ Where are my packages? Run `.libPaths()`.
-
-Inspect the Divvy trip data
-===========================
+*Add outline here.*
 
 Where to go from here
 =====================
