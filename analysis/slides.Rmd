@@ -322,7 +322,30 @@ summary(x)
 commands? What issue did we discover in the station data? How could we
 fix this issue?*
 
+Improving the "city" column
+===========================
+
+Let's fix this problem:
+
+```{r revise-city-data-1}
+rows <- which(stations$city == "Chicago ")
+length(rows)
+stations[rows,"city"] <- "Chicago"
+```
+
+We also observed that the "city" column is more useful if it is a
+factor, so let's convert it to a factor:
+
+```{r revise-city-data-2}
+stations <- transform(stations,city = factor(city))
+summary(stations)
+```
+
 Import the Divvy trip data into R
 =================================
 
+Where to go from here
+=====================
+
+*Add info here.*
 
