@@ -23,3 +23,8 @@
 * Give information about how much memory is needed.
 
 + Add steps to install packages.
+
++ Add save.image(file = "../output/workshop.RData") at appropriate
+places.
+
++ Incorporate material from "large scale data analysis" workshop(s).

@@ -174,12 +174,11 @@ sessionInfo()
 ```
 
 If you are using an older version of R (version 3.2 or earlier), you
-should upgrade to the latest version.
+should upgrade to the latest version. *Some of the examples may not
+work in older versions of R.*
 
-+ *Some of the examples may not work in older versions of R.*
-
-Check environment
-=================
+Check your R environment
+========================
 
 The R environment is where all variables and functions are stored and
 accessed. Your R environment should be empty:
@@ -192,17 +191,134 @@ If you do see names of objects listed, it means your environment is
 not empty, and you should restart R with a clean environment. (In
 RStudio, go to **Session > Restart R**.)
 
-+ At this point, we are now ready to start our data analysis.
+Create a file to keep track of your analysis code
+=================================================
+
++ In RStudio, select **File > R Script**.
+
++ Alternatively, use your favourite editor (emacs, vim, Atom, *etc*).
+
++ Add some comments to the tile to remind yourself what this file is
+  for, e.g.,
+
+    ```
+    # R code I used to analyze Divvy data
+	# during RCC workshop on May 1, 2018.
+    ```
+
++ Save the file in the [**"analysis"**](../analysis) folder.
+  Name the file whatever you'd like (e.g., `myanalysis.R`).
+
++ At this point, we are ready to start our analysis of the Divvy data.
 
 Outline of workshop
 ===================
 
 *Add outline of workshop here.*
 
-Take a peek at the Divvy station data
-=====================================
+Import the station data into R
+==============================
 
-Take a peek at the Divvy trip data
-==================================
+Load the most recent station data into an R "data frame":
+
+```{r read-station-data}
+stations <-
+  read.csv(file = "../data/Divvy_Stations_2017_Q3Q4.csv",
+           stringsAsFactors = FALSE)
+```
+
+This creates a new "data frame" object in your environment:
+
+```{r inspect-station-data-1}
+ls()
+class(stations)
+```
+
+What does `read.csv` do, and what is a "data frame"? We can find the
+answers by running
+
+```{r help-readcsv-dataframe, eval=FALSE}
+help(read.csv)
+help(data.frame)
+```
+
+Inspect the Divvy station data
+==============================
+
+Run these commands to inspect the station data:
+
+```{r inspect-station-data}
+nrow(stations)
+ncol(stations)
+head(stations)
+tail(stations)
+stations[1:6,]
+summary(stations)
+```
+
+*What do we learn about the station data from running these
+commands?*
+
+Take a closer look at the "dpcapacity" column
+=============================================
+
+Run these commands to take a closer look at the "dpcapacity" column:
+
+```{r inspect-dpcapacity-data-1}
+x <- stations$dpcapacity
+class(x)
+summary(x)
+table(x)
+quantile(x,seq(0,1,0.1))
+```
+
+*What can we say about the number of docks per station from running
+these commands?*
+
+Take an even closer look at dpcapacity data
+===========================================
+
+It is interesting that a few of the Divvy bike stations are much
+larger than the others, and some have no docks. Where are these
+stations?
+
+```{r inspect-dpcapacity-data-2}
+subset(stations,dpcapacity == 0)
+subset(stations,dpcapacity >= 40)
+```
+
+Alternatively, we can sort the table rows and inspect the top and
+bottom rows:
+
+```{r inspect-dpcapcity-data-3}
+rows <- order(stations$dpcapacity,decreasing=TRUE)
+stations <- stations[rows,]
+head(stations)
+tail(stations)
+```
+
+Take a closer look at the "city" column
+=======================================
+
+Above we inspected *numeric* data. How can we inspect non-numeric data
+in R?
+
+```{r inspect-city-data-1}
+x <- stations$city
+class(x)
+summary(x)
+```
+
+Unfortunately, the summary is not very useful here. The key is to
+convert the "city" column to a "factor" (a categorical variable):
+
+```{r inspect-city-data-2}
+x <- factor(stations$city)
+class(x)
+summary(x)
+```
+
+Import the Divvy trip data into R
+=================================
 
 
