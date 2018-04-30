@@ -219,7 +219,7 @@ Outline of workshop
 Import the station data into R
 ==============================
 
-Load the most recent station data into an R "data frame":
+Load the most recent available station data into an R "data frame":
 
 ```{r read-station-data}
 stations <-
@@ -343,6 +343,70 @@ summary(stations)
 
 Import the Divvy trip data into R
 =================================
+
+Previously, we used the `read.csv` function to import some of the
+station data into R. Let's now use the same function to load the most
+recent available trip data:
+
+```{r read-trip-data}
+trips <- read.csv("../data/Divvy_Trips_2017_Q4.csv",
+                  stringsAsFactors = FALSE)
+```
+
+You may find that this command look longer to run than
+before. Consider that the trips data is much larger:
+
+```{r trip-data-size}
+nrow(trips)
+ncol(trips)
+```
+
+This gives an opportunity to demonstrate a much faster method from the
+`data.table` package for importing large data sets.
+
+Import Divvy trip data using `fread`
+====================================
+
+Install the **data.table** package from CRAN:
+
+```{r install-data-table, eval=FALSE}
+install.packages("data.table")
+```
+
+Load the package funtions into your environment:
+
+```{r load-data-table}
+library(data.table)
+```
+
+Now let's see how well the `fread` function performs:
+
+```{r read-trip-data-better-1}
+trips <- fread("../data/Divvy_Trips_2017_Q4.csv",
+               stringsAsFactors = FALSE)
+```
+
+One annoying feature of `fread` is that it uses its own "data.table"
+class, so we need to convert it to a data frame object if we want to
+use it like other data frames:
+
+```{r read-trip-data-better-2}
+class(trips) <- "data.frame"
+```
+
+More about packages in R
+========================
+
++ CRAN is the official package source (https://cran.r-project.org).
+
++ Other important sources: Bioconductor, GitHub.
+
++ What packages are already installed? Run `installed.packages()`.
+
++ Where are my packages? Run `.libPaths()`.
+
+Inspect the Divvy trip data
+===========================
 
 Where to go from here
 =====================
