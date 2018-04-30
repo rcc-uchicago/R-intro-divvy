@@ -16,10 +16,6 @@
 
 * Add outline slides.
 
-* Add setup step to run sessionInfo().
-
-* Test R code on midway2.
-
 * Give information about how much memory is needed.
 
 + Add steps to install packages.
@@ -28,3 +24,5 @@
 places.
 
 + Incorporate material from "large scale data analysis" workshop(s).
+
++ Add a recap to each section.

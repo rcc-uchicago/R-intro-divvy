@@ -432,7 +432,14 @@ convert some of the columns to factors.
 Convert some columns to factors
 ===============================
 
-Let's start by converting the "station" columns to factors:
+Let's start by converting the "gender" column to a factor:
+
+
+
+Convert some columns to factors
+===============================
+
+Next, let's convert the "station" columns to factors:
 
 ```{r inspect-trip-data-2}
 trips <- transform(trips,
@@ -483,8 +490,6 @@ summary(uc.trips$birthyear)
 summary(trips$birthyear)
 ```
 
-*What are the NA's?*
-
 Inspect further the U of C trip data
 ====================================
 
@@ -510,6 +515,27 @@ crashes; e.g.,
 ```{r save-session-1, eval=FALSE}
 save.image("../output/myanalysis.RData")
 ```
+
+Preparing data is tedious
+=========================
+
+Common worries:
+
++ Formatting mistakes in CSV file.
+
++ Converting table columns to the appropriate data type.
+
++ Entry inconsistencies (e.g., "Chicago" vs. "Chicago ").
+
++ Missing data.
+
+Sometimes data preparation is >90% of the effort! *And merging data
+from multiple files creates more headaches!*
+
+Moving beyond the data preparation part
+=======================================
+
+*Add material here*
 
 Outline of workshop
 ===================
