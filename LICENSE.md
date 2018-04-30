@@ -64,11 +64,16 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+## Data
+
+The [Divvy data](divvy-data) are made available under a
+[separate license agreement](divvy-license).
+
 [cc-by-human]: https://creativecommons.org/licenses/by/4.0
 [cc-by-legal]: https://creativecommons.org/licenses/by/4.0/legalcode
 [mit-license]: http://opensource.org/licenses/mit-license.html
 [numfocus]: http://numfocus.org
 [osi]: http://opensource.org
 [github-repo]: https://github.com/rcc-uchicago/R-intro-divvy-2
-
-## Data
+[divvy-data]: https://www.divvybikes.com/system-data
+[divvy-license]: https://www.divvybikes.com/data-license-agreement
