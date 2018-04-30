@@ -62,4 +62,3 @@ and guidance.
 [swc-lessons-learned]: http://dx.doi.org/10.12688/f1000research.3-62.v2
 [rmarkdown]: https://cran.r-project.org/package=rmarkdown
 [divvy-data]: https://www.divvybikes.com/system-data
-

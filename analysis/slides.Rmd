@@ -58,9 +58,20 @@ Outline of workshop
 Download or "clone" git repository
 ==================================
 
-The first step is to download the workshop materials to your computer
-or into your home directory on the RCC cluster.
+The first step is to download the workshop packet to your computer
+or the RCC cluster. Go to:
 
-+ URL: github.com/rcc-uchicago/r-intro-divvy-2
++ [github.com/rcc-uchicago/r-intro-divvy-2][github-repo]
 
+To download, click green **Clone or download** button.
 
+Or, if you have git, you can run this command:
+
+```{bash download-repo, eval=FALSE}
+git clone https://github.com/rcc-uchicago/
+  R-intro-divvy-2.git
+```
+
+(Note the URL in the git command should not have contain any spaces.)
+
+[github-repo]: https://github.com/rcc-uchicago/r-intro-divvy-2
