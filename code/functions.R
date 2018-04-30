@@ -18,6 +18,14 @@ read.divvy.data <- function (station.file, trip.files) {
                     showProgress = FALSE)
   class(stations) <- "data.frame"
 
+  # Convert the "city" column to a factor.
+  cat("Processing station data.\n")
+  stations <- transform(stations,city = factor(city))
+
+  # Strip any columns that are all empty.
+  cols     <- sapply(stations,function (x) !all(is.na(x)))
+  stations <- stations[cols]
+  
   # Combine trip data into a single table.
   n     <- length(trip.files)
   trips <- NULL
