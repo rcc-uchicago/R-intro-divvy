@@ -1,0 +1,20 @@
+---
+title: "Introduction to R for data analysis"
+author: Peter Carbonetto
+output:
+  beamer_presentation:
+    template: beamer.tex
+    keep_tex: false
+---
+
+```{r knitr-options, echo=FALSE}
+knitr::opts_chunk$set(comment = "#",collapse = TRUE,fig.align = "center",
+                      results = "hide", fig.show = "hide", message = FALSE,
+		      warning = FALSE)
+```
+
+Aims of workshop
+================
+
+*Add workshop aims here.*
+

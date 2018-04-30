@@ -11,3 +11,5 @@
 * Review all content.
 
 * Add graphic for first slide.
+
+* Create slide listing workshop aims.

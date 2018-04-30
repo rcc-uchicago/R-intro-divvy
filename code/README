@@ -1,3 +1,2 @@
-This directories contains any source code that might be useful for the
-data processing and data analyses. Also included in this directory is
-the R Markdown source used to generate the slides.
+This directory contains source code that might be useful for the data
+processing steps and data analyses.
