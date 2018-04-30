@@ -394,6 +394,66 @@ use it like other data frames:
 class(trips) <- "data.frame"
 ```
 
+A first glance at the trips data
+================================
+
+Let's use some of the same commands as before to quickly get an
+overview of the trip data:
+
+```{r inspect-trip-data-1}
+nrow(trips)
+ncol(trips)
+head(trips)
+summary(trips)
+```
+
+Unfortunately, the summary command isn't particularly informative for
+many of the columns. We have the same problem as before—we should
+convert some of the columns to factors.
+
+Convert some columns to factors
+===============================
+
+Let's start by converting the "station" columns to factors:
+
+```{r inspect-trip-data-2}
+trips <- transform(trips,
+  from_station_name = factor(from_station_name),
+  to_station_name = factor(to_station_name))
+summary(trips)
+```
+
+The summary is now more informative. However, this is a better way to
+convert the "station" columns to factors:
+
+```{r inspect-trip-data-3}
+x     <- stations$name
+trips <- transform(trips,
+  from_station_name = factor(from_station_name,x),
+  to_station_name = factor(to_station_name,x))
+```
+
+*Why is second approach better?*
+
+Working with dates and times
+============================
+
+Like the categorical variables (the "factors"), the summaries for the
+dates and times aren't particularly useful. Working with dates & times
+iin R is more complicated, so for now I will only point out that the
+`lubridate` package has lots of useful functions for working with
+dates & times.
+
+Save your session
+=================
+
+It is important to periodically save the state of your R environment
+just in case you accidentally quit or the program crashes; e.g.,
+
+```{r save-session-1, eval=FALSE}
+save.image("../output/myanalysis.RData")
+```
+
 More about packages in R
 ========================
 
