@@ -418,7 +418,7 @@ A first glance at the trips data
 Let's use some of the same commands as before to quickly get an
 overview of the trip data:
 
-```{r inspect-trip-data-1}
+```{r inspect-trip-data}
 nrow(trips)
 ncol(trips)
 head(trips)
@@ -434,14 +434,32 @@ Convert some columns to factors
 
 Let's start by converting the "gender" column to a factor:
 
+```{r convert-trip-data-1}
+trips <- transform(trips,gender = factor(gender))
+summary(trips$gender)
+```
 
+What problem have we stumbled upon?
+
+Convert some columns to factors
+===============================
+
+In R, "missing data" should always be assigned the special value `NA`,
+short for "not available" or "not assigned":
+
+```{r convert-trip-data-2}
+i <- which(trips$gender == "")
+trips$gender[i] <- NA
+trips <- transform(trips,gender = factor(gender))
+summary(trips$gender)
+```
 
 Convert some columns to factors
 ===============================
 
 Next, let's convert the "station" columns to factors:
 
-```{r inspect-trip-data-2}
+```{r convert-trip-data-3}
 trips <- transform(trips,
   from_station_name = factor(from_station_name),
   to_station_name = factor(to_station_name))
@@ -451,7 +469,7 @@ summary(trips)
 The summary is now more informative. However, this is a better way to
 convert the "station" columns to factors:
 
-```{r inspect-trip-data-3}
+```{r convert-trip-data-4}
 x     <- stations$name
 trips <- transform(trips,
   from_station_name = factor(from_station_name,x),
@@ -519,7 +537,7 @@ save.image("../output/myanalysis.RData")
 Preparing data is tedious
 =========================
 
-Common worries:
+Data preparation is sometimes >90% of the effort! Common worries:
 
 + Formatting mistakes in CSV file.
 
@@ -529,8 +547,10 @@ Common worries:
 
 + Missing data.
 
-Sometimes data preparation is >90% of the effort! *And merging data
-from multiple files creates more headaches!*
++ Many other examples of Bad Practice in recording data.
+
+*Many analysis mistakes are due to poor data preparation.* (And
+merging data from multiple files creates more headaches!)
 
 Moving beyond the data preparation part
 =======================================
