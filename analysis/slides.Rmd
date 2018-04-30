@@ -144,7 +144,65 @@ Download the Divvy data
 [github-repo]: https://github.com/rcc-uchicago/R-intro-divvy-2
 [divvy-data]: https://www.divvybikes.com/system-data
 
+Set up your R environment
+=========================
+
++ Launch R or RStudio.
+
++ *We will run all the code from the **"analysis"** folder*.
+
++ To change your working directory:
+
+    + In R, use `getwd()` function.
+
+    + In RStudio, select **Session > Set Working Directory > Choose
+      Directory...`**
+
+Before continuing, check your working directory:
+
+```{r check-wd}
+getwd()  # Should be .../analysis
+```
+
+Run `sessionInfo()`
+===================
+
+Check the version of R that you are using:
+
+```{r check-version}
+sessionInfo()
+```
+
+If you are using an older version of R (version 3.2 or earlier), you
+should upgrade to the latest version.
+
++ *Some of the examples may not work in older versions of R.*
+
+Check environment
+=================
+
+The R environment is where all variables and functions are stored and
+accessed. Your R environment should be empty:
+
+```{r check-env}
+ls()
+```
+
+If you do see names of objects listed, it means your environment is
+not empty, and you should restart R with a clean environment. (In
+RStudio, go to **Session > Restart R**.)
+
++ At this point, we are now ready to start our data analysis.
+
 Outline of workshop
 ===================
 
 *Add outline of workshop here.*
+
+Take a peek at the Divvy station data
+=====================================
+
+Take a peek at the Divvy trip data
+==================================
+
+

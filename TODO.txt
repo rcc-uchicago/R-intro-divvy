@@ -2,8 +2,6 @@
 
 * Mention the workflowr demo using Divvy data.
 
-* Download 2016 & 2017 data files.
-
 * Give instructions for downloading the data.
 
 * Send email to workshop participants.
@@ -23,3 +21,5 @@
 * Test R code on midway2.
 
 * Give information about how much memory is needed.
+
++ Add steps to install packages.
