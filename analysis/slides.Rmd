@@ -18,8 +18,8 @@ Aims of workshop
 
 *Add workshop aims here.*
 
-Project: analyze 2016 & 2017 Divvy data
-=======================================
+Our project: analyze 2016 & 2017 Divvy data
+===========================================
 
 *Describe the Divvy data analysis project and aims.*
 
@@ -40,7 +40,8 @@ Your may choose to...
 
 **Note:** If you use the RCC cluster I'm assuming you know how to set
 up an interactive computing session with appropriate amount of time
-and memory, and display graphics. (I can help with this.)
+and memory, load R or RStudio, and display graphics (e.g., using
+ThinLinc). *I can help with this.*
 
 Software we will use today
 ==========================
@@ -49,7 +50,10 @@ Software we will use today
 
 2. R packages `data.table` and `ggplot2`.
 
-3. *RStudio is not optional.*
+3. RStudio (optional).
+
+**Note:** I'm assuming you have already installed R and/or RStudio on
+your laptop, or you are using the RCC cluster.
 
 Outline of workshop
 ===================
@@ -115,6 +119,8 @@ The PDF is useful for copying & pasting code from the slides.
 
 Download the Divvy data
 =======================
+
++ Disk space required: at least **2 GB**.
 
 + Download the 2016 & 2017 data files from here:
 

@@ -21,3 +21,5 @@
 * Add setup step to run sessionInfo().
 
 * Test R code on midway2.
+
+* Give information about how much memory is needed.
