@@ -3,3 +3,13 @@
 * Mention the bikedata package.
 
 * Mention the workflowr demo using Divvy data.
+
+* Add instructor notes.
+
+* Add code of conduct.
+
+* Download 2016 & 2017 data files.
+
+* Give instructions for downloading the data.
+
+
