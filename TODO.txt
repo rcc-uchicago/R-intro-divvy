@@ -13,3 +13,9 @@
 * Add graphic for first slide.
 
 * Create slide listing workshop aims.
+
+* Give list of all R packages we will use.
+
+* Add outline slides.
+
+* Add setup step to run sessionInfo().

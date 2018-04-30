@@ -18,3 +18,49 @@ Aims of workshop
 
 *Add workshop aims here.*
 
+Project: analyze 2016 & 2017 Divvy data
+=======================================
+
+*Describe the Divvy data analysis project and aims.*
+
+It's your choice
+================
+
+Your may choose to...
+
++ Use R on your laptop.
+
++ Use RStudio on your laptop.
+
++ Use R or RStudio (Desktop or Server) on the RCC cluster.
+
++ Pair up with your neighbour.
+
++ Follow what I do on the projector.
+
+*I can't guarantee that all examples will work exactly the same on
+your laptop.*
+
+Software we will use today
+==========================
+
+1. R
+
+2. R packages `data.table` and `ggplot2`.
+
+3. *RStudio is not optional.*
+
+Outline of workshop
+===================
+
+*Add outline here.*
+
+Download or "clone" git repository
+==================================
+
+The first step is to download the workshop materials to your computer
+or into your home directory on the RCC cluster.
+
++ URL: github.com/rcc-uchicago/r-intro-divvy-2
+
+
