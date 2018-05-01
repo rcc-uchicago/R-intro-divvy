@@ -78,12 +78,16 @@ your laptop, or you are using the RCC cluster.
 Outline of workshop
 ===================
 
-*Add outline here.*
+1. Initial setup.
 
-Outline of initial setup
-========================
+2. Load and prepare the Divvy station data.
 
-*Add outline of initial setup here.*
+3. Load and prepare the Divvy trip data.
+
+4. Create a map of the Divvy stations.
+
+5. Create a scatterplot comparing bike sharing activity in 2016
+   and 2017.
 
 Initial setup
 =============
@@ -99,14 +103,14 @@ Initial setup
 Download or "clone" git repository
 ==================================
 
-The first step is to download the workshop packet onto your computer
-or onto the RCC cluster. Go to:
+Download the workshop packet to your computer (or the RCC
+cluster). 
 
-+ [**github.com/rcc-uchicago/R-intro-divvy-2**][github-repo]
++ Go to: [**github.com/rcc-uchicago/R-intro-divvy-2**][github-repo]
 
-To download, click green **"Clone or download"** button.
++ To download, click the green **"Clone or download"** button.
 
-Or, if you have **git**, you can run this command:
+Or, if you have **git**, run this command:
 
 ```{bash download-repo, eval=FALSE}
 git clone https://github.com/rcc-uchicago/
@@ -614,7 +618,7 @@ divvy     <- read.divvy.data(stnfile,tripfiles)
 
 The output is a "list" containing two data frames:
 
-```
+```{r}
 stations <- divvy$stations
 trips    <- divvy$trips
 head(stations)
@@ -770,4 +774,5 @@ Parting thoughts
 
 *Add thoughts here.*
 
++ See **stephenslab.github.io/wflow-divvy**.
 

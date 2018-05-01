@@ -1,16 +1,4 @@
-* Mention the bikedata package.
-
-* Mention the workflowr demo using Divvy data.
-
-* Give instructions for downloading the data.
-
-* Send email to workshop participants.
-
 * Review all content.
-
-* Create slide listing workshop aims.
-
-* Give list of all R packages we will use.
 
 * Add outline slides.
 
