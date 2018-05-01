@@ -23,9 +23,11 @@ Aims of workshop
 
 3. Use standard tools to summarize and manipulate data frames.
 
-4. Use ggplot2 to create plots from the processed data.
+4. Learn how to install and use R packages.
 
-4. Learn through "live coding"---this includes learning from our
+5. Use ggplot2 to create plots from the processed data.
+
+6. Learn through "live coding"---this includes learning from our
 mistakes!
 
 Our project: Analyze 2016 & 2017 Divvy data
@@ -854,13 +856,12 @@ print(p)
 ```
 
 It is difficult to tell which stations had more trips in 2017—we need
-to compare against the x = y line. We can easily adjust the plot:
+to compare against the x = y line.
 
 ```{r plot-2016-vs-2017-trips-2}
 p <- p + geom_abline(slope = 1,color = "skyblue",
            linetype = "dashed") +
-       xlim(c(0,6e4)) +
-	   ylim(c(0,6e4)) 
+       xlim(c(0,6e4)) + ylim(c(0,6e4)) 
 print(p)
 ```
 
@@ -870,10 +871,36 @@ trips than other stations. Where is this station?*
 ggplot: Take home points
 ========================
 
++ Creating sophisticated plots in ggplot requires relatively little
+effort *provided the data are in the right form.*
+
++ All plots in ggplot2 consist of these 3 elements:
+
+    1. A data frame.
+
+    2. An "aesthetic mapping" that declares how columns are plotted.
+
+    3. A "geom", short for “geometric object,” that specifies the type
+       of plot.
+
++ All plots are created by combining "layers" using the + operator.
+
 Parting thoughts
 ================
 
-*Add thoughts here.*
+1. Always record your analysis steps in a file so you can reproduce
+   them later.
 
-+ See **stephenslab.github.io/wflow-divvy**.
+2. Keep track of which packages (and the versions) you
+   used—`sessionInfo()` is your friend.
+
+3. Use packages—don’t reinvent the wheel.
+
+4. Email help@rcc.uchicago.edu for advice on using R on the RCC
+   cluster.
+
+5. Use "R Markdown" to document your analyses.
+
+6. See the **workflowr** package for simplifying organizing & sharing
+   of data analyses; e.g., **stephenslab.github.io/wflow-divvy**.
 
