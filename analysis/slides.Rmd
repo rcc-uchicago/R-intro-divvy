@@ -816,6 +816,15 @@ print(p)
 
 *Why do we set "size" to `sqrt(departures)`?*
 
+Save your code & session state
+==============================
+
+This is a good time to save your session.
+
+```{r save-session-2, eval=FALSE}
+save.image("../output/divvyanalysis.RData")
+```
+
 Compare 2017 biking activity against 2016
 =========================================
 
@@ -867,6 +876,15 @@ print(p)
 
 *One station stands out because it has had a much larger increase in
 trips than other stations. Where is this station?*
+
+Save your code & session state
+==============================
+
+Save your final results for safekeeping.
+
+```{r save-session-3, eval=FALSE}
+save.image("../output/divvyanalysis.RData")
+```
 
 ggplot: Take home points
 ========================
