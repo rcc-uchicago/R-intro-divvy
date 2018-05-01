@@ -742,8 +742,7 @@ print(p)
 Adjusting the plot
 ==================
 
-I recommend the **cowplot** package, which has better plotting
-defaults.
+I recommend the **cowplot** package, which extends **ggplot2**.
 
 ```{r install-cowplot, eval=FALSE}
 install.packages("cowplot")
@@ -762,21 +761,16 @@ p <- ggplot(data    = stations,
 print(p)
 ```
 
-There are many, many functions in the ggplot2 package for adjusting
-plotting settings.
-
-+ **ggplot2.tidyverse.org** is a great reference.
-
 *What geographic features of Chicago are recognizable from this plot?*
 
 Scale stations by the number of departures
 ==========================================
 
-Next let's add an additional piece of information to this
+Next, let's add an additional piece of information to this
 visualization:
 
-+ Amount of activity at each station (which should roughly correspond
-to population density, but maybe not always).
++ Number of departures at each station (which should roughly
+correspond to population density, but maybe not always).
 
 To do this, we need to add a new column to the "stations" data frame
 containing the total number departures, which is calculated from the
@@ -784,10 +778,12 @@ containing the total number departures, which is calculated from the
 
 ```{r count-trips-per-station}
 counts <- table(trips$from_station_id)
+class(counts)
+length(counts)
 head(counts)
 ```
 
-Check that counts are in the same order as stations:
+The counts should be the same order as stations (*why is this?*):
 
 ```{r check-station-trip-counts}
 all(names(counts) == stations$id)
@@ -799,9 +795,9 @@ Scale stations by the number of departures
 Add these trip counts to the "stations" data frame:
 
 ```{r add-counts-to-stations}
-counts   <- as.vector(counts)
-stations <- cbind(stations,
-                  data.frame(departures = counts))
+counts <- as.vector(counts)
+stations <-
+  cbind(stations,data.frame(departures = counts))
 head(stations)
 ```
 
@@ -816,7 +812,7 @@ p <- ggplot(data = stations,
 print(p)
 ```
 
-*Why do we set the size of each point to `sqrt(departures)`?*
+*Why do we set "size" to `sqrt(departures)`?*
 
 Compare biking activity in 2016 & 2017
 ======================================
