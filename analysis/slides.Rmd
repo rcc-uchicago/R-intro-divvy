@@ -46,11 +46,11 @@ ThinLinc). *I can help with this.*
 Software we will use today
 ==========================
 
-1. R
+1. **R**
 
-2. R packages `data.table` and `ggplot2`.
+2. R packages **data.table**, **ggplot2** and **cowplot**.
 
-3. RStudio (optional).
+3. **RStudio** (optional).
 
 **Note:** I'm assuming you have already installed R and/or RStudio on
 your laptop, or you are using the RCC cluster.
@@ -639,6 +639,7 @@ I'd like to suggest using the **cowplot** package, which has better
 plotting parameter defaults.
 
 ```{r plot-station-map-2}
+install.packages("cowplot")
 library(cowplot)
 p <- ggplot(data    = stations,
             mapping = aes(x = longitude,
@@ -651,7 +652,7 @@ print(p)
 There are many, many functions in the ggplot2 package for adjusting
 plotting settings.
 
-+ **ggplot2.tidyverbse.org** is a great reference.
++ **ggplot2.tidyverse.org** is a great reference.
 
 *What geographic features of Chicago are recognizable from this plot?*
 
