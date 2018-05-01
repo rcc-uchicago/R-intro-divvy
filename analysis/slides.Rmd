@@ -238,12 +238,21 @@ Create a file to keep track of your analysis code
 Outline of workshop
 ===================
 
-*Add outline of workshop here.*
+1. Initial setup.
+
+2. **Load and prepare the Divvy station data.**
+
+3. Load and prepare the Divvy trip data.
+
+4. Create a map of the Divvy stations.
+
+5. Create a scatterplot comparing bike sharing activity in 2016
+   and 2017.
 
 Import the station data into R
 ==============================
 
-Load the most recent available station data into an R "data frame":
+Load the most recent station data into an R "data frame":
 
 ```{r read-station-data}
 stations <-
@@ -258,16 +267,16 @@ ls()
 class(stations)
 ```
 
-What does `read.csv` do, and what is a "data frame"? We can find the
-answers by running
+What does `read.csv` do, and what is a "data frame"? R has detailed
+documentation:
 
 ```{r help-readcsv-dataframe, eval=FALSE}
 help(read.csv)
 help(data.frame)
 ```
 
-Inspect the Divvy station data
-==============================
+Inspect the station data
+========================
 
 Run these commands to inspect the station data:
 
@@ -280,8 +289,11 @@ stations[1:6,]
 summary(stations)
 ```
 
+**Tip:** To better view data frames with many columns, try
+`options(width=100)`.
+
 *What do we learn about the station data from running these
-commands? Did we reveal any issues with these data?*
+commands? Does this reveal any issues with the data?*
 
 Take a closer look at the "dpcapacity" column
 =============================================
@@ -293,17 +305,15 @@ x <- stations$dpcapacity
 class(x)
 summary(x)
 table(x)
-quantile(x,seq(0,1,0.1))
 ```
 
-*What did we learn about the Divvy stations from running these
-commands?*
+*What additional insight did we gain from running these commands?*
 
 Take an even closer look at dpcapacity data
 ===========================================
 
 It is interesting that a few of the Divvy bike stations are much
-larger than the others, and some have no docks. Where are these
+larger than the others, whereas others have no docks. Where are these
 stations?
 
 ```{r inspect-dpcapacity-data-2}
@@ -324,8 +334,7 @@ tail(stations)
 Take a closer look at the "city" column
 =======================================
 
-Above we inspected *numeric* data. How can we inspect non-numeric data
-in R?
+Above we inspected *numeric* data. Here we examine non-numeric data.
 
 ```{r inspect-city-data-1}
 x <- stations$city
@@ -342,35 +351,54 @@ class(x)
 summary(x)
 ```
 
-*What did we learn about the Divvy stations from running these
-commands? What issue did we discover in the station data? How could we
-fix this issue?*
+*Did you discover an issue with the data from running these commands?
+How could we fix this issue?*
 
 Improving the "city" column
 ===========================
 
-Let's fix this problem:
+Let's fix this problem. First, select the offending rows of the table:
 
 ```{r revise-city-data-1}
 rows <- which(stations$city == "Chicago ")
 length(rows)
+```
+
+Fix the "city" entry for the selected rows:
+
+```{r revise-city-data-2}
 stations[rows,"city"] <- "Chicago"
 ```
 
 We also observed that the "city" column is more useful if it is a
 factor, so let's convert it to a factor:
 
-```{r revise-city-data-2}
-stations <- transform(stations,city = factor(city))
+```{r revise-city-data-3}
+stations <- transform(stations,
+                      city = factor(city))
 summary(stations)
 ```
+
+Outline of workshop
+===================
+
+1. Initial setup.
+
+2. Load and prepare the Divvy station data.
+
+3. **Load and prepare the Divvy trip data.**
+
+4. Create a map of the Divvy stations.
+
+5. Create a scatterplot comparing bike sharing activity in 2016
+   and 2017.
 
 Import the Divvy trip data into R
 =================================
 
 Previously, we used the `read.csv` function to import some of the
 station data into R. Let's now use the same function to load the most
-recent available trip data:
+recent trip data:
 
 ```{r read-trip-data}
 trips <-
@@ -386,8 +414,8 @@ nrow(trips)
 ncol(trips)
 ```
 
-This gives an opportunity to demonstrate a much faster method from the
-`data.table` package for importing large data sets.
+This gives an opportunity to demonstrate a much faster method 
+for importing large data sets.
 
 Import Divvy trip data using `fread`
 ====================================
@@ -398,13 +426,13 @@ Install the **data.table** package from CRAN:
 install.packages("data.table")
 ```
 
-Load the package functions into your environment:
+Load the functions from the package into your environment:
 
 ```{r load-data-table}
 library("data.table")
 ```
 
-Now let's see how well the `fread` function performs:
+Let's use the `fread` function from this package:
 
 ```{r read-trip-data-better-1}
 trips <- fread("../data/Divvy_Trips_2017_Q4.csv",
@@ -424,14 +452,14 @@ More about packages in R
 
 + CRAN is the official package source (cran.r-project.org).
 
-+ Other major sources: Bioconductor, GitHub.
++ Other good places to find packages: Bioconductor, GitHub.
 
 + *What packages are already installed?*
-  `rownames(installed.packages())`.
+  `rownames(installed.packages())`
 
-+ *Where are the packages?* `.libPaths()`.
++ *Where are the packages?* `.libPaths()`
 
-+ *How to learn more about a package?* `help(package = data.table)`.
++ *How to learn more about a package?* `help(package=data.table)`
 
 + "Vignettes" are also a great way to learn about a package, e.g.,
   `vignette("datatable-intro")`
