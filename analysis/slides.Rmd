@@ -16,7 +16,17 @@ knitr::opts_chunk$set(comment = "#",collapse = TRUE,fig.align = "center",
 Aims of workshop
 ================
 
-*Add workshop aims here.*
+1. Work through the steps of a basic data analysis in R, starting with
+   the "raw" source data and ending with evocative visualizations of the data.
+
+2. Understand how to import data from a CSV file into an R data frame.
+
+3. Use standard tools to summarize and manipulate data frames.
+
+4. Use ggplot2 to create plots from the processed data.
+
+4. Learn through "live coding"---this includes learning from our
+mistakes!
 
 Our project: analyze 2016 & 2017 Divvy data
 ===========================================
