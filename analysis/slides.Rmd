@@ -816,6 +816,24 @@ print(p)
 
 *Why do we set "size" to `sqrt(departures)`?*
 
+How to save and share your plot
+===============================
+
+For exploratory analyses, GIF and PNG are great formats because the
+files are easy to attach to emails or webpages and they can be viewed
+nearly universally:
+
+```{r save-station-map-png}
+ggsave("../output/station_map.png",plot = p,dpi = 150)
+```
+
+For print or publication, you will want to save in a vector graphics
+format:
+
+```{r save-station-map-png}
+ggsave("../output/station_map.pdf",plot = p)
+```
+
 Save your code & session state
 ==============================
 

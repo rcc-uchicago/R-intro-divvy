@@ -1,17 +1,4 @@
-* Review all content.
-
-* Add outline slides.
-
-* Give information about memory requirements.
-
-+ Add save.image(file = "../output/workshop.RData") at appropriate
-places.
-
-+ Add a recap to each section.
-
 + Add slides PDF to repo.
-
-+ Add step to save plot as a PDF.
 
 * Run "make test" one last time.
 
