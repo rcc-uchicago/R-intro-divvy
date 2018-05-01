@@ -84,9 +84,11 @@ Outline of workshop
 
 3. Load and prepare the Divvy trip data.
 
-4. Create a map of the Divvy stations.
+4. A closer look at U of C Divvy usage.
 
-5. Create a scatterplot comparing bike sharing activity in 2016
+5. Create a map of the Divvy stations.
+
+6. Create a scatterplot comparing bike sharing activity in 2016
    and 2017.
 
 Initial setup
@@ -244,9 +246,11 @@ Outline of workshop
 
 3. Load and prepare the Divvy trip data.
 
-4. Create a map of the Divvy stations.
+4. A closer look at U of C Divvy usage.
 
-5. Create a scatterplot comparing bike sharing activity in 2016
+5. Create a map of the Divvy stations.
+
+6. Create a scatterplot comparing bike sharing activity in 2016
    and 2017.
 
 Import the station data into R
@@ -388,9 +392,11 @@ Outline of workshop
 
 3. **Load and prepare the Divvy trip data.**
 
-4. Create a map of the Divvy stations.
+4. A closer look at U of C Divvy usage.
 
-5. Create a scatterplot comparing bike sharing activity in 2016
+5. Create a map of the Divvy stations.
+
+6. Create a scatterplot comparing bike sharing activity in 2016
    and 2017.
 
 Import the Divvy trip data into R
@@ -545,6 +551,22 @@ dates & times.
 
 + See `help(strptime)` and the `lubridate` package.
 
+Outline of workshop
+===================
+
+1. Initial setup.
+
+2. Load and prepare the Divvy station data.
+
+3. Load and prepare the Divvy trip data.
+
+4. **A closer look at U of C Divvy usage.**
+
+5. Create a map of the Divvy stations.
+
+6. Create a scatterplot comparing bike sharing activity in 2016
+   and 2017.
+
 A closer look at bike trips from U of C
 =======================================
 
@@ -585,12 +607,16 @@ bike from University & 57th all the way to Millenium Park in Fall
 Save your code & session state
 ==============================
 
-It is important to periodically save your code and save the state of
-your R environment just in case you accidentally quit or the program
-crashes; e.g.,
+It is important to periodically save:
+
+1. your code,
+
+2. the state of your R environment.
+
+To save your environment, do something like this:
 
 ```{r save-session-1, eval=FALSE}
-save.image("../output/myanalysis.RData")
+save.image("../output/divvyanalysis.RData")
 ```
 
 Preparing data is tedious
@@ -606,11 +632,11 @@ Common issues include:
 
 + Converting table columns to the appropriate data type.
 
-+ Entry inconsistencies (e.g., "Chicago" vs. "Chicago ").
++ Entry inconsistencies (e.g., additional spaces).
 
 + Missing data.
 
-+ Many other examples of Bad Practice in recording data.
++ Many other examples of Poor Practices in recording data.
 
 (And we haven't yet dealt with merging data from multiple files—this
 usually creates more headaches!)
@@ -618,34 +644,56 @@ usually creates more headaches!)
 Moving beyond data preparation
 ==============================
 
-*Add material here*
++ So far, we have illustrated a few of the challenges of working with
+  large tabular data sets ("data frames").
+
++ In order to proceed to fun stuff, I've "hidden" some of the additional
+  complications—I wrote a function in R to import and merge all the
+  Divvy data into a single data frame.
 
 Outline of workshop
 ===================
 
-*Add outline here.*
+1. Initial setup.
 
-Import and merge the 2016 & 2017 Divvy data
-===========================================
+2. Load and prepare the Divvy station data.
 
-I wrote a function to read & prepare the 2016-2017 Divvy
-data.
+3. Load and prepare the Divvy trip data.
+
+4. A closer look at U of C Divvy usage.
+
+5. **Create a map of the Divvy stations.**
+
+6. Create a scatterplot comparing bike sharing activity in 2016
+   and 2017.
+
+Import the 2016 & 2017 Divvy data
+=================================
+
+I wrote a function "read.divvy.data" that will read all the CSV files,
+then merge them into two data frames: one for the stations, and one
+for the trips.
 
 ```{r load-functions}
-library("data.table")
 source("../code/functions.R")
 ls()
 ```
 
-Import and merge the 2016 & 2017 Divvy data
-===========================================
+Choose which station and trip files to import.
+
+```{r import-divvy-data-1}
+tripfiles <- Sys.glob("../data/Divvy_Trips*.csv")
+stnfile <- "../data/Divvy_Stations_2017_Q3Q4.csv"
+```
+
+Import the 2016 & 2017 Divvy data
+=================================
 
 This may take a few minutes to run.
 
-```{r import-all-divvy-data}
-tripfiles <- Sys.glob("../data/Divvy_Trips*.csv")
-stnfile   <- "../data/Divvy_Stations_2017_Q3Q4.csv"
-divvy     <- read.divvy.data(stnfile,tripfiles)
+```{r import-divvy-data-2}
+library("data.table")
+divvy <- read.divvy.data(stnfile,tripfiles)
 ```
 
 The output is a "list" containing two data frames:
@@ -653,19 +701,21 @@ The output is a "list" containing two data frames:
 ```{r}
 stations <- divvy$stations
 trips    <- divvy$trips
+rm(divvy)
 head(stations)
 head(trips)
 ```
 
-*How many more trips were taken in 2017 than in 2017? (Try using 
-the  `summary` function.)*
+*How many more trips were taken in 2017 than in 2016?* Try using 
+the `summary` function.
 
 Out first plot: a map of the Divvy stations
 ===========================================
 
-The [ggplot2 package](https://github.com/tidyverse/ggplot2) is a
-powerful (although not immediately intuitive) set of plotting
-functions that extend the base plotting fuctions in R.
+We will use the
+[**ggplot2** package](https://github.com/tidyverse/ggplot2). It is a
+powerful (although not intuitive) set of plotting functions that
+extend the base plotting fuctions in R.
 
 ```{r install-ggplot, eval=FALSE}
 install.packages("ggplot2")
@@ -677,8 +727,9 @@ Load the ggplot2 functions into your environment:
 library("ggplot2")
 ```
 
-In only a few lines of code, we can create a plot of the Divvy
-stations by geographic location (latitude & longitude):
+The "stations" data frame gives the geographic co-ordinates (latitude
+& longitude) for each station. With ggplot, we can create a station
+map in only a few lines of code:
 
 ```{r plot-station-map-1}
 p <- ggplot(data    = stations,
@@ -688,14 +739,20 @@ p <- ggplot(data    = stations,
 print(p)
 ```
 
-Adjusting the plotting parameters
-=================================
+Adjusting the plot
+==================
 
-I'd like to suggest using the **cowplot** package, which has better
-plotting parameter defaults.
+I recommend the **cowplot** package, which has better plotting
+defaults.
+
+```{r install-cowplot, eval=FALSE}
+install.packages("cowplot")
+```
+
+This code is the same as before, except for a few adjustments to the
+default settings for plotting points (**"geom_point"**):
 
 ```{r plot-station-map-2}
-install.packages("cowplot")
 library(cowplot)
 p <- ggplot(data    = stations,
             mapping = aes(x = longitude,
