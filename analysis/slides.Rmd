@@ -467,7 +467,7 @@ More about packages in R
 A first glance at the trips data
 ================================
 
-Let's use some of the same commands as before to quickly get an
+Let's use some of the same commands we used earlier to quickly get an
 overview of the trip data:
 
 ```{r inspect-trip-data}
@@ -481,8 +481,8 @@ Unfortunately, the summary command isn't particularly informative for
 many of the columns. We have the same problem as before—we should
 convert some of the columns to factors.
 
-Convert some columns to factors
-===============================
+Convert "gender" to a factor
+============================
 
 Let's start by converting the "gender" column to a factor:
 
@@ -493,26 +493,28 @@ summary(trips$gender)
 
 *What problem have we stumbled upon?*
 
-Convert some columns to factors
-===============================
+Handling "missing" data
+=======================
 
-In R, "missing data" should always be assigned the special value `NA`,
-short for "not available" or "not assigned":
+In R, "missing data" should always be assigned the special value `NA`
+(short for "not available" or "not assigned"):
 
 ```{r convert-trip-data-2}
 i <- which(trips$gender == "")
 trips$gender[i] <- NA
-trips <- transform(trips,gender = factor(gender))
+trips <- transform(trips,
+                   gender = factor(gender))
 summary(trips$gender)
 ```
 
-Many functions in R will take care to handle missing data as long as
-they are encoded as the special value `NA`.
+Many functions in R will correctly handle missing data as long as
+they are encoded as `NA`.
 
-Convert some columns to factors
-===============================
+Convert "station" columns to factors
+====================================
 
-Next, let's convert the "station" columns to factors:
+Next, let's convert the "from station" and "to station" columns to
+factors:
 
 ```{r convert-trip-data-3}
 trips <- transform(trips,
@@ -525,7 +527,7 @@ The summary is now more informative. However, this is a better way to
 convert the "station" columns to factors:
 
 ```{r convert-trip-data-4}
-x     <- stations$name
+x <- stations$name
 trips <- transform(trips,
   from_station_name = factor(from_station_name,x),
   to_station_name = factor(to_station_name,x))
@@ -533,50 +535,52 @@ trips <- transform(trips,
 
 *Why is second approach better?*
 
-Working with dates and times
-============================
+A note about dates & times
+==========================
 
-Like the categorical variables (the "factors"), the summaries for the
-dates and times aren't particularly useful. Working with dates & times
-iin R is more complicated, so for now I will only point out that the
-`lubridate` package has lots of useful functions for working with
++ `summary(trips)` is also not useful for the
 dates & times.
 
-Take a closer look at the trips from U of C
-===========================================
++ Processing dates & times in R is more complicated.
 
-Having imported and prepared the data in R, let's take a close look
-at the trip data departing from the central Divvy station the
-University of Chicago campus.
++ See `help(strptime)` and the `lubridate` package.
+
+A closer look at bike trips from U of C
+=======================================
+
+We have put a lot of effort into preparing the Divvy data.  Let's
+examine the trip data departing from the Divvy station at 57th &
+University. Here we create a new data frame, `uctrips`:
 
 ```{r get-uc-trips}
-uofstn   <- "University Ave & 57th St"
-uc.trips <-
-  subset(trips,from_station_name == uofstn)
-nrow(uc.trips)
+ucstation <- "University Ave & 57th St"
+uctrips <-
+  subset(trips,from_station_name == ucstation)
+nrow(uctrips)
 ```
 
 How do the ages of the riders at U of C compare to citywide riders?
 
 ```{r inspect-uc-trips-1}
-summary(uc.trips$birthyear)
+summary(uctrips$birthyear)
 summary(trips$birthyear)
 ```
 
-Inspect further the U of C trip data
-====================================
+A closer look at bike trips from U of C
+=======================================
 
-It is also fun to look at the final destinations of all the riders who
-started from 57th & University:
+What are t he final destinations of trips starting at 57th &
+University?
 
 ```{r inspect-uc-trips-2}
-counts <- table(uc.trips$to_station_name)
+counts <- table(uctrips$to_station_name)
 counts <- counts[counts > 0]
 sort(counts,decreasing = TRUE)
 ```
 
 What is the destination for most riders? How many times did people
-bike all the way to Millenium Park in Fall 2017?
+bike from University & 57th all the way to Millenium Park in Fall
+2017?
 
 Save your code & session state
 ==============================
