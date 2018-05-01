@@ -572,7 +572,7 @@ Outline of workshop
 Import and merge the 2016 & 2017 Divvy data
 ===========================================
 
-I wrote a function to read and prepare the 2016 & 2017 Divvy
+I wrote a function to read & prepare the 2016-2017 Divvy
 data.
 
 ```{r load-functions}
@@ -580,6 +580,9 @@ library("data.table")
 source("../code/functions.R")
 ls()
 ```
+
+Import and merge the 2016 & 2017 Divvy data
+===========================================
 
 This may take a few minutes to run.
 
@@ -589,15 +592,17 @@ stnfile   <- "../data/Divvy_Stations_2017_Q3Q4.csv"
 divvy     <- read.divvy.data(stnfile,tripfiles)
 ```
 
-The output is a list containing two data frames:
+The output is a "list" containing two data frames:
 
 ```
-head(divvy$stations)
-head(divvy$trips)
+stations <- divvy$stations
+trips    <- divvy$trips
+head(stations)
+head(trips)
 ```
 
-*How many more trips were taken in 2017 than in 2017? Use the
-`summary` function to answer this.*
+*How many more trips were taken in 2017 than in 2017? (Try using 
+the  `summary` function.)*
 
 Out first plot: a map of the Divvy stations
 ===========================================
@@ -620,8 +625,9 @@ In only a few lines of code, we can create a plot of the Divvy
 stations by geographic location (latitude & longitude):
 
 ```{r plot-station-map-1}
-p <- ggplot(data = divvy$stations,
-       mapping = aes(x = longitude,y = latitude)) +
+p <- ggplot(data    = stations,
+            mapping = aes(x = longitude,
+			              y = latitude)) +
   geom_point()
 print(p)
 ```
@@ -634,17 +640,69 @@ plotting parameter defaults.
 
 ```{r plot-station-map-2}
 library(cowplot)
-p <- ggplot(data = divvy$stations,
-       mapping = aes(x = longitude,y = latitude)) +
-  geom_point(shape = 21,fill = "darkblue",color = "white",size = 2)
+p <- ggplot(data    = stations,
+            mapping = aes(x = longitude,
+			              y = latitude)) +
+  geom_point(shape = 21,fill = "darkblue",
+             color = "white",size = 2)
 print(p)
 ```
 
 There are many, many functions in the ggplot2 package for adjusting
-plotting settings. The website (ggplot2.tidyverbse.org) is a great
-reference.
+plotting settings.
+
++ **ggplot2.tidyverbse.org** is a great reference.
 
 *What geographic features of Chicago are recognizable from this plot?*
+
+Scale stations by the number of departures
+==========================================
+
+Next let's add an additional piece of information to this
+visualization:
+
++ Amount of activity at each station (which should roughly correspond
+to population density, but maybe not always).
+
+To do this, we need to add a new column to the "stations" data frame
+containing the total number departures, which is calculated from the
+"trips" data frame:
+
+```{r count-trips-per-station}
+counts <- table(trips$from_station_id)
+head(counts)
+```
+
+Check that counts are in the same order as stations:
+
+```{r check-station-trip-counts}
+all(names(counts) == stations$id)
+```
+
+Scale stations by the number of departures
+==========================================
+
+Add these trip counts to the "stations" data frame:
+
+```{r add-counts-to-stations}
+counts   <- as.vector(counts)
+stations <- cbind(stations,
+                  data.frame(departures = counts))
+head(stations)
+```
+
+Let's use this column in our new plot:
+
+```{r plot-station-map-3}
+p <- ggplot(data = stations,
+  mapping = aes(x = longitude,y = latitude,
+				size = sqrt(departures))) +
+  geom_point(shape = 21,fill = "darkblue",
+             color = "white")
+print(p)
+```
+
+*Why do we set the size of each point to `sqrt(departures)`?*
 
 Where to go from here
 =====================
