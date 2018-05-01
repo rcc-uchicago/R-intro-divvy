@@ -24,3 +24,7 @@ places.
 + Add a recap to each section.
 
 + Add slides PDF to repo.
+
+* Run "make test" one last time.
+
+* Create handout.

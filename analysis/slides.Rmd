@@ -28,10 +28,20 @@ Aims of workshop
 4. Learn through "live coding"---this includes learning from our
 mistakes!
 
-Our project: analyze 2016 & 2017 Divvy data
+Our project: Analyze 2016 & 2017 Divvy data
 ===========================================
 
-*Describe the Divvy data analysis project and aims.*
++ Our goal is to study use of bike sharing services in Chicago.
+
++ We will use data made available from Divvy:
+
+    - www.divvybikes.com/system-data
+
++ Much of the effort will be spent importing the data, inspecting the
+  data, and preparing the data for analysis.
+
++ Once we have carefully prepared the data, we will be able to easily
+  create evocative visualizations.
 
 It's your choice
 ================
@@ -51,7 +61,7 @@ Your may choose to...
 **Note:** If you use the RCC cluster I'm assuming you know how to set
 up an interactive computing session with appropriate amount of time
 and memory, load R or RStudio, and display graphics (e.g., using
-ThinLinc). *I can help with this.*
+ThinLinc). I can help troubleshoot.
 
 Software we will use today
 ==========================
