@@ -824,13 +824,14 @@ files are easy to attach to emails or webpages and they can be viewed
 nearly universally:
 
 ```{r save-station-map-png}
-ggsave("../output/station_map.png",plot = p,dpi = 150)
+ggsave("../output/station_map.png",
+       plot = p,dpi = 150)
 ```
 
 For print or publication, you will want to save in a vector graphics
 format:
 
-```{r save-station-map-png}
+```{r save-station-map-pdf}
 ggsave("../output/station_map.pdf",plot = p)
 ```
 
