@@ -16,7 +16,7 @@
 
 * Add outline slides.
 
-* Give information about how much memory is needed.
+* Give information about memory requirements.
 
 + Add steps to install packages.
 
