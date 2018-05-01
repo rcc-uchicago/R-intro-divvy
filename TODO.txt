@@ -13,6 +13,8 @@ places.
 
 + Add slides PDF to repo.
 
++ Add step to save plot as a PDF.
+
 * Run "make test" one last time.
 
 * Create handout.

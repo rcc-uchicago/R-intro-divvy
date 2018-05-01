@@ -125,7 +125,7 @@ What's in the workshop packet
 ```
 R-intro-divvy-2
   /analysis # Scripts implementing data analyses.
-  /code     # Additional R code used in analyses.
+  /code     # Additional code used in analyses.
   /data     # Original ("raw") data.
   /docs     # Additional workshop materials.
   /output   # Processed data & results files.
@@ -134,7 +134,7 @@ R-intro-divvy-2
 Open the slides on your computer
 ================================
 
-The PDF is useful for copying & pasting code from the slides.
++ This PDF is useful for copying & pasting code from the slides.
 
 + The PDF is in the [**"docs"**](../docs) folder of the workshop packet.
 
@@ -161,9 +161,9 @@ Download the Divvy data
     Divvy_Trips_2017_Q3Q4.zip
     ```
 
-+ Unzip all of these files.
++ Decompress ("unzip") all of these files.
 
-+ After unziping these files, you should have **15** CSV files.
++ After unzipping, you should have **15** CSV files.
 
 [github-repo]: https://github.com/rcc-uchicago/R-intro-divvy-2
 [divvy-data]: https://www.divvybikes.com/system-data
@@ -205,13 +205,13 @@ Check your R environment
 ========================
 
 The R environment is where all variables and functions are stored and
-accessed. Your R environment should be empty:
+accessed. You should start with an empty environment. Check this:
 
 ```{r check-env}
 ls()
 ```
 
-If you do see names of objects listed, it means your environment is
+If you see names of objects listed, it means your environment is
 not empty, and you should restart R with a clean environment. (In
 RStudio, go to **Session > Restart R**.)
 
@@ -220,9 +220,9 @@ Create a file to keep track of your analysis code
 
 + In RStudio, select **File > R Script**.
 
-+ Alternatively, use your favourite editor (emacs, vim, Atom, *etc*).
++ Alternatively, use your favourite editor (nano, emacs, vim, Atom, *etc*).
 
-+ Add some comments to the tile to remind yourself what this file is
++ Add some comments to the title to remind yourself what this file is
   for, e.g.,
 
     ```
@@ -231,9 +231,9 @@ Create a file to keep track of your analysis code
     ```
 
 + Save the file in the [**"analysis"**](../analysis) folder.
-  Name the file whatever you'd like (e.g., `myanalysis.R`).
+  Name the file whatever you'd like (e.g., `divvyanalysis.R`).
 
-+ At this point, we are ready to start our analysis of the Divvy data.
++ Now we are ready to start our analysis of the Divvy data.
 
 Outline of workshop
 ===================
