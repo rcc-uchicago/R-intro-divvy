@@ -704,8 +704,49 @@ print(p)
 
 *Why do we set the size of each point to `sqrt(departures)`?*
 
-Where to go from here
-=====================
+Compare biking activity in 2016 & 2017
+======================================
 
-*Add info here.*
+Get the counts separately for 2016 and 2017. Again, we will use the
+`subset` function for this:
+
+```{r count-trips-by-year}
+x <- table(subset(trips,
+       start.year == 2016)$from_station_id)
+y <- table(subset(trips,
+       start.year == 2017)$from_station_id)
+stations <-
+  cbind(stations,
+        data.frame(dep.2016 = as.vector(x),
+		           dep.2017 = as.vector(y)))
+```
+
+Scatterplot of trips by station (2016 vs. 2017)
+===============================================
+
+```{r plot-2016-vs-2017-trips}
+p <- ggplot(data = stations,
+            mapping = aes(x = dep.2016,
+			              y = dep.2017)) +
+  geom_point(shape = 4,size = 1.5)
+print(p)		
+```
+
+It is difficult to tell which stations had more trips in 2017—we need
+to compare against the x = y line.
+
+```
+p <- p + geom_abline(slope = 1,color = "skyblue",
+                     linetype = "dashed")
+print(p)
+```
+
+*One station stands out because it has had a much larger increase in
+trips than other stations. Where is this station located?*
+
+Parting thoughts
+================
+
+*Add thoughts here.*
+
 
