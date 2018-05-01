@@ -814,45 +814,61 @@ print(p)
 
 *Why do we set "size" to `sqrt(departures)`?*
 
-Compare biking activity in 2016 & 2017
-======================================
+Compare 2017 biking activity against 2016
+=========================================
 
-Get the counts separately for 2016 and 2017. Again, we will use the
-`subset` function for this:
+Earlier, we observed an increase in overall trips for 2017. Which
+stations experienced the greatest increase? 
+
++ To examine this, we need to count trips separately for 2016
+  and 2017.
+
++ Then we add these counts to the "stations" data frame.
+
+We will use the `subset`, `table` and `cbind` functions for this:
 
 ```{r count-trips-by-year}
-x <- table(subset(trips,
-       start.year == 2016)$from_station_id)
-y <- table(subset(trips,
-       start.year == 2017)$from_station_id)
+d <- subset(trips,start.year == 2016)
+x <- table(d$from_station_id)
+d <- subset(trips,start.year == 2017)
+y <- table(d$from_station_id)
 stations <-
   cbind(stations,
         data.frame(dep.2016 = as.vector(x),
 		           dep.2017 = as.vector(y)))
+head(stations)
 ```
 
 Scatterplot of trips by station (2016 vs. 2017)
 ===============================================
 
-```{r plot-2016-vs-2017-trips}
+Again, now that we have prepared a data frame with the data in the
+proper format, plotting is relatively straightforward:
+
+```{r plot-2016-vs-2017-trips-1}
 p <- ggplot(data = stations,
             mapping = aes(x = dep.2016,
 			              y = dep.2017)) +
-  geom_point(shape = 4,size = 1.5)
+  geom_point(shape = 20,size = 3)
 print(p)		
 ```
 
 It is difficult to tell which stations had more trips in 2017—we need
-to compare against the x = y line.
+to compare against the x = y line. We can easily adjust the plot:
 
-```
+```{r plot-2016-vs-2017-trips-2}
 p <- p + geom_abline(slope = 1,color = "skyblue",
-                     linetype = "dashed")
+           linetype = "dashed") +
+       xlim(c(0,6e4)) +
+	   ylim(c(0,6e4)) 
 print(p)
 ```
 
 *One station stands out because it has had a much larger increase in
-trips than other stations. Where is this station located?*
+trips than other stations. Where is this station?*
+
+ggplot: Take home points
+========================
 
 Parting thoughts
 ================
