@@ -181,7 +181,7 @@ Set up your R environment
 
 + To change your working directory:
 
-    + In R, use `getwd()` function.
+    + In R, use `setwd()` function.
 
     + In RStudio, select **Session > Set Working Directory > Choose
       Directory...`**
