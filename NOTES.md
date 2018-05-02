@@ -1,6 +1,29 @@
 # Instructor notes
 
-**Instructor in-class setup:**
+## Post-workshop notes
+
++ I should not use the "data.table" package because many people found
+  it difficult to install.
+
++ There were many issues with downloading the data and moving the
+  files to the right location. Maybe I need to simplify the steps for
+  downloading the data (e.g., by providing a single ZIP file
+  containing all the data files).
+
++ Make the part about creating a new text file (e.g., divvyanalysis.R)
+  optional, but recommended.
+
++ It is helpful to actually have RStudio running to demonstrate some
+  of the steps. Then just hide it when it is not being used.
+
++ `options(width = 100)` does not seem to work in RStudio.
+
++ Toward beginning, add slide on selecting rows and columns of a data
+  frame. This is a point I did not make clear.
+
++ It is spelled "Millenium Park".
+
+## Instructor in-class setup
 
 + Arrange chairs and tables.
 + Clean up Desktop and quit applications (particularly Slack).

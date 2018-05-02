@@ -291,12 +291,8 @@ nrow(stations)
 ncol(stations)
 head(stations)
 tail(stations)
-stations[1:6,]
 summary(stations)
 ```
-
-**Tip:** To better view data frames with many columns, try
-`options(width=100)`.
 
 *What do we learn about the station data from running these
 commands? Does this reveal any issues with the data?*
@@ -509,7 +505,7 @@ In R, "missing data" should always be assigned the special value `NA`
 
 ```{r convert-trip-data-2}
 i <- which(trips$gender == "")
-trips$gender[i] <- NA
+trips[i,"gender"] <- NA
 trips <- transform(trips,
                    gender = factor(gender))
 summary(trips$gender)
@@ -603,8 +599,8 @@ sort(counts,decreasing = TRUE)
 ```
 
 What is the destination for most riders? How many times did people
-bike from University & 57th all the way to Millenium Park in Fall
-2017?
+bike from University & 57th all the way to Millennium Park in Fall
+2017? 
 
 Save your code & session state
 ==============================
