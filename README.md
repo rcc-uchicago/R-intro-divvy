@@ -20,13 +20,13 @@ to analyze data in R or [RStudio][rstudio], either on the
 [RCC cluster][RCC], or on their own computer. Specific skills
 participants will learn include:
 
-1. importing data from CSV files,
+1. Importing data from CSV files;
 
-2. summarizing and processing data in data frames,
+2. Summarizing and processing data in data frames;
 
-3. installing and using R packages, and
+3. Installing and using R packages; and
 
-4. plotting data using ggplot2.
+4. Plotting data using ggplot2.
 
 This is an *introductory* level workshop, for users with little or no
 experience in the topic.

@@ -16,24 +16,23 @@ knitr::opts_chunk$set(comment = "#",collapse = TRUE,fig.align = "center",
 Aims of workshop
 ================
 
-1. Work through the steps of a basic data analysis in R, starting with
-   the "raw" source data and ending with evocative visualizations of the data.
+1. Work through a basic data analysis in R.
 
 2. Understand how to import data from a CSV file into an R data frame.
 
-3. Use standard tools to summarize and manipulate data frames.
+3. Use standard tools to summarize & manipulate data frames.
 
-4. Learn how to install and use R packages.
+4. Learn how to install & use R packages.
 
 5. Use ggplot2 to create plots from the processed data.
 
 6. Learn through "live coding"---this includes learning from our
-mistakes!
+   mistakes!
 
-Our project: Analyze 2016 & 2017 Divvy data
-===========================================
+Our goal: Analyze Divvy data from 2016 & 2017
+=============================================
 
-+ Our goal is to study use of bike sharing services in Chicago.
++ Investigate bike sharing trends in Chicago.
 
 + We will use data made available from Divvy:
 
@@ -42,8 +41,8 @@ Our project: Analyze 2016 & 2017 Divvy data
 + Much of the effort will be spent importing the data, inspecting the
   data, and preparing the data for analysis.
 
-+ Once we have carefully prepared the data, we will be able to easily
-  create evocative visualizations.
++ Once we have carefully prepared the data, creating visualizations is
+  (relatively) easy.
 
 It's your choice
 ================
@@ -63,14 +62,14 @@ Your may choose to...
 **Note:** If you use the RCC cluster I'm assuming you know how to set
 up an interactive computing session with appropriate amount of time
 and memory, load R or RStudio, and display graphics (e.g., using
-ThinLinc). I can help troubleshoot.
+ThinLinc).
 
 Software we will use today
 ==========================
 
 1. **R**
 
-2. R packages **data.table**, **ggplot2** and **cowplot**.
+2. R packages **ggplot2** & **cowplot**.
 
 3. **RStudio** (optional).
 
@@ -82,16 +81,15 @@ Outline of workshop
 
 1. Initial setup.
 
-2. Load and prepare the Divvy station data.
+2. Load & prepare the Divvy station data.
 
-3. Load and prepare the Divvy trip data.
+3. Load & prepare the Divvy trip data.
 
-4. A closer look at U of C Divvy usage.
+4. Take a close look at U of C Divvy usage.
 
 5. Create a map of the Divvy stations.
 
-6. Create a scatterplot comparing bike sharing activity in 2016
-   and 2017.
+6. Create plots comparing bike sharing in 2016 & 2017.
 
 Initial setup
 =============
@@ -107,8 +105,7 @@ Initial setup
 Download or "clone" git repository
 ==================================
 
-Download the workshop packet to your computer (or the RCC
-cluster). 
+Download the workshop packet to your computer.
 
 + Go to: [**github.com/rcc-uchicago/R-intro-divvy-2**][github-repo]
 
@@ -123,6 +120,9 @@ git clone https://github.com/rcc-uchicago/
 
 (Note the URL in the git command should not contain any spaces.)
 
++ *Note:* If you are using the RCC cluster, also download workshop
+  packet on the cluster.
+
 What's in the workshop packet
 =============================
 
@@ -135,6 +135,9 @@ R-intro-divvy-2
   /output   # Processed data & results files.
 ```
 
++ This setup mimics how I typically organize the code, data and
+  results for my projects.
+
 Open the slides on your computer
 ================================
 
@@ -144,6 +147,81 @@ Open the slides on your computer
 
 + You can also view the PDF by clicking the **"docs"** item in the file
   listing on the GitHub webpage.
+
+Set up your R environment
+=========================
+
++ Launch R or RStudio.
+
++ *We will run all the code from the **"analysis"** folder*.
+
++ To change your working directory:
+
+    + In R, use `setwd()` function.
+
+    + In RStudio, select **Session > Set Working Directory > Choose
+      Directory...`**
+
+Before continuing, check that you have the right working directory:
+
+```{r check-wd}
+getwd()  # Should end with "analysis".
+```
+
+Run `sessionInfo()`
+===================
+
+Check the version of R that you are using:
+
+```{r check-version}
+sessionInfo()
+```
+
+If you are using an older version of R (version 3.3 or earlier), I
+strongly recommend upgrading to the latest version. *Some of the
+examples may not work in older versions of R.*
+
+Check your R environment
+========================
+
+The R environment is where all variables and functions are stored and
+accessed. You should start with an empty environment. Check this:
+
+```{r check-env}
+ls()
+```
+
+If you see names of objects listed, it means your environment is
+not empty, and you should restart R with a clean environment.
+
++ Do `rm(list = ls())`.
+
++ Or, in RStudio, go to **Session > Restart R**.
+
+Create a file to keep track of your analysis code
+=================================================
+
++ In RStudio, select **File > R Script**.
+
++ Alternatively, use your favourite editor (nano, emacs, vim, Atom, *etc*).
+
++ Add some comments to the title to remind yourself what this file is
+  for, e.g.,
+
+    ```
+    # R code I used to analyze Divvy data
+	# during RCC workshop on July 17, 2018.
+    ```
+
++ Save the file in the [**"analysis"**](../analysis) folder.
+  Name the file whatever you'd like (e.g., `divvyanalysis.R`).
+
++ *We will save all our R code in this file.*
+
+The Console is the "brains" of RStudio
+======================================
+
+![](rstudio.png)
 
 Download the Divvy data
 =======================
@@ -171,73 +249,6 @@ Download the Divvy data
 
 [github-repo]: https://github.com/rcc-uchicago/R-intro-divvy-2
 [divvy-data]: https://www.divvybikes.com/system-data
-
-Set up your R environment
-=========================
-
-+ Launch R or RStudio.
-
-+ *We will run all the code from the **"analysis"** folder*.
-
-+ To change your working directory:
-
-    + In R, use `setwd()` function.
-
-    + In RStudio, select **Session > Set Working Directory > Choose
-      Directory...`**
-
-Before continuing, check your working directory:
-
-```{r check-wd}
-getwd()  # Should be .../analysis
-```
-
-Run `sessionInfo()`
-===================
-
-Check the version of R that you are using:
-
-```{r check-version}
-sessionInfo()
-```
-
-If you are using an older version of R (version 3.2 or earlier), you
-should upgrade to the latest version. *Some of the examples may not
-work in older versions of R.*
-
-Check your R environment
-========================
-
-The R environment is where all variables and functions are stored and
-accessed. You should start with an empty environment. Check this:
-
-```{r check-env}
-ls()
-```
-
-If you see names of objects listed, it means your environment is
-not empty, and you should restart R with a clean environment. (In
-RStudio, go to **Session > Restart R**.)
-
-Create a file to keep track of your analysis code
-=================================================
-
-+ In RStudio, select **File > R Script**.
-
-+ Alternatively, use your favourite editor (nano, emacs, vim, Atom, *etc*).
-
-+ Add some comments to the title to remind yourself what this file is
-  for, e.g.,
-
-    ```
-    # R code I used to analyze Divvy data
-	# during RCC workshop on May 1, 2018.
-    ```
-
-+ Save the file in the [**"analysis"**](../analysis) folder.
-  Name the file whatever you'd like (e.g., `divvyanalysis.R`).
-
-+ Now we are ready to start our analysis of the Divvy data.
 
 Outline of workshop
 ===================
@@ -599,7 +610,7 @@ sort(counts,decreasing = TRUE)
 ```
 
 What is the destination for most riders? How many times did people
-bike from University & 57th all the way to Millennium Park in Fall
+bike from University & 57th all the way to Millenium Park in Fall
 2017? 
 
 Save your code & session state

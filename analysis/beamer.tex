@@ -2,7 +2,7 @@
 \usefonttheme{structurebold}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
-\setbeamercolor{caption name}{fg=normal text.fg}
+\setbeamercolor{caption name}{fg=white}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
@@ -40,6 +40,7 @@ $endif$
 $if(tables)$
 \usepackage{longtable,booktabs}
 \usepackage{caption}
+
 % These lines are needed to make table captions work with longtable:
 \makeatletter
 \def\fnum@table{\tablename~\thetable}
@@ -213,6 +214,7 @@ $endfor$
 
 % Begin the actual document.
 \begin{document}
+
 $if(title)$
 \frame{\titlepage}
 $endif$
