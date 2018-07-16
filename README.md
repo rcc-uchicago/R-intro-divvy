@@ -5,7 +5,7 @@ Materials for the RCC workshop, "Introduction to R for data analysis".
 **Date:** Tuesday, July 17, 2018<br>
 **Time:** 1:00 pm to 4:00 pm<br>
 **Location:** Stevanovich Center, room 112
-([OpenStreetMap](https://www.openstreetmap.org/way/143812442#map=19/41.79060/-87.59766)<br>
+([OpenStreetMap][openstreetmap])<br>
 **Instructor:** Peter Carbonetto
 
 ## Introduction
@@ -52,6 +52,7 @@ These materials were developed by
 [Matthew Stephens](http://stephenslab.uchicago.edu) for his support
 and guidance.
 
+[openstreetmap]: https://www.openstreetmap.org/way/143812442#map=19/41.79060/-87.59766
 [R]: http://cran.r-project.org
 [rstudio]: http://rstudio.com
 [RCC]: http://rcc.uchicago.edu
