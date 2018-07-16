@@ -262,16 +262,15 @@ Outline of workshop
 
 1. Initial setup.
 
-2. **Load and prepare the Divvy station data.**
+2. **Load & prepare the Divvy station data.**
 
-3. Load and prepare the Divvy trip data.
+3. Load & prepare the Divvy trip data.
 
-4. A closer look at U of C Divvy usage.
+4. Take a close look at U of C Divvy usage.
 
 5. Create a map of the Divvy stations.
 
-6. Create a scatterplot comparing bike sharing activity in 2016
-   and 2017.
+6. Create plots comparing bike sharing in 2016 & 2017.
 
 Import the station data into R
 ==============================
@@ -284,10 +283,15 @@ stations <-
            stringsAsFactors = FALSE)
 ```
 
-This creates a new "data frame" object in your environment:
+This will define a new object, "stations", in your environment:
 
 ```{r inspect-station-data-1}
 ls()
+```
+
+It is a "data frame" object:
+
+```{r inspect-station-data-2}
 class(stations)
 ```
 
@@ -302,14 +306,21 @@ help(data.frame)
 Inspect the station data
 ========================
 
-Run these commands to inspect the station data:
+Run these commands to start inspecting the station data:
 
-```{r inspect-station-data}
+```{r inspect-station-data-3}
 nrow(stations)
 ncol(stations)
 head(stations)
 tail(stations)
 summary(stations)
+```
+
+Inspect the data in more detail:
+
+```{r inspect-station-data-4}
+sapply(stations,class)
+print(object.size(stations),units = "Kb")
 ```
 
 *What do we learn about the station data from running these
@@ -318,43 +329,54 @@ commands? Does this reveal any issues with the data?*
 Take a closer look at the "dpcapacity" column
 =============================================
 
-Run these commands to take a closer look at the "dpcapacity" column:
+Creating a new object containing only the "dpcapacity" data:
 
 ```{r inspect-dpcapacity-data-1}
 x <- stations$dpcapacity
+```
+
+Run these commands to take a closer look at the "dpcapacity" column:
+
+```{r inspect-dpcapacity-data-2}
 class(x)
+length(x)
 summary(x)
 table(x)
 ```
 
-*What additional insight did we gain from running these commands?*
+*Did we gain any additional insight from running these commands?*
 
-Take an even closer look at dpcapacity data
-===========================================
+Take an even closer look at "dpcapacity"
+========================================
 
 It is interesting that a few of the Divvy bike stations are much
 larger than the others, whereas others have no docks. Where are these
 stations?
 
-```{r inspect-dpcapacity-data-2}
+```{r inspect-dpcapacity-data-3}
 subset(stations,dpcapacity == 0)
 subset(stations,dpcapacity >= 40)
 ```
 
-Alternatively, we can sort the table rows and inspect the top and
+Alternatively, we can sort the table rows, then inspect the top and
 bottom rows:
 
-```{r inspect-dpcapcity-data-3}
+```{r inspect-dpcapcity-data-4}
 rows <- order(stations$dpcapacity,decreasing=TRUE)
 stations <- stations[rows,]
 head(stations)
 tail(stations)
 ```
 
++ *How were the station data ordered before?*
+
++ *What was risky about line 2?*
+
 Take a closer look at the "city" column
 =======================================
 
-Above we inspected *numeric* data. Here we examine non-numeric data.
+Above we inspected *numeric* data. Next's, let's look at an example of
+non-numeric data.
 
 ```{r inspect-city-data-1}
 x <- stations$city
@@ -362,8 +384,8 @@ class(x)
 summary(x)
 ```
 
-Unfortunately, the summary is not very useful here. The key is to
-convert the "city" column to a "factor" (a categorical variable):
+The summary is not very useful here! The key is to convert to a
+"factor" (factor = categorical variable):
 
 ```{r inspect-city-data-2}
 x <- factor(stations$city)
@@ -371,13 +393,23 @@ class(x)
 summary(x)
 ```
 
-*Did you discover an issue with the data from running these commands?
-How could we fix this issue?*
+*Did you discover an issue with the data from running these commands?*
+
+Brief aside: what is a "factor"?
+================================
+
+Factors are very useful, so let's take a deeper look.
+
+```{r inspect-factor}
+attributes(x)
+unclass(x)
+```
 
 Improving the "city" column
 ===========================
 
-Let's fix this problem. First, select the offending rows of the table:
+Let's fix the problem we found earlier. First, *select* the offending
+rows of the table:
 
 ```{r revise-city-data-1}
 rows <- which(stations$city == "Chicago ")
@@ -394,10 +426,61 @@ We also observed that the "city" column is more useful if it is a
 factor, so let's convert it to a factor:
 
 ```{r revise-city-data-3}
+summary(stations)
 stations <- transform(stations,
                       city = factor(city))
 summary(stations)
 ```
+
+More on selecting rows & columns
+================================
+
+Select first 4 rows of "name" column:
+
+```{r select-rows}
+stations$name[1:4]
+stations[1:4,2]
+stations[1:4,"name"]
+```
+
++ *Is one approach better than the other?*
+
+Select multiple columns:
+
+```{r select-columns}
+stations[1:4,c(2,3,6)]
+stations[1:4,c("name","city","dpcapacity")]
+```
+
+*What about selecting rows by name?*
+
+```{r station-names}
+colnames(stations)
+rownames(stations)
+```
+
+Save your code & session state
+==============================
+
+It is important to periodically save:
+
+1. your code,
+
+2. the state of your R environment.
+
+To save your environment, do something like this:
+
+```{r save-session-1, eval=FALSE}
+save.image("../output/divvyanalysis.RData")
+```
+
+Later, to restore your environment in a new session, run
+`load("../output/divvyanalysis.RData")`.
+
+Recap of first part
+===================
+
+*Add bullet points here.*
 
 Outline of workshop
 ===================
@@ -619,21 +702,6 @@ sort(counts,decreasing = TRUE)
 What is the destination for most riders? How many times did people
 bike from University & 57th all the way to Millenium Park in Fall
 2017? 
-
-Save your code & session state
-==============================
-
-It is important to periodically save:
-
-1. your code,
-
-2. the state of your R environment.
-
-To save your environment, do something like this:
-
-```{r save-session-1, eval=FALSE}
-save.image("../output/divvyanalysis.RData")
-```
 
 Preparing data is tedious
 =========================
