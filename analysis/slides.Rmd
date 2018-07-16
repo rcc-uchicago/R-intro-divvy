@@ -218,10 +218,10 @@ Create a file to keep track of your analysis code
 
 + *We will save all our R code in this file.*
 
-The Console is the "brains" of RStudio
+The console is the "brains" of RStudio
 ======================================
 
-![](rstudio.png)
+![](rstudio.jpg)
 
 Download the Divvy data
 =======================
@@ -245,10 +245,17 @@ Download the Divvy data
 
 + Decompress ("unzip") all of these files.
 
-+ After unzipping, you should have **15** CSV files.
+Check that you have all the files 
+=================================
 
-[github-repo]: https://github.com/rcc-uchicago/R-intro-divvy-2
-[divvy-data]: https://www.divvybikes.com/system-data
+After unzipping, you should have **15** CSV files.
+
+```{r }
+Sys.glob("../data/*.csv")
+```
+
+*If you don't see all 15 CSV files, you have not successfully
+downloaded and/or unzipped all the files in the "data" directory.*
 
 Outline of workshop
 ===================
@@ -948,3 +955,5 @@ Parting thoughts
 6. See the **workflowr** package for simplifying organizing & sharing
    of data analyses; e.g., **stephenslab.github.io/wflow-divvy**.
 
+[github-repo]: https://github.com/rcc-uchicago/R-intro-divvy-2
+[divvy-data]: https://www.divvybikes.com/system-data

@@ -1,1 +1,5 @@
 * Email instructions to all people who registered.
+
+* Run "make test" to verify that all the code works.
+
+* Add slides.pdf to the repo.
