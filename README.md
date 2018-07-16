@@ -18,9 +18,15 @@ the basic elements of R through a hands-on analysis of the
 is required. The aim is to provide participants with the basic tools
 to analyze data in R or [RStudio][rstudio], either on the
 [RCC cluster][RCC], or on their own computer. Specific skills
-participants will learn include importing data from CSV files,
-summarizing and processing data in data frames, installing and using R
-packages, and plotting data using ggplot2.
+participants will learn include:
+
+1. importing data from CSV files,
+
+2. summarizing and processing data in data frames,
+
+3. installing and using R packages, and
+
+4. plotting data using ggplot2.
 
 This is an *introductory* level workshop, for users with little or no
 experience in the topic.
