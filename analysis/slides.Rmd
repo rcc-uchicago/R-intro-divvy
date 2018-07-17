@@ -911,7 +911,7 @@ p <- ggplot(data = stations,
   mapping = aes(x    = longitude,
                 y    = latitude,
 				size = sqrt(departures)))
-p <- p + geom_point(shape = 21,fill = "red",
+p <- p + geom_point(shape = 21,fill = "black",
                     color = "white")
 p <- p + theme_cowplot(font_size = 11)
 print(p)
