@@ -250,7 +250,7 @@ Check that you have all the files
 
 After unzipping, you should have **15** CSV files.
 
-```{r }
+```{r list-files}
 Sys.glob("../data/*.csv")
 ```
 
@@ -468,7 +468,7 @@ It is important to periodically save:
 
 To save your environment, do something like this:
 
-```{r save-session-1, eval=FALSE}
+```{r save-session-1}
 save.image("../output/divvyanalysis.RData")
 ```
 
@@ -777,9 +777,10 @@ Outline of workshop
 Import the 2016 & 2017 Divvy data
 =================================
 
-I wrote a function "read.divvy.data" that will read all the CSV files,
-then merge them into two data frames: one for the stations, and one
-for the trips.
+I wrote a function `read.divvy.data` to automate the reading and
+processing of the Divvy data: it reads all the CSV files, then merge
+them into two data frames: one for the stations, and one for the
+trips.
 
 ```{r load-functions}
 source("../code/functions.R")
@@ -796,76 +797,81 @@ stnfile <- "../data/Divvy_Stations_2017_Q3Q4.csv"
 Import the 2016 & 2017 Divvy data
 =================================
 
-This may take a few minutes to run.
+This may take a minute to run, or longer if you have not installed the
+readr package.
 
 ```{r import-divvy-data-2}
-library("data.table")
 divvy <- read.divvy.data(stnfile,tripfiles)
 ```
 
 The output is a "list" containing two data frames:
 
-```{r}
+```{r inspect-divvy-data}
+names(divvy)
 stations <- divvy$stations
 trips    <- divvy$trips
 rm(divvy)
 head(stations)
 head(trips)
+nrow(trips)
 ```
 
-*How many more trips were taken in 2017 than in 2016?* Try using 
-the `summary` function.
++ *Were more trips taken in 2016 or 2017?*
 
-Out first (gg) plot: a map of the Divvy stations
-================================================
++ *Which columns were converted to factors?*
+
+Out first ggplot: a map of the Divvy stations
+=============================================
 
 We will use the
 [**ggplot2** package](https://github.com/tidyverse/ggplot2). It is a
-powerful (although not intuitive) set of plotting functions that
-extend the base plotting fuctions in R.
+powerful (although not initially intuitive) set of plotting functions
+that extend the base plotting fuctions in R.
 
 ```{r install-ggplot, eval=FALSE}
 install.packages("ggplot2")
 ```
 
-Load the ggplot2 functions into your environment:
-
-```{r load-ggplot}
-library("ggplot2")
-```
-
-The "stations" data frame gives the geographic co-ordinates (latitude
-& longitude) for each station. With ggplot, we can create a station
-map in only a few lines of code:
-
-```{r plot-station-map-1}
-p <- ggplot(data    = stations,
-            mapping = aes(x = longitude,
-			              y = latitude)) +
-  geom_point()
-print(p)
-```
-
-Adjusting the plot
-==================
-
-I recommend the **cowplot** package, which extends **ggplot2**.
+I also recommend the **cowplot** package, an extension to ggplot2
+developed by Claus Wilke at UT Austin.
 
 ```{r install-cowplot, eval=FALSE}
 install.packages("cowplot")
 ```
 
-This code is the same as before, except for a few adjustments to the
-default settings for plotting points (**"geom_point"**):
+Load the ggplot2 and cowplot functions into your environment:
 
-```{r plot-station-map-2}
+```{r load-ggplot}
+library(ggplot2)
 library(cowplot)
+```
+
+Plot station longitude vs. latitude
+===================================
+
+The "stations" data frame gives the geographic co-ordinates (latitude
+& longitude) for each station. With ggplot, we can create a station
+map from the "stations" data frame in only a few lines of code:
+
+```{r plot-station-map-1}
 p <- ggplot(data    = stations,
             mapping = aes(x = longitude,
-			              y = latitude)) +
-  geom_point(shape = 21,fill = "darkblue",
-             color = "white",size = 2)
+			              y = latitude))
 print(p)
+p2 <- p + geom_point()
+print(p2)
+```
+
+Adjusting the plot
+==================
+
+Let's make a few small adjustments to improve the plot:
+
+```{r plot-station-map-2}
+p3 <- p + geom_point(shape = 21,fill = "darkblue",
+                     color = "white",size = 2)
+p3 <- p3 + theme_cowplot()
+print(p3)
 ```
 
 *What geographic features of Chicago are recognizable from this plot?*
@@ -876,8 +882,8 @@ Scale stations by the number of departures
 Next, let's add an additional piece of information to this
 visualization:
 
-+ Number of departures at each station (which should roughly
-correspond to population density, but maybe not always).
++ Number of departures at each station, should should (?) roughly
+correspond to population density.
 
 To do this, we need to add a new column to the "stations" data frame
 containing the total number departures, which is calculated from the
@@ -885,9 +891,7 @@ containing the total number departures, which is calculated from the
 
 ```{r count-trips-per-station}
 counts <- table(trips$from_station_id)
-class(counts)
-length(counts)
-head(counts)
+counts
 ```
 
 The counts should be the same order as stations (*why is this?*):

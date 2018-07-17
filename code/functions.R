@@ -1,55 +1,63 @@
-# This file defines some functions that are used in the analysis of
-# the Divvy data.
-
 # Read Divvy trip and station data from CSV files, and combine these
 # data into two data frames (one data frame for the trip data, and
-# another data frame for the station data). As far as I know, this
-# works only for the 2016 and 2017 Divvy data; data from other years
-# may have slightly different formats.
+# another data frame for the station data).
+#
+# As far as I know, this works only for the 2016 and 2017 Divvy data;
+# data from other years may have slightly different formats.
+#
+# By default, "read_csv" from the readr package is used to load the
+# trip data. If the readr package is not installed, "read.csv" is used
+# instead.
 #
 # Steps are taken to prepare the data for more convenient analysis and
 # visualization; e.g., extracting useful information from the
 # date-and-time character strings, and converting some of the columns
 # into factors. The "from" and "to" station names are removed from the
-# trip data table because they seem to be less consistent across time
-# periods.
+# trip table because they seem to be less consistent across time
+# periods; only the "from" and "to" station ids are retained.
 #
-# Note that only the trip start times are retained; the trip end times
-# are removed.
+# Also note that only the trip start times are retained; the trip end
+# times are removed.
 read.divvy.data <- function (station.file, trip.files) {
 
   # Load the station data.
   cat("Reading station data from ",station.file,".\n",sep="")
-  stations <- fread(station.file,sep = ",",header = TRUE,
-                    stringsAsFactors = FALSE,verbose = FALSE,
-                    showProgress = FALSE)
+  stations <- read.csv(station.file,header = TRUE,
+                       stringsAsFactors = FALSE)
   class(stations) <- "data.frame"
 
-  # Convert the "city" column to a factor.
-  cat("Processing station data.\n")
-  stations <- transform(stations,city = factor(city))
+  # Trim the whitespace from the cities column, then convert the
+  # "city" column to a factor.
+  stations <- transform(stations,city = factor(trimws(city)))
 
   # Strip any columns that are all empty.
   cols     <- sapply(stations,function (x) !all(is.na(x)))
   stations <- stations[cols]
+
+  # Figure out whether to use read.csv or read_csv.
+  if (requireNamespace("readr",quietly = TRUE))
+    use.readr <- TRUE
+  else
+    use.readr <- FALSE
   
-  # Combine trip data into a single table. Some of the column names do
-  # not match up exactly, so we need to
+  # Combine the trip data into a single table. Some of the column
+  # names do not match up exactly, so we need to fix them.
   n     <- length(trip.files)
   trips <- NULL
   for (i in 1:n) {
     cat("Reading trip data from ",trip.files[i],".\n",sep="")
-    x        <- fread(trip.files[i],sep = ",",header = TRUE,
-                      stringsAsFactors = FALSE,verbose = FALSE,
-                      showProgress = FALSE)
-    class(x) <- "data.frame"
+    if (use.readr) {
+      suppressMessages(x <- readr::read_csv(trip.files[i],progress = FALSE))
+      class(x) <- "data.frame"
+    } else
+      x <- read.csv(trip.files[i],header = TRUE,stringsAsFactors = FALSE)
     names(x) <- c("trip_id","start_time","end_time","bikeid","tripduration",
                   "from_station_id","from_station_name","to_station_id",
                   "to_station_name","usertype","gender","birthyear")
     trips <- rbind(trips,x)
   }
 
-  # Remove the stop times, and "from" and "to" station names from the
+  # Remove the stop times, and the "from" and "to" station names from the
   # trip data.
   trips <- trips[-c(3,7,9)]
   
