@@ -26,7 +26,7 @@ Aims of workshop
 
 5. Use ggplot2 to create plots from the processed data.
 
-6. Learn through "live coding"---this includes learning from our
+6. Learn through "live coding"—this includes learning from our
    mistakes!
 
 Our goal: Analyze Divvy data from 2016 & 2017
@@ -85,11 +85,9 @@ Outline of workshop
 
 3. Load & prepare the Divvy trip data.
 
-4. Take a close look at U of C Divvy usage.
+4. Create a map of the Divvy stations.
 
-5. Create a map of the Divvy stations.
-
-6. Create plots comparing bike sharing in 2016 & 2017.
+5. Create plots comparing bike sharing in 2016 & 2017.
 
 Initial setup
 =============
@@ -101,6 +99,8 @@ Initial setup
 + YubiKeys
 
 + Pace, questions (e.g., keyboard shortcuts).
+
++ Help.
 
 Download or "clone" git repository
 ==================================
@@ -266,11 +266,9 @@ Outline of workshop
 
 3. Load & prepare the Divvy trip data.
 
-4. Take a close look at U of C Divvy usage.
+4. Create a map of the Divvy stations.
 
-5. Create a map of the Divvy stations.
-
-6. Create plots comparing bike sharing in 2016 & 2017.
+5. Create plots comparing bike sharing in 2016 & 2017.
 
 Import the station data into R
 ==============================
@@ -477,8 +475,8 @@ save.image("../output/divvyanalysis.RData")
 Later, to restore your environment in a new session, run
 `load("../output/divvyanalysis.RData")`.
 
-Concepts covered so far
-=======================
+Main concepts covered so far
+============================
 
 + The R environment & working directory.
 
@@ -505,11 +503,9 @@ Outline of workshop
 
 3. **Load and prepare the Divvy trip data.**
 
-4. A closer look at U of C Divvy usage.
+4. Create a map of the Divvy stations.
 
-5. Create a map of the Divvy stations.
-
-6. Create a scatterplot comparing bike sharing activity in 2016
+5. Create a scatterplot comparing bike sharing activity in 2016
    and 2017.
 
 Import the Divvy trip data into R
@@ -567,7 +563,7 @@ trips <-
 Import Divvy trip data using `readr` (optional)
 ===============================================
 
-Note that the output from `read_csv` is *not* a data frame---it is a
+Note that the output from `read_csv` is *not* a data frame—it is a
 "tibble".
 
 ```{r check-trip-data-class}
@@ -706,24 +702,11 @@ the rate of departures to arrivals at each station:
 
 ```{r trips-totals-scatterplot}
 plot(tripcounts$from,tripcounts$to,pch = 20,
-  panel.first = abline(a=0,b=1,col="gray"))
+  col = "blue",panel.first = abline(a=0,b=1))
 ```
 
 *Exercise:* Use `subset` to find the one station that has many more
 departures than arrivals.
-
-Concepts covered in second part
-===============================
-
-*Add bullet points here.*
-
-A powerful idea
-===============
-
-+ In R, a spreadsheet ("data frame") is an object that can be inspected,
-  manipulated and summarized with code.
-
-+ Therefore, we can write a script to *automate* our data analysis.
 
 A note about dates & times
 ==========================
@@ -735,54 +718,16 @@ dates & times.
 
 + See `help(strptime)` and the **lubridate** package.
 
-1. Initial setup.
+Main concepts covered in second part
+====================================
 
-2. Load & prepare the Divvy station data.
++ Install & use a package.
 
-3. Load & prepare the Divvy trip data.
++ Handle missing data (NA's).
 
-4. **Take a close look at U of C Divvy usage.**
++ Create a data frame.
 
-5. Create a map of the Divvy stations.
-
-6. Create plots comparing bike sharing in 2016 & 2017.
-
-A closer look at bike trips from U of C
-=======================================
-
-We have put a lot of effort into preparing the Divvy data.  Let's
-examine the trip data departing from the Divvy station at 57th &
-University. Here we create a new data frame, `uctrips`:
-
-```{r get-uc-trips}
-ucstation <- "University Ave & 57th St"
-uctrips <-
-  subset(trips,from_station_name == ucstation)
-nrow(uctrips)
-```
-
-How do the ages of the riders at U of C compare to citywide riders?
-
-```{r inspect-uc-trips-1}
-summary(uctrips$birthyear)
-summary(trips$birthyear)
-```
-
-A closer look at bike trips from U of C
-=======================================
-
-What are t he final destinations of trips starting at 57th &
-University?
-
-```{r inspect-uc-trips-2}
-counts <- table(uctrips$to_station_name)
-counts <- counts[counts > 0]
-sort(counts,decreasing = TRUE)
-```
-
-What is the destination for most riders? How many times did people
-bike from University & 57th all the way to Millenium Park in Fall
-2017? 
++ Create a plot from a data frame.
 
 Preparing data is tedious
 =========================
@@ -821,16 +766,13 @@ Outline of workshop
 
 1. Initial setup.
 
-2. Load and prepare the Divvy station data.
+2. Load & prepare the Divvy station data.
 
-3. Load and prepare the Divvy trip data.
+3. Load & prepare the Divvy trip data.
 
-4. A closer look at U of C Divvy usage.
+4. **Create a map of the Divvy stations.**
 
-5. **Create a map of the Divvy stations.**
-
-6. Create a scatterplot comparing bike sharing activity in 2016
-   and 2017.
+5. Create plots comparing bike sharing in 2016 & 2017.
 
 Import the 2016 & 2017 Divvy data
 =================================
@@ -1106,3 +1048,12 @@ Parting thoughts
 
 [github-repo]: https://github.com/rcc-uchicago/R-intro-divvy-2
 [divvy-data]: https://www.divvybikes.com/system-data
+
+A powerful idea
+===============
+
++ In R, a spreadsheet ("data frame") is an object that can be inspected,
+  manipulated and summarized with code.
+
++ Therefore, we can write a script to *automate* our data analysis.
+
