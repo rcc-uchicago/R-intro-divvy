@@ -216,7 +216,7 @@ Create a file to keep track of your analysis code
 + Save the file in the [**"analysis"**](../analysis) folder.
   Name the file whatever you'd like (e.g., `divvyanalysis.R`).
 
-+ *We will save all our R code in this file.*
++ It is Best Practice to save your R code in this file.
 
 The console is the "brains" of RStudio
 ======================================
@@ -432,8 +432,8 @@ stations <- transform(stations,
 summary(stations)
 ```
 
-More on selecting rows & columns
-================================
+Many ways to select rows & columns
+==================================
 
 Select first 4 rows of "name" column:
 
@@ -443,7 +443,7 @@ stations[1:4,2]
 stations[1:4,"name"]
 ```
 
-+ *Is one approach better than the other?*
++ *Do you prefer one approach?*
 
 Select multiple columns:
 
@@ -477,10 +477,24 @@ save.image("../output/divvyanalysis.RData")
 Later, to restore your environment in a new session, run
 `load("../output/divvyanalysis.RData")`.
 
-Recap of the first part
+Concepts covered so far
 =======================
 
-*Add bullet points here.*
++ The R environment & working directory.
+
++ Read a data frame from a text (CSV) file.
+
++ Tools to inspect a data frame.
+
++ Manipulate a data frame.
+
++ Factors = categorical variables.
+
++ Selecting & and columns.
+
++ Order rows of a data frame.
+
++ Save state of R environment.
 
 Outline of workshop
 ===================
@@ -519,38 +533,54 @@ nrow(trips)
 ncol(trips)
 ```
 
-This gives an opportunity to demonstrate a much faster method 
+This gives an opportunity to demonstrate faster methods
 for importing large data sets.
 
-Import Divvy trip data using `fread`
-====================================
+Import Divvy trip data using `readr` (optional)
+===============================================
 
-Install the **data.table** package from CRAN:
+Install the **readr** package from CRAN:
 
-```{r install-data-table, eval=FALSE}
-install.packages("data.table")
+```{r install-readr, eval=FALSE}
+install.packages("readr")
 ```
 
-Load the functions from the package into your environment:
+Load the functions from the package into your R environment:
 
-```{r load-data-table}
-library("data.table")
+```{r load-readr}
+library(readr)
 ```
 
-Let's use the `fread` function from this package:
+Let's use the `read_csv` function from this package:
 
-```{r read-trip-data-better-1}
-trips <- fread("../data/Divvy_Trips_2017_Q4.csv",
-               stringsAsFactors = FALSE)
+```{r read-trip-data-readr}
+trips <-
+  read_csv("../data/Divvy_Trips_2017_Q4.csv")
 ```
 
-One annoying feature of `fread` is that it uses its own "data.table"
-class, so we need to convert it to a data frame object if we want to
-use it like other data frames:
+*How much faster is `read_csv`?*
 
-```{r read-trip-data-better-2}
+Import Divvy trip data using `readr` (optional)
+===============================================
+
+Note that the output from `read_csv` is *not* a data frame---it is a
+"tibble".
+
+```{r check-trip-data-class}
+class(trips)
+```
+
+Typically, I convert it to a data frame:
+
+```{r convert-trip-data}
 class(trips) <- "data.frame"
 ```
+
++ For more on tibbles, see:
+
+  - http://r4ds.had.co.nz
+
++ Another very fast method is `fread` from the **data.table** package.
 
 More about packages in R
 ========================
