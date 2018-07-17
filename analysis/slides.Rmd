@@ -555,10 +555,13 @@ Let's use the `read_csv` function from this package:
 
 ```{r read-trip-data-readr}
 trips <-
-  read_csv("../data/Divvy_Trips_2017_Q4.csv")
+  read_csv("../data/Divvy_Trips_2017_Q4.csv",na = "NA")
 ```
 
 *How much faster is `read_csv`?*
+
++ *Note:* The `na = "NA"` argument was added to reproduce behaviour of
+  `read.csv`; see `help(read_csv)` for details.
 
 Import Divvy trip data using `readr` (optional)
 ===============================================
@@ -578,26 +581,37 @@ class(trips) <- "data.frame"
 
 + For more on tibbles, see:
 
-  - http://r4ds.had.co.nz
+   - http://r4ds.had.co.nz
+
++ The **readr** package has many other features not covered here.
 
 + Another very fast method is `fread` from the **data.table** package.
 
 More about packages in R
 ========================
 
-+ CRAN is the official package source (cran.r-project.org).
+"Vignettes" are a great way to learn about a package:
 
-+ Other good places to find packages: Bioconductor, GitHub.
+```{r readr-vignette, eval=FALSE}
+vignette(package = "readr")
+vignette("readr")
+```
+
++ CRAN is the official package source:
+
+    - https://cran.r-project.org.
+
++ Other good places to find packages:
+
+    - Bioconductor
+    - GitHub.
 
 + *What packages are already installed?*
   `rownames(installed.packages())`
 
-+ *Where are the packages?* `.libPaths()`
++ *Where do the packages live?* `.libPaths()`
 
-+ *How to learn more about a package?* `help(package=data.table)`
-
-+ "Vignettes" are also a great way to learn about a package, e.g.,
-  `vignette("datatable-intro")`
++ *How to learn more about a package?* `help(package=readr)`
 
 A first glance at the trips data
 ================================
@@ -613,8 +627,9 @@ summary(trips)
 ```
 
 Unfortunately, the summary command isn't particularly informative for
-many of the columns. We have the same problem as before—we should
-convert some of the columns to factors.
+many of the columns.
+
++ *What columns should we convert to factors?*
 
 Convert "gender" to a factor
 ============================
