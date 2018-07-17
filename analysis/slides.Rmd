@@ -555,13 +555,14 @@ Let's use the `read_csv` function from this package:
 
 ```{r read-trip-data-readr}
 trips <-
-  read_csv("../data/Divvy_Trips_2017_Q4.csv",na = "NA")
+  read_csv("../data/Divvy_Trips_2017_Q4.csv",
+           na = "NA")
 ```
 
 *How much faster is `read_csv`?*
 
-+ *Note:* The `na = "NA"` argument was added to reproduce behaviour of
-  `read.csv`; see `help(read_csv)` for details.
++ **Note:** The `na = "NA"` argument was added to reproduce behaviour of
+  `read.csv`.
 
 Import Divvy trip data using `readr` (optional)
 ===============================================
@@ -581,14 +582,14 @@ class(trips) <- "data.frame"
 
 + For more on tibbles, see:
 
-   - http://r4ds.had.co.nz
+    - http://r4ds.had.co.nz
 
 + The **readr** package has many other features not covered here.
 
-+ Another very fast method is `fread` from the **data.table** package.
++ Another fast method is `fread` from the **data.table** package.
 
-More about packages in R
-========================
+More on packages in R
+=====================
 
 "Vignettes" are a great way to learn about a package:
 
@@ -639,6 +640,7 @@ Let's start by converting the "gender" column to a factor:
 ```{r convert-trip-data-1}
 trips <- transform(trips,gender = factor(gender))
 summary(trips$gender)
+levels(trips$gender)
 ```
 
 *What problem have we stumbled upon?*
@@ -647,11 +649,10 @@ Handling "missing" data
 =======================
 
 In R, "missing data" should always be assigned the special value `NA`
-(short for "not available" or "not assigned"):
+("not available" or "not assigned"):
 
 ```{r convert-trip-data-2}
-i <- which(trips$gender == "")
-trips[i,"gender"] <- NA
+trips[trips$gender == "","gender"] <- NA
 trips <- transform(trips,
                    gender = factor(gender))
 summary(trips$gender)
@@ -659,6 +660,9 @@ summary(trips$gender)
 
 Many functions in R will correctly handle missing data as long as
 they are encoded as `NA`.
+
++ **Note:** Confusingly, `read_csv` automatically converts empty
+  character strings to `NA`, but `read.csv` does not
 
 Convert "station" columns to factors
 ====================================
@@ -673,8 +677,8 @@ trips <- transform(trips,
 summary(trips)
 ```
 
-The summary is now more informative. However, this is a better way to
-convert the "station" columns to factors:
+The summary is now more informative. However, here it is better to
+specify the "levels" when converting to factors:
 
 ```{r convert-trip-data-4}
 x <- stations$name
@@ -683,7 +687,7 @@ trips <- transform(trips,
   to_station_name = factor(to_station_name,x))
 ```
 
-*Why is second approach better?*
+*Why is the second approach better in this case?*
 
 A note about dates & times
 ==========================
