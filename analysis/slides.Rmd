@@ -24,7 +24,7 @@ Aims of workshop
 
 4. Learn how to install & use R packages.
 
-5. Use ggplot2 to create plots from the processed data.
+5. Use ggplot2 to create plots from data frames.
 
 6. Learn through "live coding"—this includes learning from our
    mistakes!
@@ -209,14 +209,12 @@ Create a file to keep track of your analysis code
   for, e.g.,
 
     ```
-    # R code I used to analyze Divvy data
-	# during RCC workshop on July 17, 2018.
+    # Some of the R code I wrote during the RCC
+	# workshop on July 17, 2018.
     ```
 
 + Save the file in the [**"analysis"**](../analysis) folder.
   Name the file whatever you'd like (e.g., `divvyanalysis.R`).
-
-+ It is Best Practice to save your R code in this file.
 
 The console is the "brains" of RStudio
 ======================================
@@ -293,7 +291,7 @@ It is a "data frame" object:
 class(stations)
 ```
 
-What does `read.csv` do, and what is a "data frame"? R has detailed
+*What does "read.csv" do, and what is a "data frame"?* R has detailed
 documentation:
 
 ```{r help-readcsv-dataframe, eval=FALSE}
@@ -327,7 +325,7 @@ commands? Does this reveal any issues with the data?*
 Take a closer look at the "dpcapacity" column
 =============================================
 
-Creating a new object containing only the "dpcapacity" data:
+Create a new object containing only the "dpcapacity" column:
 
 ```{r inspect-dpcapacity-data-1}
 x <- stations$dpcapacity
@@ -366,9 +364,7 @@ head(stations)
 tail(stations)
 ```
 
-+ *How were the station data ordered before?*
-
-+ *What was risky about line 2?*
+*What was risky about line 2?*
 
 Take a closer look at the "city" column
 =======================================
@@ -393,10 +389,10 @@ summary(x)
 
 *Did you discover an issue with the data from running these commands?*
 
-Brief aside: what is a "factor"?
-================================
+What is a "factor"?
+===================
 
-Factors are very useful, so let's take a deeper look.
+Factors are very useful. Let's take a deeper look.
 
 ```{r inspect-factor}
 attributes(x)
@@ -406,12 +402,11 @@ unclass(x)
 Improving the "city" column
 ===========================
 
-Let's fix the problem we found earlier. First, *select* the offending
+Let's fix the problem we found earlier. First, select the offending
 rows of the table:
 
 ```{r revise-city-data-1}
 rows <- which(stations$city == "Chicago ")
-length(rows)
 ```
 
 Fix the "city" entry for the selected rows:
@@ -420,8 +415,8 @@ Fix the "city" entry for the selected rows:
 stations[rows,"city"] <- "Chicago"
 ```
 
-We also observed that the "city" column is more useful if it is a
-factor, so let's convert it to a factor:
+The "city" column is more useful if it is a factor, so let's convert
+it:
 
 ```{r revise-city-data-3}
 summary(stations)
@@ -430,8 +425,8 @@ stations <- transform(stations,
 summary(stations)
 ```
 
-Many ways to select rows & columns
-==================================
+There are many ways to select rows & columns
+============================================
 
 Select first 4 rows of "name" column:
 
@@ -443,14 +438,14 @@ stations[1:4,"name"]
 
 + *Do you prefer one approach?*
 
-Select multiple columns:
+Select  first 4 rows and multiple columns:
 
 ```{r select-columns}
 stations[1:4,c(2,3,6)]
 stations[1:4,c("name","city","dpcapacity")]
 ```
 
-*What about selecting rows by name?*
+*Can rows be selected by name?*
 
 ```{r station-names}
 colnames(stations)
@@ -511,9 +506,8 @@ Outline of workshop
 Import the Divvy trip data into R
 =================================
 
-Previously, we used the `read.csv` function to import some of the
-station data into R. Let's now use the same function to load the most
-recent trip data:
+Previously, we used `read.csv` to import station data into R. Let's
+now use the same function to load the most recent trip data:
 
 ```{r read-trip-data}
 trips <-
@@ -563,8 +557,7 @@ trips <-
 Import Divvy trip data using `readr` (optional)
 ===============================================
 
-Note that the output from `read_csv` is *not* a data frame—it is a
-"tibble".
+The `read_csv` output is *not* a data frame—it is a "tibble".
 
 ```{r check-trip-data-class}
 class(trips)
@@ -648,7 +641,8 @@ In R, "missing data" should always be assigned the special value `NA`
 ("not available" or "not assigned"):
 
 ```{r convert-trip-data-2}
-trips[trips$gender == "","gender"] <- NA
+rows <- which(trips$gender == "")
+trips[rows,"gender"] <- NA
 trips <- transform(trips,
                    gender = factor(gender))
 summary(trips$gender)
@@ -657,8 +651,8 @@ summary(trips$gender)
 Many functions in R will correctly handle missing data as long as
 they are encoded as `NA`.
 
-+ **Note:** Confusingly, `read_csv` automatically converts empty
-  character strings to `NA`, but `read.csv` does not
++ **Note:** `read_csv` automatically converts empty
+  character strings to `NA`, but `read.csv` does not.
 
 Convert "station" columns to factors
 ====================================
@@ -683,7 +677,7 @@ trips <- transform(trips,
   to_station_name = factor(to_station_name,x))
 ```
 
-*Why is the second approach better in this case?*
+*Why is this important?*
 
 Example: summarizing trips by station (optional)
 ================================================
@@ -702,7 +696,7 @@ the rate of departures to arrivals at each station:
 
 ```{r trips-totals-scatterplot}
 plot(tripcounts$from,tripcounts$to,pch = 20,
-  col = "blue",panel.first = abline(a=0,b=1))
+     panel.first = abline(a = 0,b = 1))
 ```
 
 *Exercise:* Use `subset` to find the one station that has many more
@@ -814,6 +808,7 @@ rm(divvy)
 head(stations)
 head(trips)
 nrow(trips)
+print(object.size(trips),units = "Gb")
 ```
 
 + *Were more trips taken in 2016 or 2017?*
@@ -825,8 +820,8 @@ Out first ggplot: a map of the Divvy stations
 
 We will use the
 [**ggplot2** package](https://github.com/tidyverse/ggplot2). It is a
-powerful (although not initially intuitive) set of plotting functions
-that extend the base plotting fuctions in R.
+powerful (though not intuitive) set of plotting functions that extend
+the base plotting fuctions in R.
 
 ```{r install-ggplot, eval=FALSE}
 install.packages("ggplot2")
@@ -839,7 +834,7 @@ developed by Claus Wilke at UT Austin.
 install.packages("cowplot")
 ```
 
-Load the ggplot2 and cowplot functions into your environment:
+Load the ggplot2 and cowplot functions:
 
 ```{r load-ggplot}
 library(ggplot2)
@@ -891,10 +886,9 @@ containing the total number departures, which is calculated from the
 
 ```{r count-trips-per-station}
 counts <- table(trips$from_station_id)
-counts
 ```
 
-The counts should be the same order as stations (*why is this?*):
+The counts should be the same order as the stations—*why is this?*
 
 ```{r check-station-trip-counts}
 all(names(counts) == stations$id)
@@ -917,9 +911,9 @@ p <- ggplot(data = stations,
   mapping = aes(x    = longitude,
                 y    = latitude,
 				size = sqrt(departures)))
-p <- p + geom_point(shape = 21,fill = "limegreen",
+p <- p + geom_point(shape = 21,fill = "red",
                     color = "white")
-p <- p + theme_cowplot()
+p <- p + theme_cowplot(font_size = 11)
 print(p)
 ```
 
@@ -927,16 +921,14 @@ How to save and share your plot
 ===============================
 
 For exploratory analyses, GIF and PNG are great formats because the
-files are easy to attach to emails or webpages and they can be viewed
-nearly universally:
+files are easy to attach to emails or webpages:
 
 ```{r save-station-map-png}
 ggsave("../output/station_map.png",
        plot = p,dpi = 150)
 ```
 
-For print or publication, you will want to save in a vector graphics
-format:
+For print or publication, save in a vector graphics format:
 
 ```{r save-station-map-pdf}
 ggsave("../output/station_map.pdf",plot = p)
@@ -965,12 +957,12 @@ stations experienced the largest increase?
 We will use the `subset` and `table` to do this:
 
 ```{r count-trips-by-year}
-d <- subset(trips,start.year == 2016)
-x <- table(d$from_station_id)
-d <- subset(trips,start.year == 2017)
-y <- table(d$from_station_id)
-stations$dep.2016 <- c(x)
-stations$dep.2017 <- c(y)
+d1 <- subset(trips,start.year == 2016)
+d2 <- subset(trips,start.year == 2017)
+x1 <- table(d1$from_station_id)
+x2 <- table(d2$from_station_id)
+stations$dep.2016 <- c(x1)
+stations$dep.2017 <- c(x2)
 head(stations)
 ```
 
@@ -978,7 +970,7 @@ Scatterplot of trips by station (2016 vs. 2017)
 ===============================================
 
 As before, now that we have prepared a data frame, plotting with
-ggplot2 is relatively straightforward:
+ggplot is relatively straightforward:
 
 ```{r plot-2016-vs-2017-trips-1}
 p <- ggplot(data = stations,
@@ -1016,7 +1008,7 @@ ggplot: Take home points
 + Creating sophisticated plots requires relatively little effort
 *provided the data are in the right form.*
 
-+ All plots in ggplot2 have these three elements:
++ All plots in ggplot have these three elements:
 
     1. A data frame.
 
@@ -1033,7 +1025,7 @@ Why data analysis in R?
 + In R, a spreadsheet ("data frame") is an object that can be inspected,
   manipulated and summarized with code.
 
-+ Therefore, we can write a script to *automate* our data analysis.
++ Therefore, we can write scripts to *automate* our data analyses.
 
 Parting thoughts
 ================
