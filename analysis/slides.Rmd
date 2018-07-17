@@ -882,8 +882,8 @@ Scale stations by the number of departures
 Next, let's add an additional piece of information to this
 visualization:
 
-+ Number of departures at each station, should should (?) roughly
-correspond to population density.
++ Number of departures at each station, should (?) roughly correspond
+to population density.
 
 To do this, we need to add a new column to the "stations" data frame
 containing the total number departures, which is calculated from the
@@ -906,9 +906,7 @@ Scale stations by the number of departures
 Add these trip counts to the "stations" data frame:
 
 ```{r add-counts-to-stations}
-counts <- as.vector(counts)
-stations <-
-  cbind(stations,data.frame(departures = counts))
+stations$departures <- c(counts)
 head(stations)
 ```
 
@@ -916,14 +914,14 @@ Let's use this column in our new plot:
 
 ```{r plot-station-map-3}
 p <- ggplot(data = stations,
-  mapping = aes(x = longitude,y = latitude,
-				size = sqrt(departures))) +
-  geom_point(shape = 21,fill = "darkblue",
-             color = "white")
+  mapping = aes(x    = longitude,
+                y    = latitude,
+				size = sqrt(departures)))
+p <- p + geom_point(shape = 21,fill = "limegreen",
+                    color = "white")
+p <- p + theme_cowplot()
 print(p)
 ```
-
-*Why do we set "size" to `sqrt(departures)`?*
 
 How to save and share your plot
 ===============================
@@ -949,46 +947,44 @@ Save your code & session state
 
 This is a good time to save your session.
 
-```{r save-session-2, eval=FALSE}
+```{r save-session-2}
 save.image("../output/divvyanalysis.RData")
 ```
 
 Compare 2017 biking activity against 2016
 =========================================
 
-Earlier, we observed an increase in overall trips for 2017. Which
-stations experienced the greatest increase? 
+Earlier, we observed an increase in trips from 2016 to 2017. Which
+stations experienced the largest increase? 
 
 + To examine this, we need to count trips separately for 2016
   and 2017.
 
 + Then we add these counts to the "stations" data frame.
 
-We will use the `subset`, `table` and `cbind` functions for this:
+We will use the `subset` and `table` to do this:
 
 ```{r count-trips-by-year}
 d <- subset(trips,start.year == 2016)
 x <- table(d$from_station_id)
 d <- subset(trips,start.year == 2017)
 y <- table(d$from_station_id)
-stations <-
-  cbind(stations,
-        data.frame(dep.2016 = as.vector(x),
-		           dep.2017 = as.vector(y)))
+stations$dep.2016 <- c(x)
+stations$dep.2017 <- c(y)
 head(stations)
 ```
 
 Scatterplot of trips by station (2016 vs. 2017)
 ===============================================
 
-Again, now that we have prepared a data frame with the data in the
-proper format, plotting is relatively straightforward:
+As before, now that we have prepared a data frame, plotting with
+ggplot2 is relatively straightforward:
 
 ```{r plot-2016-vs-2017-trips-1}
 p <- ggplot(data = stations,
             mapping = aes(x = dep.2016,
-			              y = dep.2017)) +
-  geom_point(shape = 20,size = 3)
+			              y = dep.2017))
+p <- p + geom_point(shape = 20,size = 2)
 print(p)		
 ```
 
@@ -997,8 +993,8 @@ to compare against the x = y line.
 
 ```{r plot-2016-vs-2017-trips-2}
 p <- p + geom_abline(slope = 1,color = "skyblue",
-           linetype = "dashed") +
-       xlim(c(0,6e4)) + ylim(c(0,6e4)) 
+           linetype = "dashed")
+p <- p + theme_cowplot()
 print(p)
 ```
 
@@ -1010,17 +1006,17 @@ Save your code & session state
 
 Save your final results for safekeeping.
 
-```{r save-session-3, eval=FALSE}
+```{r save-session-3}
 save.image("../output/divvyanalysis.RData")
 ```
 
 ggplot: Take home points
 ========================
 
-+ Creating sophisticated plots in ggplot requires relatively little
-effort *provided the data are in the right form.*
++ Creating sophisticated plots requires relatively little effort
+*provided the data are in the right form.*
 
-+ All plots in ggplot2 consist of these 3 elements:
++ All plots in ggplot2 have these three elements:
 
     1. A data frame.
 
@@ -1029,7 +1025,15 @@ effort *provided the data are in the right form.*
     3. A "geom", short for “geometric object,” that specifies the type
        of plot.
 
-+ All plots are created by combining "layers" using the + operator.
++ Plots are created by combining "layers" using the + operator.
+
+Why data analysis in R?
+=======================
+
++ In R, a spreadsheet ("data frame") is an object that can be inspected,
+  manipulated and summarized with code.
+
++ Therefore, we can write a script to *automate* our data analysis.
 
 Parting thoughts
 ================
@@ -1038,7 +1042,7 @@ Parting thoughts
    them later.
 
 2. Keep track of which packages (and the versions) you
-   used—`sessionInfo()` is your friend.
+   used with `sessionInfo()`.
 
 3. Use packages—don’t reinvent the wheel.
 
@@ -1050,14 +1054,7 @@ Parting thoughts
 6. See the **workflowr** package for simplifying organizing & sharing
    of data analyses; e.g., **stephenslab.github.io/wflow-divvy**.
 
+7. Thank you!
+
 [github-repo]: https://github.com/rcc-uchicago/R-intro-divvy-2
 [divvy-data]: https://www.divvybikes.com/system-data
-
-A powerful idea
-===============
-
-+ In R, a spreadsheet ("data frame") is an object that can be inspected,
-  manipulated and summarized with code.
-
-+ Therefore, we can write a script to *automate* our data analysis.
-
