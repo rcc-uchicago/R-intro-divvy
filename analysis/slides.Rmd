@@ -477,8 +477,8 @@ save.image("../output/divvyanalysis.RData")
 Later, to restore your environment in a new session, run
 `load("../output/divvyanalysis.RData")`.
 
-Recap of first part
-===================
+Recap of the first part
+=======================
 
 *Add bullet points here.*
 
