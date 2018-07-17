@@ -689,31 +689,63 @@ trips <- transform(trips,
 
 *Why is the second approach better in this case?*
 
+Example: summarizing trips by station (optional)
+================================================
+
+Create a new data frame containing the "from" and "to" trip totals:
+
+```{r create-trip-totals-table}
+from <- table(trips$from_station_name)
+to   <- table(trips$to_station_name)
+tripcounts <- data.frame(from = c(from),
+                         to   = c(to))
+```
+
+With this new data frame, we can easily create a scatterplot comparing
+the rate of departures to arrivals at each station:
+
+```{r trips-totals-scatterplot}
+plot(tripcounts$from,tripcounts$to,pch = 20,
+  panel.first = abline(a=0,b=1,col="gray"))
+```
+
+*Exercise:* Use `subset` to find the one station that has many more
+departures than arrivals.
+
+Concepts covered in second part
+===============================
+
+*Add bullet points here.*
+
+A powerful idea
+===============
+
++ In R, a spreadsheet ("data frame") is an object that can be inspected,
+  manipulated and summarized with code.
+
++ Therefore, we can write a script to *automate* our data analysis.
+
 A note about dates & times
 ==========================
 
 + `summary(trips)` is also not useful for the
 dates & times.
 
-+ Processing dates & times in R is more complicated.
++ Processing dates & times is more complicated.
 
-+ See `help(strptime)` and the `lubridate` package.
-
-Outline of workshop
-===================
++ See `help(strptime)` and the **lubridate** package.
 
 1. Initial setup.
 
-2. Load and prepare the Divvy station data.
+2. Load & prepare the Divvy station data.
 
-3. Load and prepare the Divvy trip data.
+3. Load & prepare the Divvy trip data.
 
-4. **A closer look at U of C Divvy usage.**
+4. **Take a close look at U of C Divvy usage.**
 
 5. Create a map of the Divvy stations.
 
-6. Create a scatterplot comparing bike sharing activity in 2016
-   and 2017.
+6. Create plots comparing bike sharing in 2016 & 2017.
 
 A closer look at bike trips from U of C
 =======================================
@@ -842,8 +874,8 @@ head(trips)
 *How many more trips were taken in 2017 than in 2016?* Try using 
 the `summary` function.
 
-Out first plot: a map of the Divvy stations
-===========================================
+Out first (gg) plot: a map of the Divvy stations
+================================================
 
 We will use the
 [**ggplot2** package](https://github.com/tidyverse/ggplot2). It is a
