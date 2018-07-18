@@ -818,8 +818,8 @@ Out first ggplot: a map of the Divvy stations
 
 We will use the
 [**ggplot2** package](https://github.com/tidyverse/ggplot2). It is a
-powerful (though not intuitive) set of plotting functions that extend
-the base plotting fuctions in R.
+powerful (though not always intuitive) set of plotting functions that
+extend the base plotting fuctions in R.
 
 ```{r install-ggplot, eval=FALSE}
 install.packages("ggplot2")
@@ -909,7 +909,7 @@ p <- ggplot(data = stations,
   mapping = aes(x    = longitude,
                 y    = latitude,
 				size = sqrt(departures)))
-p <- p + geom_point(shape = 21,fill = "black",
+p <- p + geom_point(shape = 21,fill = "orange",
                     color = "white")
 p <- p + theme_cowplot(font_size = 11)
 print(p)
