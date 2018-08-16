@@ -2,8 +2,6 @@
 
 ## Post-workshop notes
 
-+ Simplify the plot adjustments in order to simplify the code.
-
 + It would be good to show another example of a "geom" other than
   `geom_point`. Maybe `geom_density` or `geom_text`?
 
@@ -16,3 +14,4 @@
 + Clean up Desktop and quit applications (particularly Slack).
 + Arrange PDF of slides and Terminal on screen.
 + Start up R with the wrong working directory.
++ Create handout.pdf and print it out.
