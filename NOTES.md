@@ -2,9 +2,6 @@
 
 ## Post-workshop notes
 
-+ Add a "What's included" slide, as well as a "What's included"
-  section to the README.
-
 + Some participants might not have enough memory to load all the
   data. If that is the case, they can just load some of the files.
 

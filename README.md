@@ -42,7 +42,7 @@ on. An RCC account is helpful, but not required.
 Here is an overview of the files included in this git repository (the
 "workshop packet"):
 
-+ [README.md](README): This file.
++ [README.md](README.md): This file.
 
 + [conduct.md](conduct.md): Code of Conduct.
 

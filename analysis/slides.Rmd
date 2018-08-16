@@ -123,27 +123,21 @@ git clone https://github.com/rcc-uchicago/
 What's in the workshop packet
 =============================
 
-```
-R-intro-divvy-2
-  /analysis # Scripts implementing data analyses.
-  /code     # Additional code used in analyses.
-  /data     # Original ("raw") data.
-  /docs     # Additional workshop materials.
-  /output   # Processed data & results files.
-```
++ **analysis**: directory where the code and data for our analyses
+  will be stored.
 
-+ This setup mimics how I typically organize the code, data and
-  results for my projects.
++ **slides.pdf**: the workshop slides.
 
 Open the slides on your computer
 ================================
 
 + This PDF is useful for copying & pasting code from the slides.
+  (Note that copying multiple lines from PDF may not always work.)
 
-+ The PDF is in the [**"docs"**](../docs) folder of the workshop packet.
++ The PDF is included in the workshop packet.
 
-+ You can also view the PDF by clicking the **"docs"** item in the file
-  listing on the GitHub webpage.
++ You can also view the PDF by clicking the **"slides.pdf"** item on
+  the GitHub webpage.
 
 Set up your R environment
 =========================
@@ -404,6 +398,8 @@ summary(x)
 
 What is a "factor"?
 ===================
+
+TO DO: Add more text to this slide.
 
 Factors are very useful. Let's take a deeper look.
 
@@ -789,10 +785,11 @@ Outline of workshop
 Import the 2016 & 2017 Divvy data
 =================================
 
-I wrote a function `read.divvy.data` to automate the reading and
-processing of the Divvy data: it reads all the CSV files, then merge
-them into two data frames: one for the stations, and one for the
-trips.
+*So far, we have only analyzed a small portion of the trip data.* I
+wrote a function `read.divvy.data` to automate the reading and
+processing of all the downloaded Divvy data: it reads all the CSV
+files, then merge them into two data frames: one for the stations, and
+one for the trips.
 
 ```{r load-functions}
 source("functions.R")
@@ -808,6 +805,27 @@ Choose which station and trip files to import.
 tripfiles <- Sys.glob("Divvy_Trips*.csv")
 stnfile <- "Divvy_Stations_2017_Q3Q4.csv"
 ```
+
+TO DO: Explain what to do if you don't have enough memory to load all
+the trip files. `tripfiles <- Sys.glob("Divvy_Trips*Q1.csv")`
+
+Import the 2016 & 2017 Divvy data
+=================================
+
+What function `read.divvy.data` does:
+
++ Reads the Divvy station data from the specified CSV file.
+
++ Reads the Divvy trip data from the specified CSV files.
+
++ Combines the Divvy trip data into a single data frame.
+
++ Takes additional steps to prepare the data for a more convenient
+  analysis; e.g., converts some columns to factors, extracts years
+  from the "start time" column.
+
++ Outputs a list object containing two data frames: (1) station
+  data, (2) trip data.
 
 Import the 2016 & 2017 Divvy data
 =================================
