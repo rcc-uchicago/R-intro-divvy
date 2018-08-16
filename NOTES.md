@@ -2,8 +2,6 @@
 
 ## Post-workshop notes
 
-+ Add a slide where we actually open the CSV file in a text editor.
-
 + Add info on how to save environment in RStudio instead of using
 `save.image`.
 

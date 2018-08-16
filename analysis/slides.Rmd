@@ -269,7 +269,7 @@ Eyeball the station data in the CSV file
 ========================================
 
 + Open the CSV file **Divvy_Stations_2017_Q1Q2.csv** in RStudio, or in
-  your favourite text editor (e.g., Notepad in Windows, TextEdit on a
+  your favourite text editor (e.g., Notepad in Windows, TextEdit on
   Mac).
 
 + CSV is a simple and commonly used data format.
@@ -474,14 +474,19 @@ It is important to periodically save:
 
 2. the state of your R environment.
 
-To save your environment, do something like this:
+To save your environment, go to **Session > Save Workspace As...** in
+RStudio, or run this code:
 
 ```{r save-session-1}
 save.image("divvyanalysis.RData")
 ```
 
-Later, to restore your environment in a new session, run
-`load("divvyanalysis.RData")`.
+Later, to restore your environment in a new session, select **Session >
+Load Workspace...** in RStudio, or run this code:
+
+```{r load-session, eval=FALSE}
+load("divvyanalysis.RData")
+```
 
 Main concepts covered so far
 ============================
