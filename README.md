@@ -2,7 +2,7 @@
 
 Materials for the RCC workshop, "Introduction to R for data analysis".
 
-**Date:** Tuesday, July 17, 2018<br>
+**Date:** Thursday, August 16, 2018<br>
 **Time:** 1:00 pm to 4:00 pm<br>
 **Location:** Stevanovich Center, room 112
 ([OpenStreetMap][openstreetmap])<br>
