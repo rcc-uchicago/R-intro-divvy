@@ -2,29 +2,6 @@
 
 ## Post-workshop notes
 
-+ Some participants might not have enough memory to load all the
-  data. If that is the case, they can just load some of the files.
-
-+ When we revisit the trip data in "Create a map of the Divvy
-  stations", remind participants that we only looked at a portion of
-  the data.
-
-+ Create a slide giving a summary of what function `read.divvy.data`
-  does.
-
-+ Change `na` argument in `read_csv` call to be less confusing, and
-  explain that `read_csv` does many things automatically (e.g.,
-  handling missing data)
-
-+ When "reordering" the data frame rows, we might ask, what was the
-  *original* ordering?
-
-+ Add more text to "what is a factor"?
-
-+ The slides "Convert station columns to factors" and "Summarizing
-  trips by station" are probably too complicated for an introductory
-  workshop.
-
 + Simplify the plot adjustments in order to simplify the code.
 
 + It would be good to show another example of a "geom" other than

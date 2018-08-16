@@ -52,15 +52,15 @@ Your may choose to...
 
 + Use RStudio on your laptop.
 
-+ Use R or RStudio (Desktop or Server) on the RCC cluster.
++ Use R or RStudio on the RCC cluster.
 
 + Pair up with your neighbour.
 
 + Follow what I do on the projector.
 
 **Note:** If you use the RCC cluster I'm assuming you know how to set
-up an interactive computing session with appropriate amount of time
-and memory, load R or RStudio, and display graphics (e.g., using
+up an interactive computing session with appropriate amount of compute
+time and memory, load R or RStudio, and display graphics (e.g., using
 ThinLinc).
 
 Software we will use today
@@ -104,7 +104,7 @@ Download or "clone" git repository
 
 Download the workshop packet to your computer.
 
-+ Go to: [**github.com/rcc-uchicago/R-intro-divvy-2**][github-repo]
++ Go to: [**github.com/rcc-uchicago/R-intro-divvy**][github-repo]
 
 + To download, click the green **"Clone or download"** button.
 
@@ -112,31 +112,32 @@ Or, if you have **git**, run this command:
 
 ```{bash download-repo, eval=FALSE}
 git clone https://github.com/rcc-uchicago/
-  R-intro-divvy-2.git
+  R-intro-divvy.git
 ```
 
 (Note the URL in the git command should not contain any spaces.)
 
-+ *Note:* If you are using the RCC cluster, also download workshop
++ **Note:** If you are using the RCC cluster, also download workshop
   packet on the cluster.
 
 What's in the workshop packet
 =============================
 
-+ **analysis**: directory where the code and data for our analyses
-  will be stored.
+1. **analysis**: directory where the code and data for our analyses
+   will be stored.
 
-+ **slides.pdf**: the workshop slides.
+2. **slides.pdf**: the workshop slides.
 
-Open the slides on your computer
+Open slides.pdf on your computer
 ================================
 
 + This PDF is useful for copying & pasting code from the slides.
-  (Note that copying multiple lines from PDF may not always work.)
+
++ *Note:* sometimes copying multi-line code doesn't work.)
 
 + The PDF is included in the workshop packet.
 
-+ You can also view the PDF by clicking the **"slides.pdf"** item on
++ You can also view the PDF by clicking the "slides.pdf" item on
   the GitHub webpage.
 
 Set up your R environment
@@ -168,7 +169,7 @@ Check the version of R that you are using:
 sessionInfo()
 ```
 
-If you are using an older version of R (version 3.3 or earlier), I
+If you are using an older version of R (version 3.3 or less), I
 strongly recommend upgrading to the latest version. *Some of the
 examples may not work in older versions of R.*
 
@@ -176,7 +177,7 @@ Check your R environment
 ========================
 
 The R environment is where all variables and functions are stored and
-accessed. You should start with an empty environment. Check this:
+accessed. You should start with an empty environment:
 
 ```{r check-env}
 ls()
@@ -194,20 +195,20 @@ Create a file to keep track of your analysis code
 
 + In RStudio, select **File > R Script**.
 
-+ Alternatively, use your favourite editor (nano, emacs, vim, Atom, *etc*).
++ Alternatively, use your favourite editor.
 
 + Add some comments to the title to remind yourself what this file is
   for, e.g.,
 
     ```
     # Some of the R code I wrote during the RCC
-	# workshop on July 17, 2018.
+	# workshop on August 16, 2018.
     ```
 
 + Save the file in the [**"analysis"**](../analysis) folder.
   Name the file whatever you'd like (e.g., `divvyanalysis.R`).
 
-The console is the "brains" of RStudio
+The Console is the "brains" of RStudio
 ======================================
 
 ![](../images/rstudio.jpg)
@@ -279,7 +280,7 @@ Eyeball the station data in the CSV file
 Import the station data into R
 ==============================
 
-Load the most recent station data into an R "data frame":
+Load the most up-to-date station data into an R "data frame":
 
 ```{r read-station-data}
 stations <- read.csv("Divvy_Stations_2017_Q3Q4.csv",
@@ -366,12 +367,12 @@ bottom rows:
 
 ```{r inspect-dpcapcity-data-4}
 rows <- order(stations$dpcapacity,decreasing=TRUE)
-stations <- stations[rows,]
-head(stations)
-tail(stations)
+stations2 <- stations[rows,]
+head(stations2)
+tail(stations2)
 ```
 
-*What was risky about line 2?*
+*How were the rows originally ordered in `stations`?*
 
 Take a closer look at the "city" column
 =======================================
@@ -401,12 +402,16 @@ What is a "factor"?
 
 TO DO: Add more text to this slide.
 
-Factors are very useful. Let's take a deeper look.
+Factors are often very useful in data analyses. Let's take a deeper look.
 
 ```{r inspect-factor}
 attributes(x)
 unclass(x)
 ```
+
+From the `unclass(x)` call, we see that a factor is really just an
+integer with values 1, 2, 3, *etc*., with which each integer value is
+associated with a *label* (e.g., "Chicago", "Evanston").
 
 Improving the "city" column
 ===========================
@@ -418,7 +423,8 @@ rows of the table:
 rows <- which(stations$city == "Chicago ")
 ```
 
-Fix the "city" entry for the selected rows:
+Fix the "city" column by overwriting the "city" entries in the
+selected rows:
 
 ```{r revise-city-data-2}
 stations[rows,"city"] <- "Chicago"
@@ -444,7 +450,7 @@ stations[1:4,2]
 stations[1:4,"name"]
 ```
 
-+ *Do you prefer one approach?*
++ *Do you prefer one of these approaches?*
 
 Select  first 4 rows and multiple columns:
 
@@ -520,7 +526,7 @@ Import the Divvy trip data into R
 =================================
 
 Previously, we used `read.csv` to import station data into R. Let's
-now use the same function to load the most recent trip data:
+now use `read.csv` to load the trip data from the 4th quarter of 2017:
 
 ```{r read-trip-data}
 trips <-
@@ -536,8 +542,8 @@ nrow(trips)
 ncol(trips)
 ```
 
-This gives an opportunity to demonstrate faster methods
-for importing large data sets.
+This gives an opportunity to demonstrate a faster method
+implemented in a *package*.
 
 Import Divvy trip data using `readr` (optional)
 ===============================================
@@ -558,14 +564,13 @@ Let's use the `read_csv` function from this package:
 
 ```{r read-trip-data-readr}
 trips <-
-  read_csv("Divvy_Trips_2017_Q4.csv",
-           na = "NA")
+  read_csv("Divvy_Trips_2017_Q4.csv",na = "")
 ```
 
-*How much faster is `read_csv`?*
+**Note:** `read_csv` is similar to `read.csv`, but not the same (I set
+  `na = ""` to make `read_csv` more similar to `read.csv`).
 
-+ **Note:** The `na = "NA"` argument was added to reproduce behaviour of
-  `read.csv`.
++ *How much faster is `read_csv`?*
 
 Import Divvy trip data using `readr` (optional)
 ===============================================
@@ -663,9 +668,6 @@ summary(trips$gender)
 Many functions in R will correctly handle missing data as long as
 they are encoded as `NA`.
 
-+ **Note:** `read_csv` automatically converts empty
-  character strings to `NA`, but `read.csv` does not.
-
 Convert "station" columns to factors
 ====================================
 
@@ -680,41 +682,7 @@ trips$to_station_name <-
 summary(trips)
 ```
 
-The summary is now more informative. However, here it is better to
-specify the "levels" when converting to factors:
-
-```{r convert-trip-data-4}
-x <- stations$name
-trips$from_station_name <-
-  factor(trips$from_station_name,x)
-trips$to_station_name <-
-  factor(trips$to_station_name,x)
-```
-
-*Why is this important?*
-
-Example: summarizing trips by station (optional)
-================================================
-
-Create a new data frame containing the "from" and "to" trip totals:
-
-```{r create-trip-totals-table}
-from <- table(trips$from_station_name)
-to   <- table(trips$to_station_name)
-tripcounts <- data.frame(from = c(from),
-                         to   = c(to))
-```
-
-With this new data frame, we can easily create a scatterplot comparing
-the rate of departures to arrivals at each station:
-
-```{r trips-totals-scatterplot}
-plot(tripcounts$from,tripcounts$to,pch = 20,
-     panel.first = abline(a = 0,b = 1))
-```
-
-*Exercise:* Use `subset` to find the one station that has many more
-departures than arrivals.
+The summary is now more informative.
 
 A note about dates & times
 ==========================
@@ -812,7 +780,14 @@ the trip files. `tripfiles <- Sys.glob("Divvy_Trips*Q1.csv")`
 Import the 2016 & 2017 Divvy data
 =================================
 
-What function `read.divvy.data` does:
+This may take a minute to run, or longer if you have not installed the
+readr package.
+
+```{r import-divvy-data-2}
+divvy <- read.divvy.data(stnfile,tripfiles)
+```
+
+What `read.divvy.data` does:
 
 + Reads the Divvy station data from the specified CSV file.
 
@@ -829,13 +804,6 @@ What function `read.divvy.data` does:
 
 Import the 2016 & 2017 Divvy data
 =================================
-
-This may take a minute to run, or longer if you have not installed the
-readr package.
-
-```{r import-divvy-data-2}
-divvy <- read.divvy.data(stnfile,tripfiles)
-```
 
 The output is a "list" containing two data frames:
 
