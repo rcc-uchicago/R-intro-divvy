@@ -753,29 +753,38 @@ Outline of workshop
 Import the 2016 & 2017 Divvy data
 =================================
 
-*So far, we have only analyzed a small portion of the trip data.* I
-wrote a function `read.divvy.data` to automate the reading and
++ So far, we have only analyzed the trip data from the 4th quarter
+of 2017.
+
++ I wrote a function `read.divvy.data` to automate the reading and
 processing of all the downloaded Divvy data: it reads all the CSV
 files, then merge them into two data frames: one for the stations, and
-one for the trips.
+one for the trips. Run this code to load this function into your
+R environment:
 
 ```{r load-functions}
 source("functions.R")
-ls()
 ```
 
-TO DO: Explain that `tripfiles` does not actually contain any data,
-only the names of the files.
+Import the 2016 & 2017 Divvy data
+=================================
 
-Choose which station and trip files to import.
+Choose which station and trip files to import:
 
 ```{r import-divvy-data-1}
 tripfiles <- Sys.glob("Divvy_Trips*.csv")
 stnfile <- "Divvy_Stations_2017_Q3Q4.csv"
 ```
 
-TO DO: Explain what to do if you don't have enough memory to load all
-the trip files. `tripfiles <- Sys.glob("Divvy_Trips*Q1.csv")`
+Variables `stnfile` and `tripfiles` contains the names of the files to
+be importedl they do not actually contain any data.
+
+**Note:** If your computer does not have enough memory to load all the
+trip data, run this instead:
+
+```{r import-divvy-data-1a, eval=FALSE}
+tripfiles <- Sys.glob("Divvy_Trips*Q1.csv")`
+```
 
 Import the 2016 & 2017 Divvy data
 =================================
@@ -860,7 +869,8 @@ p <- ggplot(data    = stations,
             mapping = aes(x = longitude,
 			              y = latitude))
 print(p)
-p2 <- p + geom_point()
+out <- geom_point()
+p2  <- ggplot_add(out,p)
 print(p2)
 ```
 
@@ -870,8 +880,9 @@ Adjusting the plot
 Let's make a few small adjustments to improve the plot:
 
 ```{r plot-station-map-2}
-p3 <- p + geom_point(shape = 21,fill = "darkblue",
-                     color = "white",size = 2)
+out <- geom_point(shape = 21,fill = "darkblue",
+                 color = "white",size = 2)
+p3  <- ggplot_add(out,p)
 print(p3)
 ```
 
@@ -917,8 +928,9 @@ p <- ggplot(data = stations,
   mapping = aes(x    = longitude,
                 y    = latitude,
 				size = sqrt(departures)))
-p <- p + geom_point(shape = 21,fill = "orange",
-                    color = "white")
+out <- geom_point(shape = 21,fill = "blue",
+                  color = "white")
+p   <- ggplot_add(out,p)
 print(p)
 ```
 
