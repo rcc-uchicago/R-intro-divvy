@@ -1,7 +1,0 @@
-Scripts implementing the data analyses should be stored here. These
-scripts should be run from inside this directory; that is, the working
-directory in your R environment should be set to the "analysis"
-directory.
-
-Also included in this directory is the R Markdown source used to
-generate the slides.

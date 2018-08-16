@@ -1,6 +1,0 @@
-All data downloaded from the original sources ("raw data") should be
-stored here. Processed data files should be stored in the "output"
-directory. Large data files should not be commited to the git
-repository. If small data files are committed, make sure that data
-usage conditions are being correctly followed (e.g., sometimes data
-files cannot be made publicly available).
