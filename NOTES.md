@@ -2,9 +2,6 @@
 
 ## Post-workshop notes
 
-+ Add info on how to save environment in RStudio instead of using
-`save.image`.
-
 + Add a "What's included" slide, as well as a "What's included"
   section to the README.
 
@@ -15,14 +12,8 @@
   stations", remind participants that we only looked at a portion of
   the data.
 
-+ Explain that `tripfiles` does not actually contain any data, only
-  the names of the files.
-
 + Create a slide giving a summary of what function `read.divvy.data`
   does.
-
-+ The `print(object.size(stations),units = "Kb")` line was
-  confusing---I should simplify that code.
 
 + Change `na` argument in `read_csv` call to be less confusing, and
   explain that `read_csv` does many things automatically (e.g.,
@@ -33,15 +24,9 @@
 
 + Add more text to "what is a factor"?
 
-+ Show two different ways of manipulating individual columns, with and
-  without the `transform` function.
-
 + The slides "Convert station columns to factors" and "Summarizing
   trips by station" are probably too complicated for an introductory
   workshop.
-
-+ Remove `theme_cowplot()`---these aren't needed with the current
-  version of cowplot.
 
 + Simplify the plot adjustments in order to simplify the code.
 
@@ -50,13 +35,10 @@
 
 ## Instructor in-class setup
 
-+ Arrange chairs and tables.
-+ Clean up Desktop and quit applications (particularly Slack).
++ Arrange chairs and tables, if necessary.
 + Use Terminal (not iTerm).
-+ Use Basic Terminal theme.
-+ Use Consolas font.
-+ Fix bash prompt.
-+ Arrange slides PDF and terminal on screen.
-+ Distribute Yubikeys.
-
-
++ Use "My Settings" Terminal theme (with Consolas font)
++ Simplify bash prompt.
++ Clean up Desktop and quit applications (particularly Slack).
++ Arrange PDF of slides and Terminal on screen.
++ Start up R with the wrong working directory.

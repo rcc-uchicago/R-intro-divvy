@@ -1,4 +1,7 @@
 analysis/Divvy_Stations_*.csv
 analysis/Divvy_Trips_*.csv
+analysis/*.RData
+analysis/*.pdf
+analysis/*.png
 slides_test.pdf
 handout.pdf

@@ -329,7 +329,7 @@ Inspect the data in more detail:
 
 ```{r inspect-station-data-4}
 sapply(stations,class)
-print(object.size(stations),units = "Kb")
+object.size(stations)
 ```
 
 *What do we learn about the station data from running these
@@ -392,7 +392,7 @@ summary(x)
 ```
 
 The summary is not very useful here! The key is to convert to a
-"factor" (factor = categorical variable):
+"factor" (categorical variable):
 
 ```{r inspect-city-data-2}
 x <- factor(stations$city)
@@ -433,8 +433,7 @@ it:
 
 ```{r revise-city-data-3}
 summary(stations)
-stations <- transform(stations,
-                      city = factor(city))
+stations$city <- factor(stations$city)
 summary(stations)
 ```
 
@@ -645,7 +644,7 @@ Convert "gender" to a factor
 Let's start by converting the "gender" column to a factor:
 
 ```{r convert-trip-data-1}
-trips <- transform(trips,gender = factor(gender))
+trips$gender <- factor(trips$gender)
 summary(trips$gender)
 levels(trips$gender)
 ```
@@ -661,8 +660,7 @@ In R, "missing data" should always be assigned the special value `NA`
 ```{r convert-trip-data-2}
 rows <- which(trips$gender == "")
 trips[rows,"gender"] <- NA
-trips <- transform(trips,
-                   gender = factor(gender))
+trips$gender <- factor(trips$gender)
 summary(trips$gender)
 ```
 
@@ -679,9 +677,10 @@ Next, let's convert the "from station" and "to station" columns to
 factors:
 
 ```{r convert-trip-data-3}
-trips <- transform(trips,
-  from_station_name = factor(from_station_name),
-  to_station_name = factor(to_station_name))
+trips$from_station_name <-
+  factor(trips$from_station_name)
+trips$to_station_name <-
+  factor(trips$to_station_name)
 summary(trips)
 ```
 
@@ -690,9 +689,10 @@ specify the "levels" when converting to factors:
 
 ```{r convert-trip-data-4}
 x <- stations$name
-trips <- transform(trips,
-  from_station_name = factor(from_station_name,x),
-  to_station_name = factor(to_station_name,x))
+trips$from_station_name <-
+  factor(trips$from_station_name,x)
+trips$to_station_name <-
+  factor(trips$to_station_name,x)
 ```
 
 *Why is this important?*
@@ -799,6 +799,9 @@ source("functions.R")
 ls()
 ```
 
+TO DO: Explain that `tripfiles` does not actually contain any data,
+only the names of the files.
+
 Choose which station and trip files to import.
 
 ```{r import-divvy-data-1}
@@ -826,7 +829,7 @@ rm(divvy)
 head(stations)
 head(trips)
 nrow(trips)
-print(object.size(trips),units = "Gb")
+object.size(trips)
 ```
 
 + *Were more trips taken in 2016 or 2017?*
@@ -883,7 +886,6 @@ Let's make a few small adjustments to improve the plot:
 ```{r plot-station-map-2}
 p3 <- p + geom_point(shape = 21,fill = "darkblue",
                      color = "white",size = 2)
-p3 <- p3 + theme_cowplot()
 print(p3)
 ```
 
@@ -931,7 +933,6 @@ p <- ggplot(data = stations,
 				size = sqrt(departures)))
 p <- p + geom_point(shape = 21,fill = "orange",
                     color = "white")
-p <- p + theme_cowplot(font_size = 11)
 print(p)
 ```
 
@@ -1004,7 +1005,6 @@ to compare against the x = y line.
 ```{r plot-2016-vs-2017-trips-2}
 p <- p + geom_abline(slope = 1,color = "skyblue",
            linetype = "dashed")
-p <- p + theme_cowplot()
 print(p)
 ```
 

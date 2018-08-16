@@ -1,0 +1,13 @@
+Code implementing the data analyses should be stored here. This code
+should be run from inside this directory; that is, the working
+directory in your R environment should be set to the "analysis"
+directory.
+
+All data downloaded from the original sources ("raw data") should also
+be stored here. Large data files should not be commited to the git
+repository. If small data files are committed, make sure that data
+usage conditions are being correctly followed (e.g., sometimes data
+files cannot be made publicly available).
+
+Also included in this directory is the R Markdown source used to
+generate the slides.

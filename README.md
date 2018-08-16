@@ -37,6 +37,31 @@ All participants are expected to bring a laptop with a Mac, Linux, or
 Windows operating system that they have administrative privileges
 on. An RCC account is helpful, but not required.
 
+## What's included
+
+Here is an overview of the files included in this git repository (the
+"workshop packet"):
+
++ [README.md](README): This file.
+
++ [conduct.md](conduct.md): Code of Conduct.
+
++ [LICENSE.md](license.md): License information for the materials in
+  this repository.
+
++ [NOTES.md](NOTES.md): Instructor notes.
+
++ [slides.pdf](slides.pdf): Workshop slides.
+
++ [analysis](analysis): Directory where code and data are stored for
+  our analyses. Also included in this directory is the R Markdown
+  source used to generate the slides.
+
++ [Makefile](Makefile): GNU Makefile containing commands to
+  generate the slides from the R Markdown source.
+
++ [images](images): Directory containing a few images used in the slides.
+
 ## Other information
 
 + This workshop attempts to apply elements of the
