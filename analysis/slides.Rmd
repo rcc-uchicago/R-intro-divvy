@@ -992,8 +992,9 @@ ggplot is relatively straightforward:
 ```{r plot-2016-vs-2017-trips-1}
 p <- ggplot(data = stations,
             mapping = aes(x = dep.2016,
-			              y = dep.2017))
-p <- p + geom_point(shape = 20,size = 2)
+			y = dep.2017))
+out <- geom_point(shape = 20,size = 2)
+p   <- ggplot_add(out,p)
 print(p)		
 ```
 
@@ -1001,13 +1002,14 @@ It is difficult to tell which stations had more trips in 2017—we need
 to compare against the x = y line.
 
 ```{r plot-2016-vs-2017-trips-2}
-p <- p + geom_abline(slope = 1,color = "skyblue",
-           linetype = "dashed")
+out2 <- geom_abline(slope = 1,color = "skyblue",
+                    linetype = "dashed")
+p    <- ggplot_add(out2,p)
 print(p)
 ```
 
 *One station stands out because it has had a much larger increase in
-trips than other stations. Where is this station?*
+trips than other stations. What is this station?*
 
 Save your code & session state
 ==============================
