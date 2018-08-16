@@ -42,7 +42,8 @@ rmarkdown::render("analysis/slides.Rmd")'
 # Generate the slides while also testing the R code.
 slides_test.pdf : analysis/slides.Rmd
 	Rscript -e 'knitr::opts_chunk$$set(eval = TRUE); \
-rmarkdown::render("slides.Rmd",output_file = "slides_test.pdf")'
+rmarkdown::render("analysis/slides.Rmd",output_file = "slides_test.pdf")'
+	rm -f analysis/slides_test.tex
 	mv -f analysis/slides_test.pdf .
 
 # Create the handout.
@@ -55,5 +56,8 @@ output_file = "handout.pdf")'
 
 clean:
 	rm -f slides.pdf slides_test.pdf handout.pdf
+	rm -f analysis/divvyanalysis.RData
+	rm -f analysis/station_map.pdf
+	rm -f analysis/station_map.png
 
 

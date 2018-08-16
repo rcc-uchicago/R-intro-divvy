@@ -265,6 +265,23 @@ Outline of workshop
 
 5. Create plots comparing bike sharing in 2016 & 2017.
 
+Eyeball the station data in the CSV file
+========================================
+
++ Open the CSV file **Divvy_Stations_2017_Q1Q2.csv** in RStudio, or in
+  your favourite text editor (e.g., Notepad in Windows, TextEdit on a
+  Mac).
+
++ CSV is a simple and commonly used data format.
+
++ It is easily read into R, and read by humans.
+
++ Each line stores an item (station).
+
++ The first line is a special line called the "header".
+
++ Entries in each line (table row) are separated by commas.
+
 Import the station data into R
 ==============================
 
