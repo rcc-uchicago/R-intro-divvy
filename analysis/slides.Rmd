@@ -10,7 +10,7 @@ output:
 ```{r knitr-options, echo=FALSE}
 knitr::opts_chunk$set(comment = "#",collapse = TRUE,fig.align = "center",
                       results = "hide", fig.show = "hide", message = FALSE,
-		      warning = FALSE)
+		              warning = FALSE)
 ```
 
 Aims of workshop
@@ -217,7 +217,7 @@ Create a file to keep track of your analysis code
 The console is the "brains" of RStudio
 ======================================
 
-![](rstudio.jpg)
+![](../images/rstudio.jpg)
 
 Download the Divvy data
 =======================
