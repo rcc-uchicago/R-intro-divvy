@@ -4,6 +4,7 @@ author: Peter Carbonetto
 output:
   beamer_presentation:
     template: beamer.tex
+    pandoc_args: "--highlight-style=pygments"
 ---
 
 ```{r knitr-options, echo=FALSE}
@@ -104,7 +105,7 @@ Download or "clone" git repository
 
 Download the workshop packet to your computer.
 
-+ Go to: [**github.com/rcc-uchicago/R-intro-divvy**][github-repo]
++ Go to: [**http://github.com/rcc-uchicago/R-intro-divvy**][github-repo]
 
 + To download, click the green **"Clone or download"** button.
 
@@ -133,7 +134,7 @@ Open slides.pdf on your computer
 
 + This PDF is useful for copying & pasting code from the slides.
 
-+ *Note:* sometimes copying multi-line code doesn't work.)
++ *Note:* sometimes copying multi-line code doesn't work.
 
 + The PDF is included in the workshop packet.
 
@@ -283,8 +284,8 @@ Import the station data into R
 Load the most up-to-date station data into an R "data frame":
 
 ```{r read-station-data}
-stations <- read.csv("Divvy_Stations_2017_Q3Q4.csv",
-                     stringsAsFactors = FALSE)
+stations<-read.csv("Divvy_Stations_2017_Q3Q4.csv",
+                   stringsAsFactors = FALSE)
 ```
 
 This will define a new object, "stations", in your environment:

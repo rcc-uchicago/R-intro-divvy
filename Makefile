@@ -36,7 +36,6 @@ handout: handout.pdf
 slides.pdf : analysis/slides.Rmd
 	Rscript -e 'knitr::opts_chunk$$set(eval = FALSE); \
 rmarkdown::render("analysis/slides.Rmd")'
-	rm -f analysis/slides.tex
 	mv -f analysis/slides.pdf .
 
 # Generate the slides while also testing the R code.
