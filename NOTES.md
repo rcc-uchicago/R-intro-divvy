@@ -1,12 +1,9 @@
 # Instructor notes
 
-## Post-workshop notes
+## Pre-workshop setup
 
 + In pre-workshop email, ask participants to download workshop packet
   from GitHub.
-
-+ It would be good to show another example of a "geom" other than
-  `geom_point`. Maybe `geom_density` or `geom_text`?
 
 ## Instructor in-class setup
 

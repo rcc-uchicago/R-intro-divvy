@@ -57,9 +57,9 @@ read.divvy.data <- function (station.file, trip.files) {
     trips <- rbind(trips,x)
   }
 
-  # Remove the stop times, and the "from" and "to" station names from the
+  # Remove the stop times, and the "from" and "to" station ids from the
   # trip data.
-  trips <- trips[-c(3,7,9)]
+  trips <- trips[-c(3,6,8)]
   
   # Set some of the table columns to factors.
   cat("Preparing combined trip data.\n")
@@ -69,23 +69,22 @@ read.divvy.data <- function (station.file, trip.files) {
               usertype          = factor(usertype),
               gender            = factor(gender),
               bikeid            = factor(bikeid),
-              from_station_id   = factor(from_station_id,stations$id),
-              to_station_id     = factor(to_station_id,stations$id))
+              from_station_name = factor(from_station_name,stations$name),
+              to_station_name   = factor(to_station_name,stations$name))
 
   # Convert the start times from character strings to dates (here I'm
   # following the suggestions made by Larry Layne and Austin Wehrwein).
-  cat("Converting dates and times.\n")
+  cat("Extracting years from start times.\n")
   trips <-
     transform(trips,
               start_time = strptime(start_time,format = "%m/%d/%Y %H:%M"))
   trips <-
-    transform(trips,
-              start.year = factor(as.numeric(format(start_time,"%Y"))),
-              start.week = as.numeric(format(start_time,"%W")),
-              start.day  = factor(weekdays(as.Date(start_time)),
-                                  c("Monday","Tuesday","Wednesday","Thursday",
-                                    "Friday","Saturday","Sunday")),
-              start.hour = as.numeric(strftime(start_time,format = "%H")))
+    transform(trips,start.year = factor(as.numeric(format(start_time,"%Y"))))
+  # start.week = as.numeric(format(start_time,"%W"))
+  # start.day  = factor(weekdays(as.Date(start_time)),
+  #                     c("Monday","Tuesday","Wednesday","Thursday",
+  #                       "Friday","Saturday","Sunday"))
+  # start.hour = as.numeric(strftime(start_time,format = "%H"))
   
   # Return a list object containing the station data and the trip
   # data.

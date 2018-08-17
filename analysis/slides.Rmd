@@ -121,25 +121,22 @@ git clone https://github.com/rcc-uchicago/
 + **Note:** If you are using the RCC cluster, also download workshop
   packet on the cluster.
 
-What's in the workshop packet
-=============================
+What's included in the workshop packet
+======================================
 
 1. **analysis**: directory where the code and data for our analyses
    will be stored.
 
 2. **slides.pdf**: the workshop slides.
 
-Open slides.pdf on your computer
-================================
+    + This PDF is useful for copying & pasting code from the
+      slides. (Although I have found that you should only copy one
+      line at a time.)
 
-+ This PDF is useful for copying & pasting code from the slides.
+    + The PDF is included in the workshop packet.
 
-+ *Note:* sometimes copying multi-line code doesn't work.
-
-+ The PDF is included in the workshop packet.
-
-+ You can also view the PDF by clicking the "slides.pdf" item on
-  the GitHub webpage.
+    + You can also view the PDF by clicking the "slides.pdf" item on
+      the GitHub webpage.
 
 Set up your R environment
 =========================
@@ -191,8 +188,8 @@ not empty, and you should restart R with a clean environment.
 
 + Or, in RStudio, go to **Session > Restart R**.
 
-Create a file to keep track of your analysis code
-=================================================
+Creating a file to keep track of your analysis code
+===================================================
 
 + In RStudio, select **File > R Script**.
 
@@ -326,6 +323,7 @@ Inspect the data in more detail:
 ```{r inspect-station-data-4}
 sapply(stations,class)
 object.size(stations)
+print(object.size(stations),units = "Kb")
 ```
 
 *What do we learn about the station data from running these
@@ -350,6 +348,32 @@ table(x)
 ```
 
 *Did we gain any additional insight from running these commands?*
+
+
+Selecting rows & columns
+========================
+
+Select first 4 rows of "name" column:
+
+```{r select-rows}
+stations$name[1:4]
+stations[1:4,2]
+stations[1:4,"name"]
+```
+
+Select first 4 rows and multiple columns:
+
+```{r select-columns}
+stations[1:4,c(2,3,6)]
+stations[1:4,c("name","city","dpcapacity")]
+```
+
+Getting the row and column names:
+
+```{r station-names}
+colnames(stations)
+rownames(stations)
+```
 
 Take an even closer look at "dpcapacity"
 ========================================
@@ -398,22 +422,6 @@ summary(x)
 
 *Did you discover an issue with the data from running these commands?*
 
-What is a "factor"?
-===================
-
-TO DO: Add more text to this slide.
-
-Factors are often very useful in data analyses. Let's take a deeper look.
-
-```{r inspect-factor}
-attributes(x)
-unclass(x)
-```
-
-From the `unclass(x)` call, we see that a factor is really just an
-integer with values 1, 2, 3, *etc*., with which each integer value is
-associated with a *label* (e.g., "Chicago", "Evanston").
-
 Improving the "city" column
 ===========================
 
@@ -429,43 +437,32 @@ selected rows:
 
 ```{r revise-city-data-2}
 stations[rows,"city"] <- "Chicago"
+summary(stations$city)
 ```
 
 The "city" column is more useful if it is a factor, so let's convert
-it:
+the column directly inside the data frame:
 
 ```{r revise-city-data-3}
-summary(stations)
 stations$city <- factor(stations$city)
-summary(stations)
+summary(stations$city)
 ```
 
-There are many ways to select rows & columns
-============================================
+What is a "factor"?
+===================
 
-Select first 4 rows of "name" column:
+Factors are often very useful in data analyses. Let's take a deeper
+look at what a factor *is*.
 
-```{r select-rows}
-stations$name[1:4]
-stations[1:4,2]
-stations[1:4,"name"]
+```{r inspect-factor}
+x <- stations$city
+attributes(x)
+unclass(x)
 ```
 
-+ *Do you prefer one of these approaches?*
-
-Select  first 4 rows and multiple columns:
-
-```{r select-columns}
-stations[1:4,c(2,3,6)]
-stations[1:4,c("name","city","dpcapacity")]
-```
-
-*Can rows be selected by name?*
-
-```{r station-names}
-colnames(stations)
-rownames(stations)
-```
+From the `unclass(x)` call, we see that a factor is really just an
+integer with values 1, 2, 3, *etc*., with which each integer value is
+associated with a *label* (e.g., "Chicago", "Evanston").
 
 Save your code & session state
 ==============================
@@ -503,7 +500,7 @@ Main concepts covered so far
 
 + Factors = categorical variables.
 
-+ Selecting & and columns.
++ Selecting rows & columns.
 
 + Order rows of a data frame.
 
@@ -541,6 +538,7 @@ before. Consider that the trips data is much larger:
 ```{r trip-data-size}
 nrow(trips)
 ncol(trips)
+print(object.size(trips),units = "Mb")
 ```
 
 This gives an opportunity to demonstrate a faster method
@@ -564,12 +562,10 @@ library(readr)
 Let's use the `read_csv` function from this package:
 
 ```{r read-trip-data-readr}
-trips <-
-  read_csv("Divvy_Trips_2017_Q4.csv",na = "")
+trips <- read_csv("Divvy_Trips_2017_Q4.csv")
 ```
 
-**Note:** `read_csv` is similar to `read.csv`, but not the same (I set
-  `na = ""` to make `read_csv` more similar to `read.csv`).
+**Note:** `read_csv` is similar to `read.csv`, but not the same.
 
 + *How much faster is `read_csv`?*
 
@@ -651,35 +647,30 @@ summary(trips$gender)
 levels(trips$gender)
 ```
 
-*What problem have we stumbled upon?*
+We observe that many gender entries are missing.
 
-Handling "missing" data
-=======================
+"Missing" data
+==============
 
-In R, "missing data" should always be assigned the special value `NA`
-("not available" or "not assigned"):
++ In R, "missing data" should always be assigned the special value `NA`
+  ("not available" or "not assigned").
 
-```{r convert-trip-data-2}
-rows <- which(trips$gender == "")
-trips[rows,"gender"] <- NA
-trips$gender <- factor(trips$gender)
-summary(trips$gender)
-```
++ Many functions in R will correctly handle missing data as long as
+  they are encoded as `NA`.
 
-Many functions in R will correctly handle missing data as long as
-they are encoded as `NA`.
++ The `read_csv` function from the `readr` package is "smart" enough
+  to figure out that blank entries in the CSV file should be converted
+  to `NA`.
 
 Convert "station" columns to factors
 ====================================
 
-Next, let's convert the "from station" and "to station" columns to
-factors:
+It is also useful to convert the "from station" column to a factor:
 
-```{r convert-trip-data-3}
+```{r summarize-from-station-data}
+summary(trips$from_station_name)
 trips$from_station_name <-
   factor(trips$from_station_name)
-trips$to_station_name <-
-  factor(trips$to_station_name)
 summary(trips)
 ```
 
@@ -694,17 +685,6 @@ dates & times.
 + Processing dates & times is more complicated.
 
 + See `help(strptime)` and the **lubridate** package.
-
-Main concepts covered in second part
-====================================
-
-+ Install & use a package.
-
-+ Handle missing data (NA's).
-
-+ Create a data frame.
-
-+ Create a plot from a data frame.
 
 Preparing data is tedious
 =========================
@@ -734,9 +714,9 @@ Moving beyond data preparation
 + So far, we have illustrated a few of the challenges of working with
   large tabular data sets ("data frames").
 
-+ In order to proceed to fun stuff, I've "hidden" some of the additional
-  complications—I wrote a function in R to import and merge all the
-  Divvy data into a single data frame.
++ In order to proceed to fun stuff, I've automated the data
+  preparation steps by writing a *function* in R to import and merge
+  all the Divvy data into a single data frame.
 
 Outline of workshop
 ===================
@@ -751,21 +731,31 @@ Outline of workshop
 
 5. Create plots comparing bike sharing in 2016 & 2017.
 
+Clean up your environment
+=========================
+
+Here, we will begin a new analysis, so let's refresh our environment:
+
+```{r clean-up-environment}
+rm(list = ls())
+```
+
+Or, in RStudio, go to **Session > Restart R**.
+
 Import the 2016 & 2017 Divvy data
 =================================
 
-+ So far, we have only analyzed the trip data from the 4th quarter
+So far, we have only analyzed the trip data from the 4th quarter
 of 2017.
-
-+ I wrote a function `read.divvy.data` to automate the reading and
-processing of all the downloaded Divvy data: it reads all the CSV
-files, then merge them into two data frames: one for the stations, and
-one for the trips. Run this code to load this function into your
-R environment:
 
 ```{r load-functions}
 source("functions.R")
 ```
+
+I wrote a function `read.divvy.data` to automate the reading and
+processing of all the downloaded Divvy data. It reads all the CSV
+files, then merges them into two data frames: one for the stations, and
+one for the trips.
 
 Import the 2016 & 2017 Divvy data
 =================================
@@ -773,19 +763,12 @@ Import the 2016 & 2017 Divvy data
 Choose which station and trip files to import:
 
 ```{r import-divvy-data-1}
-tripfiles <- Sys.glob("Divvy_Trips*.csv")
-stnfile <- "Divvy_Stations_2017_Q3Q4.csv"
+stnfile   <- "Divvy_Stations_2017_Q3Q4.csv"
+tripfiles <- Sys.glob("Divvy_Trips*.csv") 
 ```
 
 Variables `stnfile` and `tripfiles` contains the names of the files to
 be importedl they do not actually contain any data.
-
-**Note:** If your computer does not have enough memory to load all the
-trip data, run this instead:
-
-```{r import-divvy-data-1a, eval=FALSE}
-tripfiles <- Sys.glob("Divvy_Trips*Q1.csv")`
-```
 
 Import the 2016 & 2017 Divvy data
 =================================
@@ -797,25 +780,28 @@ readr package.
 divvy <- read.divvy.data(stnfile,tripfiles)
 ```
 
+**Note:** If your computer does not have enough memory to load all the
+trip data, use only the Q1 trip files instead:
+
+```{r import-divvy-data-1a, eval=FALSE}
+tripfiles <- Sys.glob("Divvy_Trips*Q1.csv")
+```
+
 What `read.divvy.data` does:
 
-+ Reads the Divvy station data from the specified CSV file.
++ Reads the Divvy station data from the CSV file.
 
-+ Reads the Divvy trip data from the specified CSV files.
++ Reads the Divvy trip data from the CSV files.
 
 + Combines the Divvy trip data into a single data frame.
 
-+ Takes additional steps to prepare the data for a more convenient
-  analysis; e.g., converts some columns to factors, extracts years
-  from the "start time" column.
-
-+ Outputs a list object containing two data frames: (1) station
-  data, (2) trip data.
++ Takes additional steps to prepare the data.
 
 Import the 2016 & 2017 Divvy data
 =================================
 
-The output is a "list" containing two data frames:
+The output is a "list" containing two data frames. Let's extract the
+data frames from the list:
 
 ```{r inspect-divvy-data}
 names(divvy)
@@ -825,12 +811,13 @@ rm(divvy)
 head(stations)
 head(trips)
 nrow(trips)
-object.size(trips)
 ```
 
 + *Were more trips taken in 2016 or 2017?*
 
 + *Which columns were converted to factors?*
+
++ *What oddities do you notice from the summary?*
 
 Out first ggplot: a map of the Divvy stations
 =============================================
@@ -866,28 +853,65 @@ The "stations" data frame gives the geographic co-ordinates (latitude
 map from the "stations" data frame in only a few lines of code:
 
 ```{r plot-station-map-1}
-p <- ggplot(data    = stations,
-            mapping = aes(x = longitude,
-			              y = latitude))
+aes1 <- aes(x = longitude,y = latitude)
+p    <- ggplot(stations,aes1)
 print(p)
 out <- geom_point()
 p2  <- ggplot_add(out,p)
 print(p2)
 ```
 
+*What geographic features of Chicago are recognizable from this plot?*
+
 Adjusting the plot
 ==================
 
-Let's make a few small adjustments to improve the plot:
+Let's make a few adjustments to the plot:
 
 ```{r plot-station-map-2}
 out <- geom_point(shape = 21,fill = "darkblue",
-                 color = "white",size = 2)
+                  color = "white",size = 3)
 p3  <- ggplot_add(out,p)
 print(p3)
 ```
 
-*What geographic features of Chicago are recognizable from this plot?*
+Plotting contours instead of points
+===================================
+
+We can reuse our existing code, replacing the `geom_point` with a
+`geom_density_2d`, to create a very different plot:
+
+```{r plot-station-map-3}
+out  <- geom_density_2d()
+p4   <- ggplot_add(out,p)
+print(p4)
+```
+
+Use colors to highlight the largest stations
+============================================
+
+To do this, map the "dpcapacity" column to colour in the plot:
+
+```{r plot-station-map-4}
+aes2 <- aes(x     = longitude,
+            y     = latitude,
+            color = dpcapacity)
+p   <- ggplot(stations,aes2)
+out <- geom_point()
+p <- ggplot_add(out,p)
+print(p)
+```
+
+The colour scale is not great, so let's improve it:
+
+```{r plot-station-map-5}
+out <- scale_color_gradient2(low = "white",
+  mid = "skyblue",high = "red",midpoint = 25)
+p <- ggplot_add(out,p)
+print(p)
+```
+
+*Where are the largest Divvy stations?*
 
 Scale stations by the number of departures
 ==========================================
@@ -903,13 +927,15 @@ containing the total number departures, which is calculated from the
 "trips" data frame:
 
 ```{r count-trips-per-station}
-counts <- table(trips$from_station_id)
+counts <- table(trips$from_station_name)
 ```
 
-The counts should be the same order as the stations—*why is this?*
+Because we carefully prepared the data frame in `read.divvy.data`,
+station counts should be the same order as the stations. We can check
+this:
 
 ```{r check-station-trip-counts}
-all(names(counts) == stations$id)
+all(names(counts) == stations$name)
 ```
 
 Scale stations by the number of departures
@@ -918,20 +944,20 @@ Scale stations by the number of departures
 Add these trip counts to the "stations" data frame:
 
 ```{r add-counts-to-stations}
-stations$departures <- c(counts)
+stations$departures <- as.vector(counts)
 head(stations)
 ```
 
 Let's use this column in our new plot:
 
-```{r plot-station-map-3}
-p <- ggplot(data = stations,
-  mapping = aes(x    = longitude,
-                y    = latitude,
-				size = sqrt(departures)))
-out <- geom_point(shape = 21,fill = "blue",
-                  color = "white")
-p   <- ggplot_add(out,p)
+```{r plot-station-map-6}
+aes3 <- aes(x    = longitude,
+            y    = latitude,
+    	    size = sqrt(departures))
+p    <- ggplot(stations,aes3)
+out  <- geom_point(shape = 21,fill = "blue",
+                   color = "white")
+p    <- ggplot_add(out,p)
 print(p)
 ```
 
@@ -942,14 +968,13 @@ For exploratory analyses, GIF and PNG are great formats because the
 files are easy to attach to emails or webpages:
 
 ```{r save-station-map-png}
-ggsave("station_map.png",
-       plot = p,dpi = 150)
+ggsave("station_map.png",p,dpi = 100)
 ```
 
 For print or publication, save in a vector graphics format:
 
 ```{r save-station-map-pdf}
-ggsave("station_map.pdf",plot = p)
+ggsave("station_map.pdf",p)
 ```
 
 Save your code & session state
@@ -977,10 +1002,10 @@ We will use the `subset` and `table` to do this:
 ```{r count-trips-by-year}
 d1 <- subset(trips,start.year == 2016)
 d2 <- subset(trips,start.year == 2017)
-x1 <- table(d1$from_station_id)
-x2 <- table(d2$from_station_id)
-stations$dep.2016 <- c(x1)
-stations$dep.2017 <- c(x2)
+x1 <- table(d1$from_station_name)
+x2 <- table(d2$from_station_name)
+stations$dep.2016 <- as.vector(x1)
+stations$dep.2017 <- as.vector(x2)
 head(stations)
 ```
 
@@ -991,11 +1016,10 @@ As before, now that we have prepared a data frame, plotting with
 ggplot is relatively straightforward:
 
 ```{r plot-2016-vs-2017-trips-1}
-p <- ggplot(data = stations,
-            mapping = aes(x = dep.2016,
-			y = dep.2017))
-out <- geom_point(shape = 20,size = 2)
-p   <- ggplot_add(out,p)
+aes3 <- aes(x = dep.2016,y = dep.2017)
+p    <- ggplot(stations,aes3)
+out  <- geom_point(shape = 20,size = 2)
+p    <- ggplot_add(out,p)
 print(p)		
 ```
 
@@ -1027,16 +1051,18 @@ ggplot: Take home points
 + Creating sophisticated plots requires relatively little effort
 *provided the data are in the right form.*
 
-+ All plots in ggplot have these three elements:
++ All plots in ggplot2 require these three elements:
 
     1. A data frame.
 
-    2. An "aesthetic mapping" that declares how columns are plotted.
+    2. An "aesthetic mapping" that declares how columns are mapped to
+       plot features (axes, shapes, colors, *etc.*).
 
     3. A "geom", short for “geometric object,” that specifies the type
-       of plot.
+        of plot.
 
-+ Plots are created by combining "layers" using the + operator.
++ All plots are created by *adding layers.*
+
 
 Why data analysis in R?
 =======================
