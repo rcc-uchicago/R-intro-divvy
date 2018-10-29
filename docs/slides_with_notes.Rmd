@@ -536,8 +536,7 @@ Outline of workshop
 5. Create a scatterplot comparing bike sharing activity in 2016
    and 2017.
 
-Import the Divvy trip data into R
-=================================
+# 32. Import the Divvy trip data into R
 
 Previously, we used `read.csv` to import station data into R. Let's
 now use `read.csv` to load the trip data from the 4th quarter of 2017:
@@ -548,20 +547,20 @@ trips <-
            stringsAsFactors = FALSE)
 ```
 
-You may find that this command look longer to run than
-before. Consider that the trips data is much larger:
+You may find that this command look longer to run than before. The
+trips data frame is much larger:
 
 ```{r trip-data-size}
 nrow(trips)
 ncol(trips)
-print(object.size(trips),units = "Mb")
+object.size(trips)
 ```
 
-This gives an opportunity to demonstrate a faster method
-implemented in a *package*.
+> Instructor notes: This gives an opportunity to demonstrate a faster
+> method implemented in a package.
 
-Import Divvy trip data using `readr` (optional)
-===============================================
+33. Import Divvy trip data using `readr`
+========================================
 
 Install the **readr** package from CRAN:
 
@@ -569,7 +568,7 @@ Install the **readr** package from CRAN:
 install.packages("readr")
 ```
 
-Load the functions from the package into your R environment:
+Load the package functions into your R environment:
 
 ```{r load-readr}
 library(readr)
@@ -581,12 +580,11 @@ Let's use the `read_csv` function from this package:
 trips <- read_csv("Divvy_Trips_2017_Q4.csv")
 ```
 
-**Note:** `read_csv` is similar to `read.csv`, but not the same.
+> Instructor notes: How much faster is `read_csv`? `read_csv` is
+> similar to `read.csv`, but not the same.
 
-+ *How much faster is `read_csv`?*
-
-Import Divvy trip data using `readr` (optional)
-===============================================
+34. Import Divvy trip data using `readr`
+========================================
 
 The `read_csv` output is *not* a data frame—it is a "tibble".
 
@@ -600,42 +598,22 @@ Typically, I convert it to a data frame:
 class(trips) <- "data.frame"
 ```
 
-+ For more on tibbles, see:
+> Instructor notes:
+>
+>   + The readr package has many other features not covered here.
+>
+>   + Another fast method is `fread` from the "data.table" package.
+>
+>   + "Vignettes" are a great way to learn about a package:
+>      `vignette("readr")
+>
+>   + How to learn more about a package? `help(package = readr)`
+>
+>   + Where are the packages installed to? `.libPaths()`
+>
 
-    - http://r4ds.had.co.nz
-
-+ The **readr** package has many other features not covered here.
-
-+ Another fast method is `fread` from the **data.table** package.
-
-More on packages in R
-=====================
-
-"Vignettes" are a great way to learn about a package:
-
-```{r readr-vignette, eval=FALSE}
-vignette(package = "readr")
-vignette("readr")
-```
-
-+ CRAN is the official package source:
-
-    - https://cran.r-project.org.
-
-+ Other good places to find packages:
-
-    - Bioconductor
-    - GitHub.
-
-+ *What packages are already installed?*
-  `rownames(installed.packages())`
-
-+ *Where do the packages live?* `.libPaths()`
-
-+ *How to learn more about a package?* `help(package=readr)`
-
-A first glance at the trips data
-================================
+35. A first glance at the trips data
+====================================
 
 Let's use some of the same commands we used earlier to quickly get an
 overview of the trip data:
