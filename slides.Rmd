@@ -128,6 +128,10 @@ git clone https://github.com/rcc-uchicago/
 
 (Note the URL in the git command should not contain any spaces.)
 
++ If necessary, uncompress the ZIP file.
+
++ If necessary, rename folder to **R-intro-divvy**.
+
 
 10. What's included in the workshop packet
 ==========================================
@@ -158,7 +162,7 @@ sessionInfo()
 ============================
 
 The R environment is where all variables (and functions) are stored and
-accessed. You should start with an empty environment. Run t his:
+accessed. You should start with an empty environment. Run this:
 
 ```{r check-env}
 ls()
@@ -172,49 +176,22 @@ empty and you should restart R with a clean environment. Do either:
 + Or, in RStudio, **Session > Clear Workspace**.
 
 
-New slide
-=========
+14. Load code for the hands-on exercises
+========================================
 
-+ *We will run all the code from the **"analysis"** folder*.
+Open R Markdown source file, **slides.Rmd**.
 
-+ To change your working directory:
+  + In RStudio, select **File > Open File**.
 
-    + In R, use `setwd()` function.
+  + Alternatively, use your favourite text editor.
 
-    + In RStudio, select **Session > Set Working Directory > Choose
-      Directory...`**
-
-Before continuing, check that you have the right working directory:
-
-```{r check-wd}
-getwd()  # Should end with "analysis".
-```
-
-Creating a file to keep track of your analysis code
-===================================================
-
-+ In RStudio, select **File > R Script**.
-
-+ Alternatively, use your favourite editor.
-
-+ Add some comments to the title to remind yourself what this file is
-  for, e.g.,
-
-    ```
-    # Some of the R code I wrote during the RCC
-	# workshop on August 16, 2018.
-    ```
-
-+ Save the file in the [**"analysis"**](../analysis) folder.
-  Name the file whatever you'd like (e.g., `divvyanalysis.R`).
-
-The Console is the "brains" of RStudio
-======================================
+15. The Console is the "brains" of RStudio
+==========================================
 
 ![](docs/images/rstudio.jpg)
 
-Download the Divvy data
-=======================
+16. Download the Divvy data
+===========================
 
 + Disk space required: at least **2 GB**.
 
@@ -222,7 +199,7 @@ Download the Divvy data
 
     + [**www.divvybikes.com/system-data**][divvy-data]
 
-+ Download them to the [**"analysis"**](../analysis) folder.
++ Download them to the **R-intro-divvy** folder.
 
 + You should have 4 ZIP files:
 
@@ -235,17 +212,33 @@ Download the Divvy data
 
 + Decompress ("unzip") all of these files.
 
-Check that you have all the files 
-=================================
+17. Check that you have all the files 
+=====================================
 
-After unzipping, you should have **15** CSV files.
+After unzipping, you should have **15** CSV files. Check this:
 
 ```{r list-files}
-Sys.glob("*.csv")
+list.files(pattern = "*.csv")
 ```
 
-*If you don't see all 15 CSV files, you have not successfully
-downloaded and/or unzipped all the files in the "data" directory.*
+
+18. Set your working directory to "R-intro-divvy"
+=================================================
+
+Check that you have the right working directory:
+
+```{r check-wd}
+getwd() # Should end with "R-intro-divvy".
+```
+
+If you don't, change your working directory:
+
+  + In R, use `setwd()` function.
+
+  + In RStudio, select **Session > Set Working Directory > Choose
+    Directory...`**
+
+Before continuing, double-check that you have the right working directory.
 
 Outline of workshop
 ===================
@@ -260,22 +253,12 @@ Outline of workshop
 
 5. Create plots comparing bike sharing in 2016 & 2017.
 
-Eyeball the station data in the CSV file
-========================================
+# 20. View the station data in the CSV file
 
 + Open the CSV file **Divvy_Stations_2017_Q1Q2.csv** in RStudio, or in
   your favourite text editor (e.g., Notepad in Windows, TextEdit on
   Mac).
 
-+ CSV is a simple and commonly used data format.
-
-+ It is easily read into R, and read by humans.
-
-+ Each line stores an item (station).
-
-+ The first line is a special line called the "header".
-
-+ Entries in each line (table row) are separated by commas.
 
 Import the station data into R
 ==============================
