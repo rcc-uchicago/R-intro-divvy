@@ -680,7 +680,7 @@ and the names of trip data files to import & merge.
 
 ```{r import-divvy-data-1}
 stationfile <- "Divvy_Stations_2017_Q3Q4.csv"
-tripfiles <- list.files(pattern = "Divvy_Trips_*") 
+tripfiles <- list.files(pattern="Divvy_Trips_*") 
 ```
 
 
@@ -697,7 +697,7 @@ This may take a minute to run, or longer if you have not installed the
 readr package.
 
 
-27. Inspect the 2016 & 2017 Divvy data
+47. Inspect the 2016 & 2017 Divvy data
 ======================================
 
 The output is a "list" object, in which each list element is a data
@@ -714,13 +714,13 @@ nrow(trips)
 ```
 
 
-Out first ggplot: a map of the Divvy stations
-=============================================
+48. Our first plot: a map of the Divvy stations
+===============================================
 
 We will use the
 [**ggplot2** package](https://github.com/tidyverse/ggplot2). It is a
-powerful (though not always intuitive) set of plotting functions that
-extend the base plotting fuctions in R.
+powerful (though not immediately intuitive) set of plotting functions
+that extend the base plotting functions in R.
 
 ```{r install-ggplot, eval=FALSE}
 install.packages("ggplot2")
@@ -740,8 +740,8 @@ library(ggplot2)
 library(cowplot)
 ```
 
-Plot station longitude vs. latitude
-===================================
+49. Plot station longitude vs. latitude
+=======================================
 
 The "stations" data frame gives the geographic co-ordinates (latitude
 & longitude) for each station. With ggplot, we can create a station
@@ -756,10 +756,9 @@ p2  <- ggplot_add(out,p)
 print(p2)
 ```
 
-*What geographic features of Chicago are recognizable from this plot?*
 
-Adjusting the plot
-==================
+50. Adjusting the plot
+======================
 
 Let's make a few adjustments to the plot:
 
@@ -770,55 +769,39 @@ p3  <- ggplot_add(out,p)
 print(p3)
 ```
 
-Plotting contours instead of points
-===================================
-
-We can reuse our existing code, replacing the `geom_point` with a
-`geom_density_2d`, to create a very different plot:
-
-```{r plot-station-map-3}
-out  <- geom_density_2d()
-p4   <- ggplot_add(out,p)
-print(p4)
-```
-
-Use colors to highlight the largest stations
-============================================
+51. Use colors to highlight the largest stations
+================================================
 
 To do this, map the "dpcapacity" column to colour in the plot:
 
 ```{r plot-station-map-4}
-aes2 <- aes(x     = longitude,
-            y     = latitude,
-            color = dpcapacity)
+aes2 <- aes(x    = longitude,
+            y    = latitude,
+            fill = dpcapacity)
 p   <- ggplot(stations,aes2)
-out <- geom_point()
+out <- geom_point(shape = 21,color = "white",size = 3)
 p <- ggplot_add(out,p)
 print(p)
 ```
+
+52. Use colors to highlight the largest stations
+================================================
 
 The colour scale is not great, so let's improve it:
 
 ```{r plot-station-map-5}
-out <- scale_color_gradient2(low = "white",
-  mid = "skyblue",high = "red",midpoint = 25)
+out <- scale_fill_gradient2(low = "skyblue",
+  mid = "darkblue",high = "red",midpoint = 25)
 p <- ggplot_add(out,p)
 print(p)
 ```
 
-*Where are the largest Divvy stations?*
 
 Scale stations by the number of departures
 ==========================================
 
-Next, let's add an additional piece of information to this
-visualization:
-
-+ Number of departures at each station, should (?) roughly correspond
-to population density.
-
 To do this, we need to add a new column to the "stations" data frame
-containing the total number departures, which is calculated from the
+containing the total number departures. It can be calculated from the
 "trips" data frame:
 
 ```{r count-trips-per-station}
@@ -833,13 +816,15 @@ this:
 all(names(counts) == stations$name)
 ```
 
+
 Scale stations by the number of departures
 ==========================================
 
-Add these trip counts to the "stations" data frame:
+Add the trip counts to the "stations" data frame:
 
 ```{r add-counts-to-stations}
-stations$departures <- as.vector(counts)
+counts <- as.vector(counts)
+stations$departures <- counts
 head(stations)
 ```
 
@@ -850,14 +835,14 @@ aes3 <- aes(x    = longitude,
             y    = latitude,
     	    size = sqrt(departures))
 p    <- ggplot(stations,aes3)
-out  <- geom_point(shape = 21,fill = "blue",
+out  <- geom_point(shape = 21,fill = "darkblue",
                    color = "white")
 p    <- ggplot_add(out,p)
 print(p)
 ```
 
-How to save and share your plot
-===============================
+Save & share your plot
+========================
 
 For exploratory analyses, GIF and PNG are great formats because the
 files are easy to attach to emails or webpages:
@@ -881,8 +866,8 @@ This is a good time to save your session.
 save.image("divvyanalysis.RData")
 ```
 
-Compare 2017 biking activity against 2016
-=========================================
+Compare 2017 biking activity against 2016 (optional)
+====================================================
 
 Earlier, we observed an increase in trips from 2016 to 2017. Which
 stations experienced the largest increase? 
