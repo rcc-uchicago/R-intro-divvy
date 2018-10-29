@@ -342,7 +342,8 @@ object.size(stations)
 > let them figure out what sort of data is contained in this table.
 > Does this reveal any issues with the data?
 >
-> What happens if we run `summary("stations")`?
+> What happens if we run `summary("stations")` instead of
+> `summary(stations)`?
 
 23. Take a closer look at the "dpcapacity" column
 =================================================
@@ -625,13 +626,12 @@ head(trips)
 summary(trips)
 ```
 
-Unfortunately, the summary command isn't particularly informative for
-many of the columns.
+> Instructor notes: Unfortunately, the summary command isn't
+> particularly informative for many of the columns. What columns should
+> we convert to factors?
 
-+ *What columns should we convert to factors?*
-
-Convert "gender" to a factor
-============================
+36. Convert "gender" to a factor
+================================
 
 Let's start by converting the "gender" column to a factor:
 
@@ -641,47 +641,45 @@ summary(trips$gender)
 levels(trips$gender)
 ```
 
-We observe that many gender entries are missing.
+> Instructor notes: We see that many gender entries are missing.
 
-"Missing" data
-==============
+37. "Missing data"
+==================
 
-+ In R, "missing data" should always be assigned the special value `NA`
-  ("not available" or "not assigned").
++ In R, "missing data" should be assigned the special value `NA` ("not
+  available").
 
 + Many functions in R will correctly handle missing data as long as
   they are encoded as `NA`.
 
-+ The `read_csv` function from the `readr` package is "smart" enough
++ The `read_csv` function from the `readr` package was "smart" enough
   to figure out that blank entries in the CSV file should be converted
   to `NA`.
 
-Convert "station" columns to factors
-====================================
+38. Convert "station" columns to factors
+========================================
 
-It is also useful to convert the "from station" column to a factor:
+The "from station" column is also more useful as a factor:
 
 ```{r summarize-from-station-data}
 summary(trips$from_station_name)
 trips$from_station_name <-
   factor(trips$from_station_name)
-summary(trips)
+summary(trips$from_station_name)
 ```
 
-The summary is now more informative.
-
-A note about dates & times
+39. A note about dates & times
 ==========================
 
-+ `summary(trips)` is also not useful for the
-dates & times.
++ `summary(trips$start_time)` and `summary(trips$end_time)` are also
+  not informative.
 
 + Processing dates & times is more complicated.
 
 + See `help(strptime)` and the **lubridate** package.
 
-Preparing data is tedious
-=========================
+40. Preparing data is tedious
+=============================
 
 Data preparation is sometimes >90% of the effort!
 
@@ -697,20 +695,17 @@ Common issues include:
 
 + Missing data.
 
-+ Many other examples of Poor Practices in recording data.
+> Instructor notes: And we haven't yet dealt with merging data from
+multiple files---this usually creates more headaches!
 
-(And we haven't yet dealt with merging data from multiple files—this
-usually creates more headaches!)
-
-Moving beyond data preparation
-==============================
+41. Moving beyond data preparation
+==================================
 
 + So far, we have illustrated a few of the challenges of working with
   large tabular data sets ("data frames").
 
 + In order to proceed to fun stuff, I've automated the data
-  preparation steps by writing a *function* in R to import and merge
-  all the Divvy data into a single data frame.
+  preparation steps by writing an R *function* to do this.
 
 Outline of workshop
 ===================
@@ -725,10 +720,9 @@ Outline of workshop
 
 5. Create plots comparing bike sharing in 2016 & 2017.
 
-Clean up your environment
-=========================
+# 43. Refresh your environment
 
-Here, we will begin a new analysis, so let's refresh our environment:
+We will begin a new analysis, so let's refresh our environment:
 
 ```{r clean-up-environment}
 rm(list = ls())
@@ -736,66 +730,55 @@ rm(list = ls())
 
 Or, in RStudio, go to **Session > Restart R**.
 
-Import the 2016 & 2017 Divvy data
-=================================
+44. Import the 2016 & 2017 Divvy data
+=====================================
 
-So far, we have only analyzed the trip data from the 4th quarter
-of 2017.
+Load function `read.divvy.data` that automates the reading and
+processing of all the downloaded Divvy data:
 
 ```{r load-functions}
 source("functions.R")
 ```
 
-I wrote a function `read.divvy.data` to automate the reading and
-processing of all the downloaded Divvy data. It reads all the CSV
-files, then merges them into two data frames: one for the stations, and
-one for the trips.
+45. Import the 2016 & 2017 Divvy data
+=====================================
 
-Import the 2016 & 2017 Divvy data
-=================================
-
-Choose which station and trip files to import:
+The `read.divvy.data` takes the name of the station file to import,
+and the names of trip data files to import & merge.
 
 ```{r import-divvy-data-1}
-stnfile   <- "Divvy_Stations_2017_Q3Q4.csv"
-tripfiles <- Sys.glob("Divvy_Trips*.csv") 
+stationfile <- "Divvy_Stations_2017_Q3Q4.csv"
+tripfiles <- list.files(pattern="Divvy_Trips_*") 
 ```
 
-Variables `stnfile` and `tripfiles` contains the names of the files to
-be importedl they do not actually contain any data.
+> Instructor notes: Variables `stationfile` and `tripfiles` contains
+> the names of the files to be imported. They do not actually contain
+> any data.
 
-Import the 2016 & 2017 Divvy data
-=================================
+46. Import the 2016 & 2017 Divvy data
+=====================================
+
+Load and process the trip and station data:
+
+```{r import-divvy-data-2}
+divvy <- read.divvy.data(stationfile,tripfiles)
+```
 
 This may take a minute to run, or longer if you have not installed the
 readr package.
 
-```{r import-divvy-data-2}
-divvy <- read.divvy.data(stnfile,tripfiles)
-```
+> Instructor notes: If someone's computer does not have enough memory to
+> load all the trip data, they can load only the Q1 trip files instead:
+> 
+> ```{r import-divvy-data-1a, eval=FALSE}
+> tripfiles <- list.files(pattern = "*Q1.csv")
+> ```
 
-**Note:** If your computer does not have enough memory to load all the
-trip data, use only the Q1 trip files instead:
+47. Inspect the 2016 & 2017 Divvy data
+======================================
 
-```{r import-divvy-data-1a, eval=FALSE}
-tripfiles <- Sys.glob("Divvy_Trips*Q1.csv")
-```
-
-What `read.divvy.data` does:
-
-+ Reads the Divvy station data from the CSV file.
-
-+ Reads the Divvy trip data from the CSV files.
-
-+ Combines the Divvy trip data into a single data frame.
-
-+ Takes additional steps to prepare the data.
-
-Import the 2016 & 2017 Divvy data
-=================================
-
-The output is a "list" containing two data frames. Let's extract the
-data frames from the list:
+The output is a "list" object, in which each list element is a data
+frame. Let's extract the data frames from the list:
 
 ```{r inspect-divvy-data}
 names(divvy)
@@ -807,19 +790,21 @@ head(trips)
 nrow(trips)
 ```
 
-+ *Were more trips taken in 2016 or 2017?*
+> Instructor notes: Here are some questions to ask the students, time
+> permitting.
+> 
+>   + Were more trips taken in 2016 or 2017?
+>   + Which columns were converted to factors?
+>   + Do you notice any other oddities from the summary?
+>
 
-+ *Which columns were converted to factors?*
-
-+ *What oddities do you notice from the summary?*
-
-Out first ggplot: a map of the Divvy stations
-=============================================
+48. Our first plot: a map of the Divvy stations
+===============================================
 
 We will use the
 [**ggplot2** package](https://github.com/tidyverse/ggplot2). It is a
-powerful (though not always intuitive) set of plotting functions that
-extend the base plotting fuctions in R.
+powerful (though not immediately intuitive) set of plotting functions
+that extend the base plotting functions in R.
 
 ```{r install-ggplot, eval=FALSE}
 install.packages("ggplot2")
@@ -839,8 +824,8 @@ library(ggplot2)
 library(cowplot)
 ```
 
-Plot station longitude vs. latitude
-===================================
+49. Plot station longitude vs. latitude
+=======================================
 
 The "stations" data frame gives the geographic co-ordinates (latitude
 & longitude) for each station. With ggplot, we can create a station
