@@ -1,7 +1,7 @@
-analysis/Divvy_Stations_*.csv
-analysis/Divvy_Trips_*.csv
-analysis/*.RData
-analysis/*.pdf
-analysis/*.png
+Divvy_Stations_*.csv
+Divvy_Trips_*.csv
+divvyanalysis.RData
+station_map.pdf
+station_map.png
 slides_test.pdf
 handout.pdf

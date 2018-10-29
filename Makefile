@@ -24,13 +24,16 @@
 
 # RULES
 # -----
-all: slides
+all: slides handout
 
 slides: slides.pdf
 
 test: slides_test.pdf
 
 handout: handout.pdf
+
+slides.Rmd : slides_with_notes.Rmd
+	grep -v '^>' slides_with_notes.Rmd > slides.Rmd
 
 # Create the slides.
 slides.pdf : analysis/slides.Rmd
@@ -43,8 +46,6 @@ rmarkdown::render("analysis/slides.Rmd")'
 slides_test.pdf : analysis/slides.Rmd
 	Rscript -e 'knitr::opts_chunk$$set(eval = TRUE); \
 rmarkdown::render("analysis/slides.Rmd",output_file = "slides_test.pdf")'
-	rm -f analysis/slides_test.tex
-	mv -f analysis/slides_test.pdf .
 
 # Create the handout.
 handout.pdf : analysis/slides.Rmd
