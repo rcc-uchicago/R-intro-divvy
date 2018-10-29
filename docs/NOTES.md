@@ -5,6 +5,13 @@
 + In pre-workshop email, ask participants to download workshop packet
   from GitHub.
 
+## Things to bring
+
++ Water bottle.
++ Adapter for connecting to projector.
++ Power cord for laptop.
++ Printout of slides with notes.
+
 ## Instructor in-class setup
 
 + Arrange chairs and tables, if necessary.
@@ -15,4 +22,4 @@
    - Arrange panes to maximize size of Console pane.
    - Hide Toolbar.
    - Use Vibrant Ink theme.
-+ Print out slides with notes.
+

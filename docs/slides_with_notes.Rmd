@@ -17,7 +17,8 @@ knitr::opts_chunk$set(results = "hide",fig.show = "hide",
 2. Aims of workshop
 ===================
 
-1. Work through a basic data analysis in R.
+1. Get hands-on experience with the basic elements of data analysis
+   in R.
 
 2. Understand how to import data from a CSV file into an R data frame.
 
@@ -25,9 +26,9 @@ knitr::opts_chunk$set(results = "hide",fig.show = "hide",
 
 4. Learn how to install & use R packages.
 
-5. Use ggplot2 to create plots from data frames.
+5. Use ggplot2 to plot data.
 
-6. Learn through "live coding"—this includes learning from our
+6. Learn through "live coding"---this includes learning from our
    mistakes!
 
 # 3. Our goal: Analyze Divvy data from 2016 & 2017
@@ -43,6 +44,19 @@ knitr::opts_chunk$set(results = "hide",fig.show = "hide",
 
 + Once we have carefully prepared the data, creating visualizations is
   (relatively) easy.
+
+4. The programmatic approach
+============================
+
++ Data analyses are usually *iterative* and *repetitive*. Therefore, you
+need to develop skills to *efficiently* create & refine your analyses.
+
++ The *programmatic approach* to data analysis will allow us to...
+
+    - Reuse our code to quickly create sophisticated
+      analyses---*automation is your friend*!
+
+    - Expand capabilities by installing new R packages.
 
 4. It's your choice
 ===================
