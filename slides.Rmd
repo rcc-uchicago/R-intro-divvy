@@ -775,11 +775,12 @@ print(p3)
 To do this, map the "dpcapacity" column to colour in the plot:
 
 ```{r plot-station-map-4}
-aes2 <- aes(x    = longitude,
+aes1 <- aes(x    = longitude,
             y    = latitude,
             fill = dpcapacity)
-p   <- ggplot(stations,aes2)
-out <- geom_point(shape = 21,color = "white",size = 3)
+p   <- ggplot(stations,aes1)
+out <- geom_point(shape = 21,color = "white",
+                  size = 3)
 p <- ggplot_add(out,p)
 print(p)
 ```
@@ -797,8 +798,8 @@ print(p)
 ```
 
 
-Scale stations by the number of departures
-==========================================
+53. Scale stations by the number of departures
+==============================================
 
 To do this, we need to add a new column to the "stations" data frame
 containing the total number departures. It can be calculated from the
@@ -817,8 +818,8 @@ all(names(counts) == stations$name)
 ```
 
 
-Scale stations by the number of departures
-==========================================
+54. Scale stations by the number of departures
+==============================================
 
 Add the trip counts to the "stations" data frame:
 
@@ -831,18 +832,18 @@ head(stations)
 Let's use this column in our new plot:
 
 ```{r plot-station-map-6}
-aes3 <- aes(x    = longitude,
+aes1 <- aes(x    = longitude,
             y    = latitude,
     	    size = sqrt(departures))
-p    <- ggplot(stations,aes3)
+p    <- ggplot(stations,aes1)
 out  <- geom_point(shape = 21,fill = "darkblue",
                    color = "white")
 p    <- ggplot_add(out,p)
 print(p)
 ```
 
-Save & share your plot
-========================
+55. Save & share your plot
+==========================
 
 For exploratory analyses, GIF and PNG are great formats because the
 files are easy to attach to emails or webpages:
@@ -857,8 +858,8 @@ For print or publication, save in a vector graphics format:
 ggsave("station_map.pdf",p)
 ```
 
-Save your code & session state
-==============================
+56. Save your code & session state
+==================================
 
 This is a good time to save your session.
 
@@ -866,58 +867,72 @@ This is a good time to save your session.
 save.image("divvyanalysis.RData")
 ```
 
-Compare 2017 biking activity against 2016 (optional)
-====================================================
+57. Compare 2016 & 2017 biking activity (optional)
+==================================================
 
-Earlier, we observed an increase in trips from 2016 to 2017. Which
-stations experienced the largest increase? 
+Earlier, we noticed that that were more trips in 2017 than 2016. Which
+stations experienced the largest increase? To examine this question,
+we take the following steps:
 
-+ To examine this, we need to count trips separately for 2016
-  and 2017.
+1. Count trips from each station separately for 2016 and 2017.
 
-+ Then we add these counts to the "stations" data frame.
+2. Add these counts to the "stations" data frame.
 
-We will use the `subset` and `table` to do this:
+# 58. Count trips separately for 2016 & 2017
+
+We will use `subset` followed by `table` to do this:
 
 ```{r count-trips-by-year}
 d1 <- subset(trips,start.year == 2016)
 d2 <- subset(trips,start.year == 2017)
 x1 <- table(d1$from_station_name)
 x2 <- table(d2$from_station_name)
-stations$dep.2016 <- as.vector(x1)
-stations$dep.2017 <- as.vector(x2)
+```
+
+59. Add counts to the stations data frame
+=========================================
+
+Remember we need to convert the "table" output to a vector:
+
+```{r add-counts-by-year-to-data-frame}
+x1 <- as.vector(x1)
+x2 <- as.vector(x2)
+stations$dep.2016 <- x1
+stations$dep.2017 <- x2
 head(stations)
 ```
 
-Scatterplot of trips by station (2016 vs. 2017)
-===============================================
+60. Scatterplot of trips by station (2016 vs. 2017)
+===================================================
 
 As before, now that we have prepared a data frame, plotting with
-ggplot is relatively straightforward:
+ggplot is relatively easy:
 
 ```{r plot-2016-vs-2017-trips-1}
-aes3 <- aes(x = dep.2016,y = dep.2017)
-p    <- ggplot(stations,aes3)
-out  <- geom_point(shape = 20,size = 2)
+aes1 <- aes(x = dep.2016,y = dep.2017)
+p    <- ggplot(stations,aes1)
+out  <- geom_point(shape = 20,size = 3,
+                   color = "darkblue")
 p    <- ggplot_add(out,p)
 print(p)		
 ```
 
-It is difficult to tell which stations had more trips in 2017—we need
-to compare against the x = y line.
+61. Scatterplot of trips by station
+===================================
+
+It is difficult to tell which stations had more trips in 2017---we
+need to compare against the x = y line.
 
 ```{r plot-2016-vs-2017-trips-2}
-out2 <- geom_abline(slope = 1,color = "skyblue",
+out2 <- geom_abline(slope = 1,color = "orange",
                     linetype = "dashed")
 p    <- ggplot_add(out2,p)
 print(p)
 ```
 
-*One station stands out because it has had a much larger increase in
-trips than other stations. What is this station?*
 
-Save your code & session state
-==============================
+62. Save your code & session state
+==================================
 
 Save your final results for safekeeping.
 
@@ -925,8 +940,8 @@ Save your final results for safekeeping.
 save.image("divvyanalysis.RData")
 ```
 
-ggplot: Take home points
-========================
+63. ggplot: Take home points
+============================
 
 + Creating sophisticated plots requires relatively little effort
 *provided the data are in the right form.*
@@ -943,17 +958,16 @@ ggplot: Take home points
 
 + All plots are created by *adding layers.*
 
+64. Why data analysis in R?
+===========================
 
-Why data analysis in R?
-=======================
-
-+ In R, a spreadsheet ("data frame") is an object that can be inspected,
++ In R, a spreadsheet ("data frame") is an *object* that can be inspected,
   manipulated and summarized with code.
 
 + Therefore, we can write scripts to *automate* our data analyses.
 
-Parting thoughts
-================
+65. Parting thoughts
+====================
 
 1. Always record your analysis steps in a file so you can reproduce
    them later.
@@ -961,12 +975,12 @@ Parting thoughts
 2. Keep track of which packages (and the versions) you
    used with `sessionInfo()`.
 
-3. Use packages—don’t reinvent the wheel.
+3. Use "R Markdown" to document your analyses.
 
-4. Email help@rcc.uchicago.edu for advice on using R on the RCC
+4. Use packages---don’t reinvent the wheel.
+
+5. Email help@rcc.uchicago.edu for advice on using R on the RCC
    cluster.
-
-5. Use "R Markdown" to document your analyses.
 
 6. See the **workflowr** package for simplifying organizing & sharing
    of data analyses; e.g., **stephenslab.github.io/wflow-divvy**.
