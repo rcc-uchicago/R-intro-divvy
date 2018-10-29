@@ -3,18 +3,19 @@ title: "Introduction to R for data analysis"
 author: Peter Carbonetto
 output:
   beamer_presentation:
-    template: beamer.tex
+    template: docs/beamer.tex
+    keep_tex: false
+    fig_caption: false
     pandoc_args: "--highlight-style=pygments"
 ---
 
 ```{r knitr-options, echo=FALSE}
-knitr::opts_chunk$set(comment = "#",collapse = TRUE,fig.align = "center",
-                      results = "hide", fig.show = "hide", message = FALSE,
-		              warning = FALSE)
+knitr::opts_chunk$set(results = "hide",fig.show = "hide",
+                      message = FALSE,warning = FALSE)
 ```
 
-Aims of workshop
-================
+2. Aims of workshop
+===================
 
 1. Work through a basic data analysis in R.
 
@@ -29,8 +30,7 @@ Aims of workshop
 6. Learn through "live coding"—this includes learning from our
    mistakes!
 
-Our goal: Analyze Divvy data from 2016 & 2017
-=============================================
+# 3. Our goal: Analyze Divvy data from 2016 & 2017
 
 + Investigate bike sharing trends in Chicago.
 
@@ -44,8 +44,8 @@ Our goal: Analyze Divvy data from 2016 & 2017
 + Once we have carefully prepared the data, creating visualizations is
   (relatively) easy.
 
-It's your choice
-================
+4. It's your choice
+===================
 
 Your may choose to...
 
@@ -209,7 +209,7 @@ Creating a file to keep track of your analysis code
 The Console is the "brains" of RStudio
 ======================================
 
-![](../images/rstudio.jpg)
+![](docs/images/rstudio.jpg)
 
 Download the Divvy data
 =======================

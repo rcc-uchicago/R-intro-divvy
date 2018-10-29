@@ -24,7 +24,7 @@
 
 # RULES
 # -----
-all: slides handout
+all: slides
 
 slides: slides.pdf
 
@@ -32,33 +32,27 @@ test: slides_test.pdf
 
 handout: handout.pdf
 
-slides.Rmd : slides_with_notes.Rmd
-	grep -v '^>' slides_with_notes.Rmd > slides.Rmd
+slides.Rmd : docs/slides_with_notes.Rmd
+	grep -v '^>' docs/slides_with_notes.Rmd > slides.Rmd
 
 # Create the slides.
-slides.pdf : analysis/slides.Rmd
+slides.pdf : slides.Rmd
 	Rscript -e 'knitr::opts_chunk$$set(eval = FALSE); \
-rmarkdown::render("analysis/slides.Rmd")'
-	rm -f analysis/slides.tex
-	mv -f analysis/slides.pdf .
+rmarkdown::render("slides.Rmd")'
 
 # Generate the slides while also testing the R code.
-slides_test.pdf : analysis/slides.Rmd
+slides_test.pdf : slides.Rmd
 	Rscript -e 'knitr::opts_chunk$$set(eval = TRUE); \
-rmarkdown::render("analysis/slides.Rmd",output_file = "slides_test.pdf")'
+rmarkdown::render("slides.Rmd",output_file = "slides_test.pdf")'
 
 # Create the handout.
-handout.pdf : analysis/slides.Rmd
+handout.pdf : slides.Rmd
 	Rscript -e 'knitr::opts_chunk$$set(eval = FALSE); \
-rmarkdown::render("analysis/slides.Rmd",output_format = "pdf_document", \
+rmarkdown::render("slides.Rmd",output_format = "pdf_document", \
 output_file = "handout.pdf")'
-	rm -f analysis/handout.tex
-	mv -f analysis/handout.pdf .
 
 clean:
-	rm -f slides.pdf slides_test.pdf handout.pdf
-	rm -f analysis/divvyanalysis.RData
-	rm -f analysis/station_map.pdf
-	rm -f analysis/station_map.png
+	rm -f slides.pdf slides_test.pdf handout.pdf divvyanalysis.RData
+	rm -f station_map.pdf station_map.png
 
 

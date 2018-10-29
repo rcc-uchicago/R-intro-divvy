@@ -8,10 +8,11 @@
 ## Instructor in-class setup
 
 + Arrange chairs and tables, if necessary.
-+ Use Terminal (not iTerm).
-+ Use "My Settings" Terminal theme (with Consolas font)
-+ Simplify bash prompt.
 + Clean up Desktop and quit applications (particularly Slack).
-+ Arrange PDF of slides and Terminal on screen.
-+ Start up R with the wrong working directory.
-+ Create handout.pdf and print it out.
++ Arrange PDF of slides and RStudio on screen.
++ Start up RStudio with the wrong working directory.
++ RStudio setup:
+   - Arrange panes to maximize size of Console pane.
+   - Hide Toolbar.
+   - Use Vibrant Ink theme.
++ Print out slides with notes.
