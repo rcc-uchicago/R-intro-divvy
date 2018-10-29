@@ -35,7 +35,7 @@ knitr::opts_chunk$set(results = "hide",fig.show = "hide",
 
 + Investigate bike sharing trends in Chicago.
 
-+ We will use data made available from Divvy:
++ We will use data made available by Divvy:
 
     - www.divvybikes.com/system-data
 
@@ -73,25 +73,16 @@ Your may choose to...
 
 + Follow what I do on the projector.
 
-**Note:** If you use the RCC cluster I'm assuming you know how to set
-up an interactive computing session with appropriate amount of compute
-time and memory, load R or RStudio, and display graphics (e.g., using
-ThinLinc).
 
 6. Software we will use today
 =============================
 
-1. **R**
+1. **R** and/or **RStudio**.
 
 2. R packages **readr**, **ggplot2** & **cowplot**.
 
-3. **RStudio** (optional).
 
-**Note:** I'm assuming you have already installed R and/or RStudio on
-your laptop, or you are using the RCC cluster.
-
-7. Outline of workshop
-======================
+# 7. Outline of workshop
 
 1. Initial setup.
 
@@ -103,14 +94,13 @@ your laptop, or you are using the RCC cluster.
 
 5. Create plots comparing bike sharing in 2016 & 2017.
 
-Initial setup
-=============
+# 8. Initial setup
 
 + WiFi.
 
 + Power outlets.
 
-+ Tidying up your computer.
++ Computer clutter.
 
 + Workshop packet.
 
@@ -120,8 +110,8 @@ Initial setup
 
 + Help.
 
-Download or "clone" git repository
-==================================
+9. Download or "clone" git repository
+=====================================
 
 Download the workshop packet to your computer.
 
@@ -138,30 +128,52 @@ git clone https://github.com/rcc-uchicago/
 
 (Note the URL in the git command should not contain any spaces.)
 
-+ **Note:** If you are using the RCC cluster, also download workshop
-  packet on the cluster.
 
-What's included in the workshop packet
-======================================
+10. What's included in the workshop packet
+==========================================
 
-1. **analysis**: directory where the code and data for our analyses
-   will be stored.
++ **slides.pdf**: These slides.
 
-2. **slides.pdf**: the workshop slides.
++ **slides.Rmd**: R Markdown source used to generate these
+  slides. *Copy & paste code from this file.*
 
-    + This PDF is useful for copying & pasting code from the
-      slides. (Although I have found that you should only copy one
-      line at a time.)
++ **functions.R**: Some R code used in the hands-on examples.
 
-    + The PDF is included in the workshop packet.
-
-    + You can also view the PDF by clicking the "slides.pdf" item on
-      the GitHub webpage.
-
-Set up your R environment
-=========================
+11. Set up your R environment
+=============================
 
 + Launch R or RStudio.
+
+12. Run `sessionInfo()`
+=======================
+
+Check the version of R that you are using:
+
+```{r check-version}
+sessionInfo()
+```
+
+
+13. Clear your R environment
+============================
+
+The R environment is where all variables (and functions) are stored and
+accessed. You should start with an empty environment. Run t his:
+
+```{r check-env}
+ls()
+```
+
+If this outputs names of objects, it means your environment is not
+empty and you should restart R with a clean environment. Do either:
+
++ `rm(list = ls())`.
+
++ Or, in RStudio, **Session > Clear Workspace**.
+
+
+New slide
+=========
 
 + *We will run all the code from the **"analysis"** folder*.
 
@@ -177,36 +189,6 @@ Before continuing, check that you have the right working directory:
 ```{r check-wd}
 getwd()  # Should end with "analysis".
 ```
-
-Run `sessionInfo()`
-===================
-
-Check the version of R that you are using:
-
-```{r check-version}
-sessionInfo()
-```
-
-If you are using an older version of R (version 3.3 or less), I
-strongly recommend upgrading to the latest version. *Some of the
-examples may not work in older versions of R.*
-
-Check your R environment
-========================
-
-The R environment is where all variables and functions are stored and
-accessed. You should start with an empty environment:
-
-```{r check-env}
-ls()
-```
-
-If you see names of objects listed, it means your environment is
-not empty, and you should restart R with a clean environment.
-
-+ Do `rm(list = ls())`.
-
-+ Or, in RStudio, go to **Session > Restart R**.
 
 Creating a file to keep track of your analysis code
 ===================================================
