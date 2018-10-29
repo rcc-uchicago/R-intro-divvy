@@ -58,7 +58,7 @@ need to develop skills to *efficiently* create & refine your analyses.
 
     - Expand capabilities by installing new R packages.
 
-4. It's your choice
+5. It's your choice
 ===================
 
 Your may choose to...
@@ -78,8 +78,8 @@ up an interactive computing session with appropriate amount of compute
 time and memory, load R or RStudio, and display graphics (e.g., using
 ThinLinc).
 
-Software we will use today
-==========================
+6. Software we will use today
+=============================
 
 1. **R**
 
@@ -90,8 +90,8 @@ Software we will use today
 **Note:** I'm assuming you have already installed R and/or RStudio on
 your laptop, or you are using the RCC cluster.
 
-Outline of workshop
-===================
+7. Outline of workshop
+======================
 
 1. Initial setup.
 
@@ -106,9 +106,15 @@ Outline of workshop
 Initial setup
 =============
 
-+ WiFi
++ WiFi.
 
-+ Power outlets
++ Power outlets.
+
++ Tidying up your computer.
+
++ Workshop packet.
+
++ Reading what I type.
 
 + Pace, questions (e.g., keyboard shortcuts).
 

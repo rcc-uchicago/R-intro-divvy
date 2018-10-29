@@ -24,21 +24,29 @@
 
 # RULES
 # -----
-all: slides
+all: slides 
 
-slides: slides.pdf
+slides: slides.pdf 
 
 test: slides_test.pdf
 
 handout: handout.pdf
 
-slides.Rmd : docs/slides_with_notes.Rmd
-	grep -v '^>' docs/slides_with_notes.Rmd > slides.Rmd
+slides_with_notes.Rmd : docs/slides_with_notes.Rmd
+	cp docs/slides_with_notes.Rmd slides_with_notes.Rmd
+
+slides.Rmd : slides_with_notes.Rmd
+	grep -v '^>' slides_with_notes.Rmd > slides.Rmd
 
 # Create the slides.
 slides.pdf : slides.Rmd
 	Rscript -e 'knitr::opts_chunk$$set(eval = FALSE); \
 rmarkdown::render("slides.Rmd")'
+
+# Create the slides with the instructor's notes.
+slides_with_notes.pdf : slides_with_notes.Rmd
+	Rscript -e 'knitr::opts_chunk$$set(eval = FALSE); \
+rmarkdown::render("slides_with_notes.Rmd",output_format = "pdf_document")'
 
 # Generate the slides while also testing the R code.
 slides_test.pdf : slides.Rmd
@@ -53,6 +61,7 @@ output_file = "handout.pdf")'
 
 clean:
 	rm -f slides.pdf slides_test.pdf handout.pdf divvyanalysis.RData
-	rm -f station_map.pdf station_map.png
+	rm -f slides_with_notes.Rmd station_map.pdf station_map.png
+	rm -f slides_with_notes.pdf
 
 
