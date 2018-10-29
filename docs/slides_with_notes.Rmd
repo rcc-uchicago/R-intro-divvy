@@ -288,10 +288,10 @@ Mac).
 >   + Entries in each line (table row) are separated by commas.
 >
 
-Import the station data into R
-==============================
+21. Import the station data into R
+==================================
 
-Load the most up-to-date station data into an R "data frame":
+Load 2017 third & fourth quarter station data into an R "data frame":
 
 ```{r read-station-data}
 stations<-read.csv("Divvy_Stations_2017_Q3Q4.csv",
@@ -310,18 +310,18 @@ It is a "data frame" object:
 class(stations)
 ```
 
-*What does "read.csv" do, and what is a "data frame"?* R has detailed
-documentation:
+> Instructor notes: What does "read.csv" do, and what is a "data
+> frame"? R has detailed documentation on these these topics:
+> 
+> ```{r help-readcsv-dataframe, eval=FALSE}
+> help(read.csv)
+> help(data.frame)
+> ```
 
-```{r help-readcsv-dataframe, eval=FALSE}
-help(read.csv)
-help(data.frame)
-```
+22. Inspect the station data
+============================
 
-Inspect the station data
-========================
-
-Run these commands to start inspecting the station data:
+Check that the data were ready correctly, and inspect the table:
 
 ```{r inspect-station-data-3}
 nrow(stations)
@@ -336,14 +336,16 @@ Inspect the data in more detail:
 ```{r inspect-station-data-4}
 sapply(stations,class)
 object.size(stations)
-print(object.size(stations),units = "Kb")
 ```
 
-*What do we learn about the station data from running these
-commands? Does this reveal any issues with the data?*
+> Instructor notes: Let the students first run these commands, and
+> let them figure out what sort of data is contained in this table.
+> Does this reveal any issues with the data?
+>
+> What happens if we run `summary("stations")`?
 
-Take a closer look at the "dpcapacity" column
-=============================================
+23. Take a closer look at the "dpcapacity" column
+=================================================
 
 Create a new object containing only the "dpcapacity" column:
 
@@ -360,11 +362,11 @@ summary(x)
 table(x)
 ```
 
-*Did we gain any additional insight from running these commands?*
+> Instructor notes: Did any of these commands give us additional
+> insight into these data?
 
-
-Selecting rows & columns
-========================
+24. More on selecting rows & columns
+====================================
 
 Select first 4 rows of "name" column:
 
@@ -388,8 +390,8 @@ colnames(stations)
 rownames(stations)
 ```
 
-Take an even closer look at "dpcapacity"
-========================================
+25. Take an even closer look at "dpcapacity"
+============================================
 
 It is interesting that a few of the Divvy bike stations are much
 larger than the others, whereas others have no docks. Where are these
@@ -410,13 +412,13 @@ head(stations2)
 tail(stations2)
 ```
 
-*How were the rows originally ordered in `stations`?*
+> Instructor notes: How were the rows originally ordered in `stations`?
 
-Take a closer look at the "city" column
-=======================================
+26. Take a closer look at the "city" column
+===========================================
 
-Above we inspected *numeric* data. Next's, let's look at an example of
-non-numeric data.
+Previously, we inspected *numeric* data. Next's, let's look at an
+example of non-numeric data.
 
 ```{r inspect-city-data-1}
 x <- stations$city
@@ -433,10 +435,11 @@ class(x)
 summary(x)
 ```
 
-*Did you discover an issue with the data from running these commands?*
+> Instructor notes: What issue did we discover from running these
+> commands?
 
-Improving the "city" column
-===========================
+27. Fixing the "city" column
+============================
 
 Let's fix the problem we found earlier. First, select the offending
 rows of the table:
@@ -445,7 +448,7 @@ rows of the table:
 rows <- which(stations$city == "Chicago ")
 ```
 
-Fix the "city" column by overwriting the "city" entries in the
+Fix the "city" column by *overwriting* the "city" entries in the
 selected rows:
 
 ```{r revise-city-data-2}
@@ -453,16 +456,16 @@ stations[rows,"city"] <- "Chicago"
 summary(stations$city)
 ```
 
-The "city" column is more useful if it is a factor, so let's convert
-the column directly inside the data frame:
+The "city" column is more useful if it is a factor. Let's modify
+this column inside the data frame:
 
 ```{r revise-city-data-3}
 stations$city <- factor(stations$city)
 summary(stations$city)
 ```
 
-What is a "factor"?
-===================
+28. What is a "factor"? (optional)
+==================================
 
 Factors are often very useful in data analyses. Let's take a deeper
 look at what a factor *is*.
@@ -477,8 +480,8 @@ From the `unclass(x)` call, we see that a factor is really just an
 integer with values 1, 2, 3, *etc*., with which each integer value is
 associated with a *label* (e.g., "Chicago", "Evanston").
 
-Save your code & session state
-==============================
+29. Save your code & session state
+==================================
 
 It is important to periodically save:
 
@@ -500,8 +503,8 @@ Load Workspace...** in RStudio, or run this code:
 load("divvyanalysis.RData")
 ```
 
-Main concepts covered so far
-============================
+30. Main concepts covered so far
+================================
 
 + The R environment & working directory.
 
@@ -509,13 +512,13 @@ Main concepts covered so far
 
 + Tools to inspect a data frame.
 
-+ Manipulate a data frame.
-
-+ Factors = categorical variables.
++ Tools to manipulate a data frame.
 
 + Selecting rows & columns.
 
-+ Order rows of a data frame.
++ Ordering rows of a data frame.
+
++ Factors = categorical variables.
 
 + Save state of R environment.
 
