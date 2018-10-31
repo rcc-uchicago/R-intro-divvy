@@ -16,6 +16,7 @@
 
 + Arrange chairs and tables, if necessary.
 + Clean up Desktop and quit applications (particularly Slack).
++ Clean up files in git repository.
 + Arrange PDF of slides and RStudio on screen.
 + Start up RStudio with the wrong working directory.
 + RStudio setup:

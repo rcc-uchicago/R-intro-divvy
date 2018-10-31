@@ -628,7 +628,6 @@ Common issues include:
 
 + Missing data.
 
-multiple files---this usually creates more headaches!
 
 41. Moving beyond data preparation
 ==================================

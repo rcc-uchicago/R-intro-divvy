@@ -696,7 +696,7 @@ Common issues include:
 + Missing data.
 
 > Instructor notes: And we haven't yet dealt with merging data from
-multiple files---this usually creates more headaches!
+> multiple files---this usually creates more headaches!
 
 41. Moving beyond data preparation
 ==================================
