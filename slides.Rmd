@@ -1029,5 +1029,5 @@ save.image("divvyanalysis.RData")
 
 7. Thank you!
 
-[github-repo]: https://github.com/rcc-uchicago/R-intro-divvy-2
+[github-repo]: https://github.com/rcc-uchicago/R-intro-divvy
 [divvy-data]: https://www.divvybikes.com/system-data
