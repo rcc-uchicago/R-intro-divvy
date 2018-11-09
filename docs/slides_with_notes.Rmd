@@ -321,7 +321,7 @@ class(stations)
 22. Inspect the station data
 ============================
 
-Check that the data were ready correctly, and inspect the table:
+Check that the data were read correctly, and inspect the table:
 
 ```{r inspect-station-data-3}
 nrow(stations)
@@ -348,7 +348,7 @@ object.size(stations)
 23. Take a closer look at the "dpcapacity" column
 =================================================
 
-Create a new object containing only the "dpcapacity" column:
+Select only the "dpcapacity" column, and assign it to a new variable:
 
 ```{r inspect-dpcapacity-data-1}
 x <- stations$dpcapacity
@@ -428,7 +428,7 @@ summary(x)
 ```
 
 The summary is not very useful here! The key is to convert to a
-"factor" (categorical variable):
+"factor" (*i.e.,* categorical variable):
 
 ```{r inspect-city-data-2}
 x <- factor(stations$city)
@@ -464,6 +464,9 @@ this column inside the data frame:
 stations$city <- factor(stations$city)
 summary(stations$city)
 ```
+
+> Instructor notes: The "which" line of code is a pretty good example
+> of a more complicated (compound) expression.
 
 28. What is a "factor"? (optional)
 ==================================
@@ -601,6 +604,11 @@ class(trips) <- "data.frame"
 
 > Instructor notes:
 >
+>   + Explain that modifying the class of an object should only be
+>     done very rarely, and only when you know what you are doing!
+>     Here we know that "trips" is already a data frame (and also a
+>     tibble).
+>
 >   + The readr package has many other features not covered here.
 >
 >   + Another fast method is `fread` from the "data.table" package.
@@ -678,7 +686,57 @@ summary(trips$from_station_name)
 
 + See `help(strptime)` and the **lubridate** package.
 
-40. Preparing data is tedious
+40. Combining trip data from two quarters
+=========================================
+
+Up to this point, we have only examined at the trip data from one
+quarter of one year. Suppose we wanted to analyze the trip
+data from the 3rd and 4th quarters of 2017. How would we do that?
+
+```{r read-Q3-trip-data-readr}
+tripsQ4 <- trips
+tripsQ3 <- read_csv("Divvy_Trips_2017_Q3.csv")
+class(tripsQ3) <- "data.frame"
+```
+
+We can *merge* the two tables *by rows*---that is, we put one table on
+top of the other. 
+
+```{r merge-trip-data}
+trips <- rbind(tripsQ3,tripsQ4)
+```
+
+41. Combining trip data from two quarters
+=========================================
+
+Let's double-check the result:
+
+```{r check-merge}
+dim(tripsQ3)
+dim(tripsQ4)
+dim(trips)
+head(trips)
+```
+
+When merging data sets by rows, we have beware of inconsistencies in
+the columns, e.g.,
+
+```{r check-merge-gender}
+class(tripsQ3$gender)
+class(tripsQ4$gender)
+class(trips$gender)
+```
+
+> Instructor notes: What other inconsistencies might we want to check?
+>
+> There are many, many ways different data sets can have
+> inconsistencies that need to be fixed prior to merging.
+>
+> What mistake did we make in the "rbind" call above? (Hint: the
+> reverse chronological ordering of the trips may not have been
+> preserved.)
+
+42. Preparing data is tedious
 =============================
 
 Data preparation is sometimes >90% of the effort!
@@ -698,7 +756,7 @@ Common issues include:
 > Instructor notes: And we haven't yet dealt with merging data from
 > multiple files---this usually creates more headaches!
 
-41. Moving beyond data preparation
+43. Moving beyond data preparation
 ==================================
 
 + So far, we have illustrated a few of the challenges of working with
@@ -720,7 +778,7 @@ Outline of workshop
 
 5. Create plots comparing bike sharing in 2016 & 2017.
 
-# 43. Refresh your environment
+# 45. Refresh your environment
 
 We will begin a new analysis, so let's refresh our environment:
 
@@ -730,7 +788,7 @@ rm(list = ls())
 
 Or, in RStudio, go to **Session > Restart R**.
 
-44. Import the 2016 & 2017 Divvy data
+46. Import the 2016 & 2017 Divvy data
 =====================================
 
 Load function `read.divvy.data` that automates the reading and
@@ -740,7 +798,7 @@ processing of all the downloaded Divvy data:
 source("readdivvydata.R")
 ```
 
-45. Import the 2016 & 2017 Divvy data
+47. Import the 2016 & 2017 Divvy data
 =====================================
 
 The `read.divvy.data` takes the name of the station file to import,
@@ -755,7 +813,7 @@ tripfiles <- list.files(pattern="Divvy_Trips_*")
 > the names of the files to be imported. They do not actually contain
 > any data.
 
-46. Import the 2016 & 2017 Divvy data
+48. Import the 2016 & 2017 Divvy data
 =====================================
 
 Load and process the trip and station data:
@@ -774,7 +832,7 @@ readr package.
 > tripfiles <- list.files(pattern = "*Q1.csv")
 > ```
 
-47. Inspect the 2016 & 2017 Divvy data
+49. Inspect the 2016 & 2017 Divvy data
 ======================================
 
 The output is a "list" object, in which each list element is a data
@@ -798,7 +856,7 @@ nrow(trips)
 >   + Do you notice any other oddities from the summary?
 >
 
-48. Our first plot: a map of the Divvy stations
+50. Our first plot: a map of the Divvy stations
 ===============================================
 
 We will use the
@@ -824,7 +882,7 @@ library(ggplot2)
 library(cowplot)
 ```
 
-49. Plot station longitude vs. latitude
+51. Plot station longitude vs. latitude
 =======================================
 
 The "stations" data frame gives the geographic co-ordinates (latitude
@@ -845,7 +903,7 @@ print(p2)
 >
 > What geographic features of Chicago are recognizable from this plot?
 
-50. Adjusting the plot
+52. Adjusting the plot
 ======================
 
 Let's make a few adjustments to the plot:
@@ -857,7 +915,7 @@ p3  <- ggplot_add(out,p)
 print(p3)
 ```
 
-51. Use colors to highlight the largest stations
+53. Use colors to highlight the largest stations
 ================================================
 
 To do this, map the "dpcapacity" column to colour in the plot:
@@ -873,7 +931,7 @@ p <- ggplot_add(out,p)
 print(p)
 ```
 
-52. Use colors to highlight the largest stations
+54. Use colors to highlight the largest stations
 ================================================
 
 The colour scale is not great, so let's improve it:
@@ -887,7 +945,7 @@ print(p)
 
 > Instructor notes: Where are the largest Divvy stations?
 
-53. Scale stations by the number of departures
+55. Scale stations by the number of departures
 ==============================================
 
 To do this, we need to add a new column to the "stations" data frame
@@ -909,7 +967,7 @@ all(names(counts) == stations$name)
 > Instructor notes: The number of departures at each station, should
 > (roughly) correspond to population density.
 
-54. Scale stations by the number of departures
+56. Scale stations by the number of departures
 ==============================================
 
 Add the trip counts to the "stations" data frame:
@@ -933,7 +991,7 @@ p    <- ggplot_add(out,p)
 print(p)
 ```
 
-55. Save & share your plot
+57. Save & share your plot
 ==========================
 
 For exploratory analyses, GIF and PNG are great formats because the
@@ -949,7 +1007,7 @@ For print or publication, save in a vector graphics format:
 ggsave("station_map.pdf",p)
 ```
 
-56. Save your code & session state
+58. Save your code & session state
 ==================================
 
 This is a good time to save your session.
@@ -958,7 +1016,7 @@ This is a good time to save your session.
 save.image("divvyanalysis.RData")
 ```
 
-57. Compare 2016 & 2017 biking activity (optional)
+59. Compare 2016 & 2017 biking activity (optional)
 ==================================================
 
 Earlier, we noticed that that were more trips in 2017 than 2016. Which
@@ -969,7 +1027,7 @@ we take the following steps:
 
 2. Add these counts to the "stations" data frame.
 
-# 58. Count trips separately for 2016 & 2017
+# 60. Count trips separately for 2016 & 2017
 
 We will use `subset` followed by `table` to do this:
 
@@ -980,7 +1038,7 @@ x1 <- table(d1$from_station_name)
 x2 <- table(d2$from_station_name)
 ```
 
-59. Add counts to the stations data frame
+61. Add counts to the stations data frame
 =========================================
 
 Remember we need to convert the "table" output to a vector:
@@ -993,7 +1051,7 @@ stations$dep.2017 <- x2
 head(stations)
 ```
 
-60. Scatterplot of trips by station (2016 vs. 2017)
+62. Scatterplot of trips by station (2016 vs. 2017)
 ===================================================
 
 As before, now that we have prepared a data frame, plotting with
@@ -1008,7 +1066,7 @@ p    <- ggplot_add(out,p)
 print(p)		
 ```
 
-61. Scatterplot of trips by station
+63. Scatterplot of trips by station
 ===================================
 
 It is difficult to tell which stations had more trips in 2017---we
@@ -1024,7 +1082,7 @@ print(p)
 > Instructor notes: One station stands out because it has had a much
 > larger increase in trips than other stations. What is this station?
 
-62. Save your code & session state
+64. Save your code & session state
 ==================================
 
 Save your final results for safekeeping.
@@ -1033,7 +1091,7 @@ Save your final results for safekeeping.
 save.image("divvyanalysis.RData")
 ```
 
-63. ggplot: Take home points
+65. ggplot: Take home points
 ============================
 
 + Creating sophisticated plots requires relatively little effort
@@ -1051,7 +1109,7 @@ save.image("divvyanalysis.RData")
 
 + All plots are created by *adding layers.*
 
-64. Why data analysis in R?
+66. Why data analysis in R?
 ===========================
 
 + In R, a spreadsheet ("data frame") is an *object* that can be inspected,
@@ -1059,7 +1117,7 @@ save.image("divvyanalysis.RData")
 
 + Therefore, we can write scripts to *automate* our data analyses.
 
-65. Parting thoughts
+67. Parting thoughts
 ====================
 
 1. Always record your analysis steps in a file so you can reproduce
