@@ -790,8 +790,8 @@ The "stations" data frame gives the geographic co-ordinates (latitude
 map from the "stations" data frame in only a few lines of code:
 
 ```{r plot-station-map-1}
-aes1 <- aes(x = longitude,y = latitude)
-p    <- ggplot(stations,aes1)
+a <- aes(x = longitude,y = latitude)
+p <- ggplot(stations,a)
 print(p)
 out <- geom_point()
 p2  <- ggplot_add(out,p)
@@ -805,7 +805,7 @@ print(p2)
 Let's make a few adjustments to the plot:
 
 ```{r plot-station-map-2}
-out <- geom_point(shape = 21,fill = "darkblue",
+out <- geom_point(shape = 21,fill = "limegreen",
                   color = "white",size = 3)
 p3  <- ggplot_add(out,p)
 print(p3)
@@ -817,10 +817,10 @@ print(p3)
 To do this, map the "dpcapacity" column to colour in the plot:
 
 ```{r plot-station-map-4}
-aes1 <- aes(x    = longitude,
-            y    = latitude,
-            fill = dpcapacity)
-p   <- ggplot(stations,aes1)
+a <- aes(x    = longitude,
+         y    = latitude,
+         fill = dpcapacity)
+p <- ggplot(stations,a)
 out <- geom_point(shape = 21,color = "white",
                   size = 3)
 p <- ggplot_add(out,p)
@@ -833,7 +833,7 @@ print(p)
 The colour scale is not great, so let's improve it:
 
 ```{r plot-station-map-5}
-out <- scale_fill_gradient2(low = "skyblue",
+out <- scale_fill_gradient2(low = "dodgerblue",
   mid = "darkblue",high = "red",midpoint = 25)
 p <- ggplot_add(out,p)
 print(p)
@@ -874,12 +874,12 @@ head(stations)
 Let's use this column in our new plot:
 
 ```{r plot-station-map-6}
-aes1 <- aes(x    = longitude,
-            y    = latitude,
-    	    size = sqrt(departures))
-p    <- ggplot(stations,aes1)
-out  <- geom_point(shape = 21,fill = "darkblue",
-                   color = "white")
+a <- aes(x    = longitude,
+         y    = latitude,
+ 	     size = sqrt(departures))
+p <- ggplot(stations,a)
+out  <- geom_point(shape = 21,fill = "white",
+                   color = "black")
 p    <- ggplot_add(out,p)
 print(p)
 ```
@@ -951,9 +951,9 @@ As before, now that we have prepared a data frame, plotting with
 ggplot is relatively easy:
 
 ```{r plot-2016-vs-2017-trips-1}
-aes1 <- aes(x = dep.2016,y = dep.2017)
-p    <- ggplot(stations,aes1)
-out  <- geom_point(shape = 20,size = 3,
+a    <- aes(x = dep.2016,y = dep.2017)
+p    <- ggplot(stations,a)
+out  <- geom_point(shape = 1,size = 2,
                    color = "darkblue")
 p    <- ggplot_add(out,p)
 print(p)		
