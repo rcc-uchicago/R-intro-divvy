@@ -7,9 +7,9 @@
 #   a lot of the R code.
 #
 # * Optionally, type "make handout" to generate a PDF document that
-#   can be used as a handout to distribute to workshop
-#   participants. For improved layout, I recommend setting the YAML
-#   header in slides.Rmd to
+#   can be used as a handout to distribute to workshop participants,
+#   or as an instructor aid. For improved layout, I recommend setting
+#   the YAML header in slides.Rmd to
 # 
 #     ---
 #     title: "Introduction to R for data analysis"

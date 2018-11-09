@@ -39,8 +39,8 @@ on. An RCC account is helpful, but not required.
 
 ## What's included
 
-Here is an overview of the files included in this git repository (the
-"workshop packet"):
+Here is an overview of some of the files included in this git
+repository (the "workshop packet"):
 
 + [README.md](README.md): This file.
 
@@ -49,18 +49,16 @@ Here is an overview of the files included in this git repository (the
 + [LICENSE.md](license.md): License information for the materials in
   this repository.
 
-+ [NOTES.md](NOTES.md): Instructor notes.
++ [slides.pdf](slides.pdf): The slides for the workshop.
 
-+ [slides.pdf](slides.pdf): Workshop slides.
++ [slides.Rmd](slides.Rmd): R Markdown source used to generate these
+  slides.
 
-+ [analysis](analysis): Directory where code and data are stored for
-  our analyses. Also included in this directory is the R Markdown
-  source used to generate the slides.
++ [readdivvydata.R](readdivvydata.R): Some R code used in the hands-on
+  examples.
 
 + [Makefile](Makefile): GNU Makefile containing commands to
   generate the slides from the R Markdown source.
-
-+ [images](images): Directory containing a few images used in the slides.
 
 ## Other information
 
@@ -71,10 +69,10 @@ Here is an overview of the files included in this git repository (the
 [license information](LICENSE.md).
 
 + To generate PDFs of the slides from the R Markdown source, run `make
-slides.pdf` in the [docs](docs) directory. For this to work, you will
-need to to install the [rmarkdown][rmarkdown] package in R, as well as
-the packages used in [slides.Rmd](analysis/slides.Rmd). For more details,
-see the [Makefile](docs/Makefile).
+slides` in the root directory of the git repository. For this to work,
+you will need to to install the [rmarkdown][rmarkdown] package in R,
+as well as the packages used in [slides.Rmd](slides.Rmd). For more
+details, see the [Makefile](Makefile).
 
 + See also the [instructor notes](NOTES.md).
 

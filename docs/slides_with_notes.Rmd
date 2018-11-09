@@ -149,7 +149,7 @@ git clone https://github.com/rcc-uchicago/
 + **slides.Rmd**: R Markdown source used to generate these
   slides. *Copy & paste code from this file.*
 
-+ **functions.R**: Some R code used in the hands-on examples.
++ **readdivvydata.R**: Some R code used in the hands-on examples.
 
 11. Set up your R environment
 =============================
@@ -737,7 +737,7 @@ Load function `read.divvy.data` that automates the reading and
 processing of all the downloaded Divvy data:
 
 ```{r load-functions}
-source("functions.R")
+source("readdivvydata.R")
 ```
 
 45. Import the 2016 & 2017 Divvy data
