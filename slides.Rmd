@@ -73,14 +73,12 @@ Your may choose to...
 
 + Follow what I do on the projector.
 
-
 6. Software we will use today
 =============================
 
 1. **R** and/or **RStudio**.
 
 2. R packages **readr**, **ggplot2** & **cowplot**.
-
 
 # 7. Outline of workshop
 
@@ -132,7 +130,6 @@ git clone https://github.com/rcc-uchicago/
 
 + If necessary, rename folder to **R-intro-divvy**.
 
-
 10. What's included in the workshop packet
 ==========================================
 
@@ -157,7 +154,6 @@ Check the version of R that you are using:
 sessionInfo()
 ```
 
-
 13. Clear your R environment
 ============================
 
@@ -174,7 +170,6 @@ empty and you should restart R with a clean environment. Do either:
 + `rm(list = ls())`.
 
 + Or, in RStudio, **Session > Clear Workspace**.
-
 
 14. Load code for the hands-on exercises
 ========================================
@@ -221,7 +216,6 @@ After unzipping, you should have **15** CSV files. Check this:
 list.files(pattern = "*.csv")
 ```
 
-
 18. Set your working directory to "R-intro-divvy"
 =================================================
 
@@ -259,7 +253,6 @@ Open the CSV file **Divvy_Stations_2017_Q1Q2.csv** in RStudio, or in
 your favourite text editor (e.g., Notepad in Windows, TextEdit on
 Mac).
 
-
 21. Import the station data into R
 ==================================
 
@@ -282,7 +275,6 @@ It is a "data frame" object:
 class(stations)
 ```
 
-
 22. Inspect the station data
 ============================
 
@@ -303,7 +295,6 @@ sapply(stations,class)
 object.size(stations)
 ```
 
-
 23. Take a closer look at the "dpcapacity" column
 =================================================
 
@@ -321,7 +312,6 @@ length(x)
 summary(x)
 table(x)
 ```
-
 
 24. More on selecting rows & columns
 ====================================
@@ -370,7 +360,6 @@ head(stations2)
 tail(stations2)
 ```
 
-
 26. Take a closer look at the "city" column
 ===========================================
 
@@ -391,7 +380,6 @@ x <- factor(stations$city)
 class(x)
 summary(x)
 ```
-
 
 27. Fixing the "city" column
 ============================
@@ -418,7 +406,6 @@ this column inside the data frame:
 stations$city <- factor(stations$city)
 summary(stations$city)
 ```
-
 
 28. What is a "factor"? (optional)
 ==================================
@@ -512,7 +499,6 @@ ncol(trips)
 object.size(trips)
 ```
 
-
 33. Import Divvy trip data using `readr`
 ========================================
 
@@ -550,7 +536,6 @@ Typically, I convert it to a data frame:
 class(trips) <- "data.frame"
 ```
 
-
 35. A first glance at the trips data
 ====================================
 
@@ -564,7 +549,6 @@ head(trips)
 summary(trips)
 ```
 
-
 36. Convert "gender" to a factor
 ================================
 
@@ -575,7 +559,6 @@ trips$gender <- factor(trips$gender)
 summary(trips$gender)
 levels(trips$gender)
 ```
-
 
 37. "Missing data"
 ==================
@@ -653,7 +636,6 @@ class(tripsQ4$gender)
 class(trips$gender)
 ```
 
-
 42. Preparing data is tedious
 =============================
 
@@ -670,7 +652,6 @@ Common issues include:
 + Entry inconsistencies (e.g., additional spaces).
 
 + Missing data.
-
 
 43. Moving beyond data preparation
 ==================================
@@ -725,7 +706,6 @@ stationfile <- "Divvy_Stations_2017_Q3Q4.csv"
 tripfiles <- list.files(pattern="Divvy_Trips_*") 
 ```
 
-
 48. Import the 2016 & 2017 Divvy data
 =====================================
 
@@ -737,7 +717,6 @@ divvy <- read.divvy.data(stationfile,tripfiles)
 
 This may take a minute to run, or longer if you have not installed the
 readr package.
-
 
 49. Inspect the 2016 & 2017 Divvy data
 ======================================
@@ -754,7 +733,6 @@ head(stations)
 head(trips)
 nrow(trips)
 ```
-
 
 50. Our first plot: a map of the Divvy stations
 ===============================================
@@ -793,11 +771,10 @@ map from the "stations" data frame in only a few lines of code:
 a <- aes(x = longitude,y = latitude)
 p <- ggplot(stations,a)
 print(p)
-out <- geom_point()
-p2  <- ggplot_add(out,p)
+g  <- geom_point()
+p2 <- ggplot_add(g,p)
 print(p2)
 ```
-
 
 52. Adjusting the plot
 ======================
@@ -805,9 +782,9 @@ print(p2)
 Let's make a few adjustments to the plot:
 
 ```{r plot-station-map-2}
-out <- geom_point(shape = 21,fill = "limegreen",
+g  <- geom_point(shape = 21,fill = "limegreen",
                   color = "white",size = 3)
-p3  <- ggplot_add(out,p)
+p3 <- ggplot_add(g,p)
 print(p3)
 ```
 
@@ -821,9 +798,9 @@ a <- aes(x    = longitude,
          y    = latitude,
          fill = dpcapacity)
 p <- ggplot(stations,a)
-out <- geom_point(shape = 21,color = "white",
-                  size = 3)
-p <- ggplot_add(out,p)
+g <- geom_point(shape = 21,color = "white",
+                size = 3)
+p <- ggplot_add(g,p)
 print(p)
 ```
 
@@ -833,12 +810,11 @@ print(p)
 The colour scale is not great, so let's improve it:
 
 ```{r plot-station-map-5}
-out <- scale_fill_gradient2(low = "dodgerblue",
+g <- scale_fill_gradient2(low = "dodgerblue",
   mid = "darkblue",high = "red",midpoint = 25)
-p <- ggplot_add(out,p)
+p <- ggplot_add(g,p)
 print(p)
 ```
-
 
 55. Scale stations by the number of departures
 ==============================================
@@ -859,7 +835,6 @@ this:
 all(names(counts) == stations$name)
 ```
 
-
 56. Scale stations by the number of departures
 ==============================================
 
@@ -878,9 +853,9 @@ a <- aes(x    = longitude,
          y    = latitude,
  	     size = sqrt(departures))
 p <- ggplot(stations,a)
-out  <- geom_point(shape = 21,fill = "white",
-                   color = "black")
-p    <- ggplot_add(out,p)
+g <- geom_point(shape = 21,fill = "white",
+                color = "black")
+p <- ggplot_add(g,p)
 print(p)
 ```
 
@@ -951,11 +926,11 @@ As before, now that we have prepared a data frame, plotting with
 ggplot is relatively easy:
 
 ```{r plot-2016-vs-2017-trips-1}
-a    <- aes(x = dep.2016,y = dep.2017)
-p    <- ggplot(stations,a)
-out  <- geom_point(shape = 1,size = 2,
-                   color = "darkblue")
-p    <- ggplot_add(out,p)
+a <- aes(x = dep.2016,y = dep.2017)
+p <- ggplot(stations,a)
+g <- geom_point(shape = 1,size = 2,
+                color = "darkblue")
+p <- ggplot_add(g,p)
 print(p)		
 ```
 
@@ -966,12 +941,11 @@ It is difficult to tell which stations had more trips in 2017---we
 need to compare against the x = y line.
 
 ```{r plot-2016-vs-2017-trips-2}
-out2 <- geom_abline(slope = 1,color = "orange",
-                    linetype = "dashed")
-p    <- ggplot_add(out2,p)
+g2 <- geom_abline(slope = 1,color = "orange",
+                  linetype = "dashed")
+p  <- ggplot_add(g2,p)
 print(p)
 ```
-
 
 64. Save your code & session state
 ==================================
