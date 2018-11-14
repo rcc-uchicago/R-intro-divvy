@@ -1,3 +1,24 @@
+# Read Divvy station data from a CSV file. I've only tested this code
+# on the 2016 and 2017 Divvy data; data from other years may have
+# slightly different formats.
+read.station.data  <- function (filename) {
+
+  # Load the station data.
+  cat("Reading station data from ",filename,".\n",sep="")
+  dat <- read.csv(filename,header = TRUE,stringsAsFactors = FALSE)
+  class(dat) <- "data.frame"
+
+  # Trim the whitespace from the cities column, then convert the
+  # "city" column to a factor.
+  dat <- transform(dat,city = factor(trimws(city)))
+
+  # Strip any columns that are all empty, and return the data frame.
+  cols <- sapply(dat,function (x) !all(is.na(x)))
+  dat  <- dat[cols]
+
+  return(dat)
+}
+
 # Read Divvy trip and station data from CSV files, and combine these
 # data into two data frames (one data frame for the trip data, and
 # another data frame for the station data).
@@ -18,21 +39,7 @@
 #
 # Also note that only the trip start times are retained; the trip end
 # times are removed.
-read.divvy.data <- function (station.file, trip.files) {
-
-  # Load the station data.
-  cat("Reading station data from ",station.file,".\n",sep="")
-  stations <- read.csv(station.file,header = TRUE,
-                       stringsAsFactors = FALSE)
-  class(stations) <- "data.frame"
-
-  # Trim the whitespace from the cities column, then convert the
-  # "city" column to a factor.
-  stations <- transform(stations,city = factor(trimws(city)))
-
-  # Strip any columns that are all empty.
-  cols     <- sapply(stations,function (x) !all(is.na(x)))
-  stations <- stations[cols]
+read.trip.data <- function (trip.files, stations) {
 
   # Figure out whether to use read.csv or read_csv.
   if (requireNamespace("readr",quietly = TRUE))
@@ -75,18 +82,12 @@ read.divvy.data <- function (station.file, trip.files) {
   # Convert the start times from character strings to dates (here I'm
   # following the suggestions made by Larry Layne and Austin Wehrwein).
   cat("Extracting years from start times.\n")
-  trips <-
-    transform(trips,
-              start_time = strptime(start_time,format = "%m/%d/%Y %H:%M"))
-  trips <-
-    transform(trips,start.year = factor(as.numeric(format(start_time,"%Y"))))
-  # start.week = as.numeric(format(start_time,"%W"))
-  # start.day  = factor(weekdays(as.Date(start_time)),
-  #                     c("Monday","Tuesday","Wednesday","Thursday",
-  #                       "Friday","Saturday","Sunday"))
-  # start.hour = as.numeric(strftime(start_time,format = "%H"))
+  trips <- transform(trips,
+             start_time = strptime(start_time,format = "%m/%d/%Y %H:%M"))
+  trips <- transform(trips,
+             start.year = factor(as.numeric(format(start_time,"%Y"))))
   
   # Return a list object containing the station data and the trip
   # data.
-  return(list(stations = stations,trips = trips))
+  return(trips)
 }

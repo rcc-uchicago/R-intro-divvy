@@ -816,14 +816,20 @@ tripfiles <- list.files(pattern="Divvy_Trips_*")
 48. Import the 2016 & 2017 Divvy data
 =====================================
 
-Load and process the trip and station data:
+Load and process the station data:
 
 ```{r import-divvy-data-2}
-divvy <- read.divvy.data(stationfile,tripfiles)
+stations <- read.station.data(stationfile)
 ```
 
-This may take a minute to run, or longer if you have not installed the
-readr package.
+Load and process the trip data:
+
+```{r import-divvy-data-3}
+trips <- read.trip.data(tripfiles,stations)
+```
+
+Loading the trip data may take a minute to run, or longer if you have
+not installed the readr package.
 
 > Instructor notes: If someone's computer does not have enough memory to
 > load all the trip data, they can load only the Q1 trip files instead:
@@ -831,25 +837,21 @@ readr package.
 > ```{r import-divvy-data-1a, eval=FALSE}
 > tripfiles <- list.files(pattern = "*Q1.csv")
 > ```
+>
 
 49. Inspect the 2016 & 2017 Divvy data
 ======================================
 
-The output is a "list" object, in which each list element is a data
-frame. Let's extract the data frames from the list:
-
 ```{r inspect-divvy-data}
-names(divvy)
-stations <- divvy$stations
-trips    <- divvy$trips
-rm(divvy)
 head(stations)
-head(trips)
+summary(stations)
 nrow(trips)
+head(trips)
+summary(trips)
 ```
 
 > Instructor notes: Here are some questions to ask the students, time
-> permitting.
+> permitting:
 > 
 >   + Were more trips taken in 2016 or 2017?
 >   + Which columns were converted to factors?
@@ -893,8 +895,8 @@ map from the "stations" data frame in only a few lines of code:
 a <- aes(x = longitude,y = latitude)
 p <- ggplot(stations,a)
 print(p)
-out <- geom_point()
-p2  <- ggplot_add(out,p)
+g  <- geom_point()
+p2 <- ggplot_add(g,p)
 print(p2)
 ```
 
@@ -909,9 +911,9 @@ print(p2)
 Let's make a few adjustments to the plot:
 
 ```{r plot-station-map-2}
-out <- geom_point(shape = 21,fill = "limegreen",
-                  color = "white",size = 3)
-p3  <- ggplot_add(out,p)
+g  <- geom_point(shape = 21,fill = "limegreen",
+                 color = "white",size = 3)
+p3 <- ggplot_add(g,p)
 print(p3)
 ```
 
@@ -925,9 +927,9 @@ a <- aes(x    = longitude,
          y    = latitude,
          fill = dpcapacity)
 p <- ggplot(stations,a)
-out <- geom_point(shape = 21,color = "white",
-                  size = 3)
-p <- ggplot_add(out,p)
+g <- geom_point(shape = 21,color = "white",
+                size = 3)
+p <- ggplot_add(g,p)
 print(p)
 ```
 
@@ -937,9 +939,9 @@ print(p)
 The colour scale is not great, so let's improve it:
 
 ```{r plot-station-map-5}
-out <- scale_fill_gradient2(low = "dodgerblue",
+g <- scale_fill_gradient2(low = "dodgerblue",
   mid = "darkblue",high = "red",midpoint = 25)
-p <- ggplot_add(out,p)
+p <- ggplot_add(g,p)
 print(p)
 ```
 
@@ -985,9 +987,9 @@ a <- aes(x    = longitude,
          y    = latitude,
  	     size = sqrt(departures))
 p <- ggplot(stations,a)
-out  <- geom_point(shape = 21,fill = "white",
-                   color = "black")
-p    <- ggplot_add(out,p)
+g <- geom_point(shape = 21,fill = "white",
+                color = "black")
+p <- ggplot_add(g,p)
 print(p)
 ```
 
@@ -1058,11 +1060,11 @@ As before, now that we have prepared a data frame, plotting with
 ggplot is relatively easy:
 
 ```{r plot-2016-vs-2017-trips-1}
-a    <- aes(x = dep.2016,y = dep.2017)
-p    <- ggplot(stations,a)
-out  <- geom_point(shape = 1,size = 2,
-                   color = "darkblue")
-p    <- ggplot_add(out,p)
+a <- aes(x = dep.2016,y = dep.2017)
+p <- ggplot(stations,a)
+g <- geom_point(shape = 1,size = 2,
+                color = "darkblue")
+p <- ggplot_add(g,p)
 print(p)		
 ```
 
@@ -1073,9 +1075,9 @@ It is difficult to tell which stations had more trips in 2017---we
 need to compare against the x = y line.
 
 ```{r plot-2016-vs-2017-trips-2}
-out2 <- geom_abline(slope = 1,color = "orange",
-                    linetype = "dashed")
-p    <- ggplot_add(out2,p)
+g2 <- geom_abline(slope = 1,color = "orange",
+                  linetype = "dashed")
+p  <- ggplot_add(g2,p)
 print(p)
 ```
 

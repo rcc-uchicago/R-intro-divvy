@@ -62,6 +62,5 @@ output_file = "handout.pdf")'
 clean:
 	rm -f slides.pdf slides_test.pdf handout.pdf divvyanalysis.RData
 	rm -f slides_with_notes.Rmd station_map.pdf station_map.png
-	rm -f slides_with_notes.pdf
-
+	rm -f slides_with_notes.pdf divvyanalysis.RData
 
