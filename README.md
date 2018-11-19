@@ -2,9 +2,9 @@
 
 Materials for the RCC workshop, "Introduction to R for data analysis".
 
-**Date:** Tuesday, November 13, 2018<br>
-**Time:** 10:00 am to 12:30 pm<br>
-**Location:** Walker room 303
+**Date:** Tuesday, November 20, 2018<br>
+**Time:** 11:20 am to 2:30 pm<br>
+**Location:** KCBD 8th floor conference room
 ([OpenStreetMap][openstreetmap])<br>
 **Instructor:** Peter Carbonetto
 
@@ -82,7 +82,7 @@ These materials were developed by [Peter Carbonetto][peter] at the
 [University of Chicago][uchicago]. Thank you to
 [Matthew Stephens][matthew] for his support and guidance.
 
-[openstreetmap]: https://www.openstreetmap.org/way/155201128
+[openstreetmap]: https://www.openstreetmap.org/way/143527369
 [R]: http://cran.r-project.org
 [rstudio]: http://rstudio.com
 [RCC]: http://rcc.uchicago.edu
