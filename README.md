@@ -2,12 +2,6 @@
 
 Materials for the RCC workshop, "Introduction to R for data analysis".
 
-**Date:** Tuesday, November 20, 2018<br>
-**Time:** 11:20 am to 2:30 pm<br>
-**Location:** KCBD 8th floor conference room
-([OpenStreetMap][openstreetmap])<br>
-**Instructor:** Peter Carbonetto
-
 ## Introduction
 
 The [R computing environment][R] has become one of the most important
