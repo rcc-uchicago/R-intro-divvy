@@ -1,9 +1,5 @@
 # Introduction to R for data analysis
 
-Materials for the RCC workshop, "Introduction to R for data analysis".
-
-## Introduction
-
 The [R computing environment][R] has become one of the most important
 tools in quantitative research, from computational biology to
 financial modeling. This short workshop will expose participants to
