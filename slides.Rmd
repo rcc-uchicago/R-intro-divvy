@@ -958,7 +958,7 @@ should be straightforward.
 ===================================
 
 It is difficult to tell which stations had more trips in 2017---it
-would be helpful to compare against the x = y line.
+would be helpful to compare against the diagonal (x = y) line.
 
 ```{r plot-2016-vs-2017-trips-2}
 g2 <- geom_abline(slope = 1,color = "orange",
@@ -1001,7 +1001,8 @@ save.image("divvyanalysis.RData")
 + In R, a spreadsheet ("data frame") is an *object* that can be inspected,
   manipulated and summarized with code.
 
-+ Therefore, we can write scripts to *automate* our data analyses.
++ Therefore, we can write an R script to *automate* the data
+  preparation and analysis steps.
 
 68. Parting thoughts
 ====================
