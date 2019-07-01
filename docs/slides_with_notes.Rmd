@@ -28,8 +28,7 @@ knitr::opts_chunk$set(results = "hide",fig.show = "hide",
 
 5. Use ggplot2 to plot data.
 
-6. Learn through "live coding"---this includes learning from our
-   mistakes!
+6. Learn through "live coding".
 
 # 3. Our goal: Analyze Divvy data from 2016 & 2017
 
@@ -43,20 +42,20 @@ knitr::opts_chunk$set(results = "hide",fig.show = "hide",
   data, and preparing the data for analysis.
 
 + Once we have carefully prepared the data, creating visualizations is
-  (relatively) easy.
+  (relatively) little effort.
 
 4. The programmatic approach
 ============================
 
-+ Data analyses are usually *iterative* and *repetitive*. Therefore, you
-need to develop skills to *efficiently* create & refine your analyses.
++ Data analysis usually involves *iterative refinement* and *repetition*.
 
-+ The *programmatic approach* to data analysis will allow us to...
++ The *programmatic approach* to data analysis will allow you to...
 
-    - Reuse our code to quickly create sophisticated
-      analyses---*automation is your friend*!
+    - Quickly reproduce existing analyses.
 
-    - Expand capabilities by installing new R packages.
+    - Quickly create new analyses by building on existing code.
+
+    - Expand capabilities with R packages.
 
 5. It's your choice
 ===================
@@ -147,7 +146,7 @@ git clone https://github.com/rcc-uchicago/
 + **slides.pdf**: These slides.
 
 + **slides.Rmd**: R Markdown source used to generate these
-  slides. *Copy & paste code from this file.*
+  slides. *Open this file in RStudio or your favourite editor.*
 
 + **readdivvydata.R**: Some R code used in the hands-on examples.
 
@@ -210,7 +209,7 @@ Open R Markdown source file, **slides.Rmd**.
 16. Download the Divvy data
 ===========================
 
-+ Disk space required: at least **2 GB**.
++ Disk space required: about **2 GB**.
 
 + Download the 2016 & 2017 data files from here:
 
@@ -232,7 +231,7 @@ Open R Markdown source file, **slides.Rmd**.
 17. Check that you have all the files 
 =====================================
 
-After unzipping, you should have **15** CSV files. Check this:
+After unzipping, you should have **15** CSV files. Verify this:
 
 ```{r list-files}
 list.files(pattern = "*.csv")
@@ -260,8 +259,8 @@ If you don't, change your working directory:
 
 Before continuing, double-check that you have the right working directory.
 
-Outline of workshop
-===================
+19. Outline of workshop
+=======================
 
 1. Initial setup.
 
@@ -377,7 +376,7 @@ stations[1:4,2]
 stations[1:4,"name"]
 ```
 
-Select first 4 rows and multiple columns:
+Select first 4 rows of several columns:
 
 ```{r select-columns}
 stations[1:4,c(2,3,6)]
@@ -394,20 +393,30 @@ rownames(stations)
 25. Take an even closer look at "dpcapacity"
 ============================================
 
-It is interesting that a few of the Divvy bike stations are much
-larger than the others, whereas others have no docks. Where are these
-stations?
+It is interesting that a couple of the Divvy bike stations have no
+docks. What are these stations?
 
 ```{r inspect-dpcapacity-data-3}
 subset(stations,dpcapacity == 0)
-subset(stations,dpcapacity >= 40)
 ```
 
-Alternatively, we can sort the table rows, then inspect the top and
-bottom rows:
+How would we view the largest stations?
+
+```{r inspect-dpcapacity-data-4}
+# -------------
+# Add code here
+# -------------
+```
+
+> Answer: subset(stations,dpcapacity >= 40)
+
+26. Ordering the stations by number of docks
+============================================
+
+Here's another look at the smallest and largest stations:
 
 ```{r inspect-dpcapcity-data-4}
-rows <- order(stations$dpcapacity,decreasing=TRUE)
+rows <- order(stations$dpcapacity)
 stations2 <- stations[rows,]
 head(stations2)
 tail(stations2)
@@ -415,7 +424,7 @@ tail(stations2)
 
 > Instructor notes: How were the rows originally ordered in `stations`?
 
-26. Take a closer look at the "city" column
+27. Take a closer look at the "city" column
 ===========================================
 
 Previously, we inspected *numeric* data. Next's, let's look at an
@@ -439,11 +448,11 @@ summary(x)
 > Instructor notes: What issue did we discover from running these
 > commands?
 
-27. Fixing the "city" column
+28. Fixing the "city" column
 ============================
 
-Let's fix the problem we found earlier. First, select the offending
-rows of the table:
+Let's fix the problem of two "Chicago" categories. First, select the
+offending rows of the table:
 
 ```{r revise-city-data-1}
 rows <- which(stations$city == "Chicago ")
@@ -458,7 +467,7 @@ summary(stations$city)
 ```
 
 The "city" column is more useful if it is a factor. Let's modify
-this column inside the data frame:
+this column *inside* the data frame:
 
 ```{r revise-city-data-3}
 stations$city <- factor(stations$city)
@@ -468,11 +477,11 @@ summary(stations$city)
 > Instructor notes: The "which" line of code is a pretty good example
 > of a more complicated (compound) expression.
 
-28. What is a "factor"? (optional)
-==================================
+29. What is a factor?
+=====================
 
-Factors are often very useful in data analyses. Let's take a deeper
-look at what a factor *is*.
+Factors are often very useful in data analyses. Let's take another
+look at what a factor is.
 
 ```{r inspect-factor}
 x <- stations$city
@@ -480,11 +489,11 @@ attributes(x)
 unclass(x)
 ```
 
-From the `unclass(x)` call, we see that a factor is really just an
-integer with values 1, 2, 3, *etc*., with which each integer value is
-associated with a *label* (e.g., "Chicago", "Evanston").
+From the `unclass(x)` call, we see that a factor under-the-hood is an
+integer with values 1, 2, 3, *etc*, with which each integer value is
+associated with a *label* ("Chicago", "Evanston", "Oak Park").
 
-29. Save your code & session state
+30. Save your code & session state
 ==================================
 
 It is important to periodically save:
@@ -507,7 +516,7 @@ Load Workspace...** in RStudio, or run this code:
 load("divvyanalysis.RData")
 ```
 
-30. Main concepts covered so far
+31. Main concepts covered so far
 ================================
 
 + The R environment & working directory.
@@ -526,8 +535,8 @@ load("divvyanalysis.RData")
 
 + Save state of R environment.
 
-Outline of workshop
-===================
+32. Outline of workshop
+=======================
 
 1. Initial setup.
 
@@ -540,7 +549,7 @@ Outline of workshop
 5. Create a scatterplot comparing bike sharing activity in 2016
    and 2017.
 
-# 32. Import the Divvy trip data into R
+# 33. Import the Divvy trip data into R
 
 Previously, we used `read.csv` to import station data into R. Let's
 now use `read.csv` to load the trip data from the 4th quarter of 2017:
@@ -563,7 +572,7 @@ object.size(trips)
 > Instructor notes: This gives an opportunity to demonstrate a faster
 > method implemented in a package.
 
-33. Import Divvy trip data using `readr`
+34. Import Divvy trip data using `readr`
 ========================================
 
 Install the **readr** package from CRAN:
@@ -587,7 +596,7 @@ trips <- read_csv("Divvy_Trips_2017_Q4.csv")
 > Instructor notes: How much faster is `read_csv`? `read_csv` is
 > similar to `read.csv`, but not the same.
 
-34. Import Divvy trip data using `readr`
+35. Import Divvy trip data using `readr`
 ========================================
 
 The `read_csv` output is *not* a data frame—it is a "tibble".
@@ -596,7 +605,7 @@ The `read_csv` output is *not* a data frame—it is a "tibble".
 class(trips)
 ```
 
-Typically, I convert it to a data frame:
+Usually, I convert it to a data frame:
 
 ```{r convert-trip-data}
 class(trips) <- "data.frame"
@@ -621,7 +630,7 @@ class(trips) <- "data.frame"
 >   + Where are the packages installed to? `.libPaths()`
 >
 
-35. A first glance at the trips data
+36. A first glance at the trips data
 ====================================
 
 Let's use some of the same commands we used earlier to quickly get an
@@ -638,10 +647,10 @@ summary(trips)
 > particularly informative for many of the columns. What columns should
 > we convert to factors?
 
-36. Convert "gender" to a factor
+37. Convert "gender" to a factor
 ================================
 
-Let's start by converting the "gender" column to a factor:
+Let's begin by converting the "gender" column to a factor:
 
 ```{r convert-trip-data-1}
 trips$gender <- factor(trips$gender)
@@ -651,8 +660,8 @@ levels(trips$gender)
 
 > Instructor notes: We see that many gender entries are missing.
 
-37. "Missing data"
-==================
+38. Missing data
+================
 
 + In R, "missing data" should be assigned the special value `NA` ("not
   available").
@@ -664,10 +673,10 @@ levels(trips$gender)
   to figure out that blank entries in the CSV file should be converted
   to `NA`.
 
-38. Convert "station" columns to factors
+39. Convert "station" columns to factors
 ========================================
 
-The "from station" column is also more useful as a factor:
+Likewise, the "from station" column is also more useful as a factor:
 
 ```{r summarize-from-station-data}
 summary(trips$from_station_name)
@@ -676,8 +685,10 @@ trips$from_station_name <-
 summary(trips$from_station_name)
 ```
 
-39. A note about dates & times
-==========================
+> Instructor notes: What do these numbers give us?
+
+40. A note about dates & times
+==============================
 
 + `summary(trips$start_time)` and `summary(trips$end_time)` are also
   not informative.
@@ -686,12 +697,13 @@ summary(trips$from_station_name)
 
 + See `help(strptime)` and the **lubridate** package.
 
-40. Combining trip data from two quarters
+41 Combining trip data from two quarters
 =========================================
 
 Up to this point, we have only examined at the trip data from one
 quarter of one year. Suppose we wanted to analyze the trip
-data from the 3rd and 4th quarters of 2017. How would we do that?
+data from both the 3rd and 4th quarters of 2017. How would we do that?
+First, we have to import both tables.
 
 ```{r read-Q3-trip-data-readr}
 tripsQ4 <- trips
@@ -699,14 +711,19 @@ tripsQ3 <- read_csv("Divvy_Trips_2017_Q3.csv")
 class(tripsQ3) <- "data.frame"
 ```
 
-We can *merge* the two tables *by rows*---that is, we put one table on
+We can *merge* the two tables *by row*---that is, we put one table on
 top of the other. 
 
 ```{r merge-trip-data}
-trips <- rbind(tripsQ3,tripsQ4)
+trips <- rbind(tripsQ4,tripsQ3)
 ```
 
-41. Combining trip data from two quarters
+> Instructor notes: Why did we list the Q4 trips first?
+>
+> "rbind" only works if the columns in both tables are the same.
+>
+
+42. Combining trip data from two quarters
 =========================================
 
 Let's double-check the result:
@@ -718,25 +735,10 @@ dim(trips)
 head(trips)
 ```
 
-When merging data sets by rows, we have beware of inconsistencies in
-the columns, e.g.,
-
-```{r check-merge-gender}
-class(tripsQ3$gender)
-class(tripsQ4$gender)
-class(trips$gender)
-```
-
-> Instructor notes: What other inconsistencies might we want to check?
->
 > There are many, many ways different data sets can have
 > inconsistencies that need to be fixed prior to merging.
->
-> What mistake did we make in the "rbind" call above? (Hint: the
-> reverse chronological ordering of the trips may not have been
-> preserved.)
 
-42. Preparing data is tedious
+43. Preparing data is tedious
 =============================
 
 Data preparation is sometimes >90% of the effort!
@@ -749,14 +751,11 @@ Common issues include:
 
 + Converting table columns to the appropriate data type.
 
-+ Entry inconsistencies (e.g., additional spaces).
++ Inconsistent data entry (e.g., additional spaces).
 
 + Missing data.
 
-> Instructor notes: And we haven't yet dealt with merging data from
-> multiple files---this usually creates more headaches!
-
-43. Moving beyond data preparation
+44. Moving beyond data preparation
 ==================================
 
 + So far, we have illustrated a few of the challenges of working with
@@ -765,8 +764,8 @@ Common issues include:
 + In order to proceed to fun stuff, I've automated the data
   preparation steps by writing an R *function* to do this.
 
-Outline of workshop
-===================
+45. Outline of workshop
+=======================
 
 1. Initial setup.
 
@@ -778,7 +777,7 @@ Outline of workshop
 
 5. Create plots comparing bike sharing in 2016 & 2017.
 
-# 45. Refresh your environment
+# 46. Refresh your environment
 
 We will begin a new analysis, so let's refresh our environment:
 
@@ -788,7 +787,7 @@ rm(list = ls())
 
 Or, in RStudio, go to **Session > Restart R**.
 
-46. Import the 2016 & 2017 Divvy data
+47. Import the 2016 & 2017 Divvy data
 =====================================
 
 Load function `read.divvy.data` that automates the reading and
