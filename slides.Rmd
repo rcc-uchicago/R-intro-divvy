@@ -360,9 +360,7 @@ subset(stations,dpcapacity == 0)
 How would we view the largest stations?
 
 ```{r inspect-dpcapacity-data-4}
-# -------------
 # Add code here
-# -------------
 ```
 
 
@@ -715,7 +713,7 @@ processing of all the downloaded Divvy data:
 source("readdivvydata.R")
 ```
 
-47. Import the 2016 & 2017 Divvy data
+48. Import the 2016 & 2017 Divvy data
 =====================================
 
 The `read.divvy.data` takes the name of the station file to import,
@@ -727,7 +725,7 @@ tripfiles <- list.files(pattern="Divvy_Trips_*")
 ```
 
 
-48. Import the 2016 & 2017 Divvy data
+49. Import the 2016 & 2017 Divvy data
 =====================================
 
 Load and process the station data:
@@ -742,11 +740,11 @@ Load and process the trip data:
 trips <- read.trip.data(tripfiles,stations)
 ```
 
-Loading the trip data may take a minute to run, or longer if you have
-not installed the readr package.
+Loading the trip data may take a minute to run (or longer if you have
+not installed the readr package).
 
 
-49. Inspect the 2016 & 2017 Divvy data
+50. Inspect the 2016 & 2017 Divvy data
 ======================================
 
 ```{r inspect-divvy-data}
@@ -758,7 +756,7 @@ summary(trips)
 ```
 
 
-50. Our first plot: a map of the Divvy stations
+51. Our first plot: a map of the Divvy stations
 ===============================================
 
 We will use the
@@ -784,7 +782,7 @@ library(ggplot2)
 library(cowplot)
 ```
 
-51. Plot station longitude vs. latitude
+52. Plot station longitude vs. latitude
 =======================================
 
 The "stations" data frame gives the geographic co-ordinates (latitude
@@ -801,10 +799,10 @@ print(p2)
 ```
 
 
-52. Adjusting the plot
+53. Adjusting the plot
 ======================
 
-Let's make a few adjustments to the plot:
+ggplot has many options for changing the look of the plot elements:
 
 ```{r plot-station-map-2}
 g  <- geom_point(shape = 21,fill = "limegreen",
@@ -813,8 +811,8 @@ p3 <- ggplot_add(g,p)
 print(p3)
 ```
 
-53. Use colors to highlight the largest stations
-================================================
+54. Use color to highlight the largest stations
+===============================================
 
 To do this, map the "dpcapacity" column to colour in the plot:
 
@@ -829,8 +827,8 @@ p <- ggplot_add(g,p)
 print(p)
 ```
 
-54. Use colors to highlight the largest stations
-================================================
+55. Use color to highlight the largest stations
+===============================================
 
 The colour scale is not great, so let's improve it:
 
@@ -842,51 +840,52 @@ print(p)
 ```
 
 
-55. Scale stations by the number of departures
-==============================================
+56. Scale points by number of departures
+========================================
 
-To do this, we need to add a new column to the "stations" data frame
-containing the total number departures. It can be calculated from the
-"trips" data frame:
+We need to add a new column to the "stations" data frame containing
+the total number departures. It can be calculated from the "trips"
+data frame:
 
 ```{r count-trips-per-station}
 counts <- table(trips$from_station_name)
 ```
 
-Because we carefully prepared the data frame in `read.divvy.data`,
-station counts should be the same order as the stations. We can check
-this:
+Because we used `read.divvy.data`, station counts should be the same
+order as the stations. Let's verify this:
 
 ```{r check-station-trip-counts}
 all(names(counts) == stations$name)
 ```
 
 
-56. Scale stations by the number of departures
+57. Scale stations by the number of departures
 ==============================================
 
 Add the trip counts to the "stations" data frame:
 
 ```{r add-counts-to-stations}
-counts <- as.vector(counts)
-stations$departures <- counts
+stations$departures <- as.vector(counts)
 head(stations)
 ```
 
-Let's use this column in our new plot:
+Now we can include the "departures" column in a plot:
 
 ```{r plot-station-map-6}
 a <- aes(x    = longitude,
          y    = latitude,
  	     size = sqrt(departures))
 p <- ggplot(stations,a)
-g <- geom_point(shape = 21,fill = "white",
-                color = "black")
-p <- ggplot_add(g,p)
-print(p)
 ```
 
-57. Save & share your plot
+Add points to your plot:
+
+```{r plot-station-map-7}
+# Add code here
+```
+
+
+58. Save & share your plot
 ==========================
 
 For exploratory analyses, GIF and PNG are great formats because the
@@ -902,7 +901,7 @@ For print or publication, save in a vector graphics format:
 ggsave("station_map.pdf",p)
 ```
 
-58. Save your code & session state
+59. Save your code & session state
 ==================================
 
 This is a good time to save your session.
@@ -911,18 +910,18 @@ This is a good time to save your session.
 save.image("divvyanalysis.RData")
 ```
 
-59. Compare 2016 & 2017 biking activity (optional)
-==================================================
+60. Compare 2016 & 2017 biking activity
+=======================================
 
-Earlier, we noticed that that were more trips in 2017 than 2016. Which
-stations experienced the largest increase? To examine this question,
-we take the following steps:
+Earlier, we saw that that were more trips in 2017 than 2016. Which
+stations experienced the largest increase in trips? To explore this
+question, we take the following steps:
 
-1. Count trips from each station separately for 2016 and 2017.
+1. Count trips separately for 2016 and 2017.
 
-2. Add these counts to the "stations" data frame.
+2. Add these counts to the "stations" data frame, similar to before.
 
-# 60. Count trips separately for 2016 & 2017
+# 61. Count trips separately for 2016 & 2017
 
 We will use `subset` followed by `table` to do this:
 
@@ -933,20 +932,18 @@ x1 <- table(d1$from_station_name)
 x2 <- table(d2$from_station_name)
 ```
 
-61. Add counts to the stations data frame
+62. Add counts to the stations data frame
 =========================================
 
 Remember we need to convert the "table" output to a vector:
 
 ```{r add-counts-by-year-to-data-frame}
-x1 <- as.vector(x1)
-x2 <- as.vector(x2)
-stations$dep.2016 <- x1
-stations$dep.2017 <- x2
+stations$dep.2016 <- as.vector(x1)
+stations$dep.2017 <- as.vector(x2)
 head(stations)
 ```
 
-62. Scatterplot of trips by station (2016 vs. 2017)
+63. Scatterplot of trips by station (2016 vs. 2017)
 ===================================================
 
 As before, now that we have prepared a data frame, plotting with
