@@ -1,0 +1,61 @@
+Subject: Please read for tomorrow's R workshop
+
+You are receiving this email because you have registered for the RCC
+Workshop, "Introduction to R for data analysis", taking place tomorrow
+(Tuesday, July 2), 2–5p in the Zar room, which is in the John Crerar
+Library.
+
+Here are a few notes about participating in the workshop.
+
+First, if you cannot attend, please cancel your registration on the
+Eventbrite website. This will help me get a better sense of workshop
+size.
+
+This is a hands-on tutorial, so you will get the most benefit from the
+tutorial if you bring your laptop and work through the examples
+in-class.
+
+Please follow these steps before coming to the workshop:
+
+1. Make sure that at least one of these statements is true:
+
+(a) You have R 3.4 or above installed on your laptop.
+(b) You have RStudio AND R (3.4 or above) installed on your laptop.
+(c) You have an RCC account, and plan on running R (or RStudio) on the
+RCC cluster.
+
+Importantly, please check that you have a *recent* version of R on
+your computer. Older versions (3.3 or less) may not work with some of
+the R packages we will use during the workshop. If you have an older
+version of R, it would be best if you upgraded to the latest version
+available from the CRAN website.
+
+2. Download the workshop packet, available from here:
+
+https://github.com/rcc-uchicago/R-intro-divvy
+
+To download, click the green “Clone or download” button. If necessary,
+uncompress the ZIP file. And, if necessary, rename folder to
+"R-intro-divvy".
+
+Alternatively, if you have git, run this command to clone the repository:
+
+  git clone https://github.com/rcc-uchicago/R-intro-divvy.git
+
+3. Download the Divvy data. The WiFi cannot handle many people
+downloading large files simultaneously, so it is important that you
+download the data files before coming to the workshop tomorrow. Please
+download the 2016 & 2017 Divvy data files from here:
+
+https://www.divvybikes.com/system-data
+
+After completing this step, you should have these 4 ZIP files on your
+laptop:
+
+  Divvy_Trips_2016_Q1Q2.zip
+  Divvy_Trips_2016_Q3Q4.zip
+  Divvy_Trips_2017_Q1Q2.zip
+  Divvy_Trips_2017_Q3Q4.zip
+
+I will give you additional setup instructions at the beginning of the
+workshop.
