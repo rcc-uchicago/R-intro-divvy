@@ -946,23 +946,19 @@ head(stations)
 63. Scatterplot of trips by station (2016 vs. 2017)
 ===================================================
 
-As before, now that we have prepared a data frame, plotting with
-ggplot is relatively easy:
+As before, now that we have prepared a data frame, creating the plot
+should be straightforward.
 
 ```{r plot-2016-vs-2017-trips-1}
-a <- aes(x = dep.2016,y = dep.2017)
-p <- ggplot(stations,a)
-g <- geom_point(shape = 1,size = 2,
-                color = "darkblue")
-p <- ggplot_add(g,p)
-print(p)		
+# Add code here.
 ```
 
-63. Scatterplot of trips by station
+
+64. Scatterplot of trips by station
 ===================================
 
-It is difficult to tell which stations had more trips in 2017---we
-need to compare against the x = y line.
+It is difficult to tell which stations had more trips in 2017---it
+would be helpful to compare against the x = y line.
 
 ```{r plot-2016-vs-2017-trips-2}
 g2 <- geom_abline(slope = 1,color = "orange",
@@ -972,7 +968,7 @@ print(p)
 ```
 
 
-64. Save your code & session state
+65. Save your code & session state
 ==================================
 
 Save your final results for safekeeping.
@@ -981,7 +977,7 @@ Save your final results for safekeeping.
 save.image("divvyanalysis.RData")
 ```
 
-65. ggplot: Take home points
+66. ggplot: Take home points
 ============================
 
 + Creating sophisticated plots requires relatively little effort
@@ -999,7 +995,7 @@ save.image("divvyanalysis.RData")
 
 + All plots are created by *adding layers.*
 
-66. Why data analysis in R?
+67. Why data analysis in R?
 ===========================
 
 + In R, a spreadsheet ("data frame") is an *object* that can be inspected,
@@ -1007,7 +1003,7 @@ save.image("divvyanalysis.RData")
 
 + Therefore, we can write scripts to *automate* our data analyses.
 
-67. Parting thoughts
+68. Parting thoughts
 ====================
 
 1. Always record your analysis steps in a file so you can reproduce
