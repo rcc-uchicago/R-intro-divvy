@@ -155,7 +155,16 @@ git clone https://github.com/rcc-uchicago/
 
 + Launch R or RStudio.
 
-12. Run `sessionInfo()`
+12. Load code for the hands-on exercises
+========================================
+
+Open R Markdown source file, **slides.Rmd**.
+
+  + In RStudio, select **File > Open File**.
+
+  + Alternatively, use your favourite text editor.
+
+13. Run `sessionInfo()`
 =======================
 
 Check the version of R that you are using:
@@ -168,7 +177,7 @@ sessionInfo()
 > (version 3.3 or less), I strongly recommend upgrading to the latest
 > version. Some of the examples may not work in older versions of R.
 
-13. Clear your R environment
+14. Clear your R environment
 ============================
 
 The R environment is where all variables (and functions) are stored and
@@ -192,17 +201,8 @@ empty and you should restart R with a clean environment. Do either:
 > This is also a good opportunity to point out some of the RStudio
 > that should be turned off.
 
-14. Load code for the hands-on exercises
-========================================
-
-Open R Markdown source file, **slides.Rmd**.
-
-  + In RStudio, select **File > Open File**.
-
-  + Alternatively, use your favourite text editor.
-
-15. The Console is the "brains" of RStudio
-==========================================
+15. The Console is where all the action happens
+===============================================
 
 ![](docs/images/rstudio.jpg)
 
@@ -231,7 +231,8 @@ Open R Markdown source file, **slides.Rmd**.
 17. Check that you have all the files 
 =====================================
 
-After unzipping, you should have **15** CSV files. Verify this:
+After unzipping, you should have exactly **15** CSV files. Verify
+this:
 
 ```{r list-files}
 list.files(pattern = "*.csv")
@@ -240,7 +241,10 @@ list.files(pattern = "*.csv")
 > Instructor notes: If you don't see all 15 CSV files, you have either
 > (1) not successfully downloaded and/or unzipped all the files in the
 > "data" directory, or (2) you have the wrong working directory.
-
+>
+> If you have more than 15 files listed, move or delete the unwanted
+> files.
+ 
 18. Set your working directory to "R-intro-divvy"
 =================================================
 
@@ -529,7 +533,7 @@ load("divvyanalysis.RData")
 
 + Ordering rows of a data frame.
 
-+ Factors = categorical variables.
++ Factors == categorical variables.
 
 + Save state of R environment.
 
@@ -570,8 +574,8 @@ object.size(trips)
 > Instructor notes: This gives an opportunity to demonstrate a faster
 > method implemented in a package.
 
-34. Import Divvy trip data using `readr`
-========================================
+34. Import Divvy trip data using `readr` (optional)
+===================================================
 
 Install the **readr** package from CRAN:
 
@@ -594,8 +598,8 @@ trips <- read_csv("Divvy_Trips_2017_Q4.csv")
 > Instructor notes: How much faster is `read_csv`? `read_csv` is
 > similar to `read.csv`, but not the same.
 
-35. Import Divvy trip data using `readr`
-========================================
+35. Import Divvy trip data using `readr` (optional)
+===================================================
 
 The `read_csv` output is *not* a data frame—it is a "tibble".
 
@@ -695,7 +699,7 @@ summary(trips$from_station_name)
 
 + See `help(strptime)` and the **lubridate** package.
 
-41 Combining trip data from two quarters
+41. Combining trip data from two quarters
 =========================================
 
 Up to this point, we have only examined at the trip data from one
@@ -893,8 +897,8 @@ a <- aes(x = longitude,y = latitude)
 p <- ggplot(stations,a)
 print(p)
 g  <- geom_point()
-p2 <- ggplot_add(g,p)
-print(p2)
+p <- ggplot_add(g,p)
+print(p)
 ```
 
 > Instructor notes: The "print" function tells R to draw the plot
@@ -908,10 +912,10 @@ print(p2)
 ggplot has many options for changing the look of the plot elements:
 
 ```{r plot-station-map-2}
-g  <- geom_point(shape = 21,fill = "limegreen",
+g <- geom_point(shape = 21,fill = "limegreen",
                  color = "white",size = 3)
-p3 <- ggplot_add(g,p)
-print(p3)
+p <- ggplot_add(g,p)
+print(p)
 ```
 
 54. Use color to highlight the largest stations
@@ -1063,17 +1067,12 @@ As before, now that we have prepared a data frame, creating the plot
 should be straightforward.
 
 ```{r plot-2016-vs-2017-trips-1}
-# Add code here.
+a <- aes(x = dep.2016,y = dep.2017)
+p <- ggplot(stations,a)
+g <- geom_point()
+p <- ggplot_add(g,p)
+print(p)
 ```
-
-> One possible solution:
-> 
->   a <- aes(x = dep.2016,y = dep.2017)
->   p <- ggplot(stations,a)
->   g <- geom_point()
->   p <- ggplot_add(g,p)
->   print(p)
->
 
 64. Scatterplot of trips by station
 ===================================
