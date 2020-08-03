@@ -332,6 +332,7 @@ ncol(stations)
 head(stations)
 tail(stations)
 summary(stations)
+str(stations)
 ```
 
 Inspect the data in more detail:
