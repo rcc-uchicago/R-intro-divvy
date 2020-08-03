@@ -1,0 +1,8 @@
+to do
+=====
+
++ Print out slides with instructor's notes.
+
++ Send email to workshop participants.
+
+
