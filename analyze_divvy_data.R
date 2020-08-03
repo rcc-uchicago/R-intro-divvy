@@ -46,5 +46,35 @@ x <- factor(stations$city)
 class(x)
 summary(x)
 
+# Fixing the "city" column.
+stations2 <- stations
+rows <- which(stations2$city == "Chicago ")
+stations2[rows,"city"] <- "Chicago"
+summary(stations$city)
+stations2$city <- factor(stations2$city)
+summary(stations2$city)
+summary(stations2)
+stations <- stations2
+
+# Create a map of the Divvy stations.
+plot(stations$longitude,stations$latitude,pch = 20)
+
+# Color stations by city.
+plot(stations$longitude,stations$latitude,col = stations$city,pch = 20)
+
+# Create the map using ggplot2.
+library(ggplot2)
+p1 <- ggplot(stations,aes(x = longitude,y = latitude,color = city)) +
+  geom_point()
+print(p1)
+
+# Create a better map.
+p2 <- ggplot(stations,aes(x = longitude,y = latitude,fill = city)) +
+  geom_point(shape = 21,size = 2,color = "white")
+p2 <- p2 + scale_fill_manual(values = c("dodgerblue","darkorange","darkblue"))
+library(cowplot)
+p2 <- p2 + theme_cowplot()
+print(p2)
+
 # Load trip data.
 # TO DO.
