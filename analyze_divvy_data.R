@@ -35,13 +35,19 @@ table(x)
 subset(stations,dpcapacity == 0)
 stations[stations$dpcapacity == 0,]
 
+# Order stations by number of docks.
+rows <- order(stations$dpcapacity)
+stations2 <- stations[rows,]
+head(stations2)
+tail(stations2)
+
 # Previously, we inspected numeric data. Next’s, let’s look at an
 # example of non-numeric data.
 x <- stations$city
 class(x)
 summary(x)
 
-# Convert "city" to a "factor".
+# Convert "city" to a factor.
 x <- factor(stations$city)
 class(x)
 summary(x)
@@ -77,4 +83,12 @@ p2 <- p2 + theme_cowplot()
 print(p2)
 
 # Load trip data.
+library(readr)
+trips <- read_csv("Divvy_Trips_2019_Q4.csv.gz")
+class(trips) <- "data.frame"
+
+# Import and process trip data using script.
+source("read_trip_data.R")
+
+# Inspect trip data.
 # TO DO.
