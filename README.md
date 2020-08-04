@@ -47,7 +47,7 @@ repository (the "workshop packet"):
 + [Divvy_Stations_2017_Q3Q4.csv](Divvy_Stations_2017_Q3Q4.csv): Divvy
   station data downloaded from the [Divvy website][divvy-data].
 
-+ [Divvy_Trips_2019_Q4.csv.gz](Divvy_Trips_2019_Q4.csv.gz): 2017 Divvy trip
++ [Divvy_Trips_2019_Q4.csv.gz](Divvy_Trips_2019_Q4.csv.gz): 2019 Divvy trip
   data downloaded from the [Divvy website][divvy-data].
 
 + [read_trip_data.R](read_trip_data.R): Some R code used in the hands-on

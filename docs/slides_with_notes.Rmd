@@ -115,7 +115,8 @@ https://github.com/rcc-uchicago/R-intro-divvy
 10. Download or "clone" git repository
 ======================================
 
-Download the workshop packet to your computer.
+*If not using RStudio Cloud,* download the workshop packet to your
+computer.
 
 + Go to [**http://github.com/rcc-uchicago/R-intro-divvy**][github-repo]
 
@@ -134,25 +135,27 @@ git clone https://github.com/rcc-uchicago/
 
 + If necessary, rename folder to **R-intro-divvy**.
 
-> Instructor notes: If you are using the RCC cluster, also download
-> workshop packet on the cluster.
-
-10. What's included in the workshop packet
+11. What's included in the workshop packet
 ==========================================
 
 + **slides.pdf**: These slides.
 
 + **slides.Rmd**: R Markdown source used to generate these
-  slides. *Open this file in RStudio or your favourite editor.*
+  slides. *You may open this file in RStudio or your favourite
+  editor.*
 
-+ **readdivvydata.R**: Some R code used in the hands-on examples.
++ **read_trip_data.R**: Some R code used in the examples.
 
-11. Set up your R environment
++ **Divvy_Stations_2017_Q3Q4.csv:** Divvy station data.
+
++ **Divvy_Trips_2019_Q4.csv.gz:** 2019 Divvy trip data.
+
+12. Set up your R environment
 =============================
 
 + Launch R or RStudio.
 
-12. Load code for the hands-on exercises
+13. Load code for the hands-on exercises
 ========================================
 
 Open R Markdown source file, **slides.Rmd**.
@@ -161,7 +164,7 @@ Open R Markdown source file, **slides.Rmd**.
 
   + Alternatively, use your favourite text editor.
 
-13. Run `sessionInfo()`
+14. Run `sessionInfo()`
 =======================
 
 Check the version of R that you are using:
@@ -170,15 +173,12 @@ Check the version of R that you are using:
 sessionInfo()
 ```
 
-> Instructor notes: If you are using an older version of R
-> (version 3.3 or less), I strongly recommend upgrading to the latest
-> version. Some of the examples may not work in older versions of R.
+15. Clear your workspace
+========================
 
-14. Clear your R environment
-============================
-
-The R environment is where all variables (and functions) are stored and
-accessed. You should start with an empty environment. Run this:
+The R environment is where all variables (and functions) are stored
+and accessed. It is Best Practice to start with an empty environment,
+or "workspace". Run this:
 
 ```{r check-env}
 ls()
@@ -196,82 +196,43 @@ empty and you should restart R with a clean environment. Do either:
 > analysis.
 >
 > This is also a good opportunity to point out some of the RStudio
-> that should be turned off.
+> options that should be turned off.
 
-15. The Console is where all the action happens
-===============================================
+16. The Console is where the action is
+======================================
 
 ![](docs/images/rstudio.jpg)
 
-16. Download the Divvy data
-===========================
-
-+ Disk space required: about **2 GB**.
-
-+ Download the 2016 & 2017 data files from here:
-
-    + [**www.divvybikes.com/system-data**][divvy-data]
-
-+ Download them to the **R-intro-divvy** folder.
-
-+ You should have 4 ZIP files:
-
-    ```
-    Divvy_Trips_2016_Q1Q2.zip
-    Divvy_Trips_2016_Q3Q4.zip
-    Divvy_Trips_2017_Q1Q2.zip
-    Divvy_Trips_2017_Q3Q4.zip
-    ```
-
-+ Decompress ("unzip") all of these files.
-
-17. Check that you have all the files 
-=====================================
-
-After unzipping, you should have exactly **15** CSV files. Verify
-this:
-
-```{r list-files}
-list.files(pattern = "*.csv")
-```
-
-> Instructor notes: If you don't see all 15 CSV files, you have either
-> (1) not successfully downloaded and/or unzipped all the files in the
-> "data" directory, or (2) you have the wrong working directory.
->
-> If you have more than 15 files listed, move or delete the unwanted
-> files.
- 
-18. Set your working directory to "R-intro-divvy"
+17. Set your working directory to "R-intro-divvy"
 =================================================
 
 Check that you have the right working directory:
 
-```{r check-wd}
-getwd() # Should end with "R-intro-divvy".
+```{r list-files}
+list.files()
 ```
 
-If you don't, change your working directory:
+You should see the tutorial files. If you don't, change your working
+directory:
 
-  + In R, use `setwd()` function.
+  + In R, use the `setwd()` function.
 
   + In RStudio, select **Session > Set Working Directory > Choose
     Directory...`**
 
-Before continuing, double-check that you have the right working directory.
+If you have changed your working directory, double-check that you have
+the right working directory before continuing.
 
-19. Outline of workshop
+18. Outline of workshop
 =======================
 
 1. Initial setup.
 
-2. **Load & prepare the Divvy station data.**
+2. **Analysis of Divvy station data.**
 
-3. Load & prepare the Divvy trip data.
+3. Analysis of Divvy trip data.
 
-4. Create a map of the Divvy stations.
-
-5. Create plots comparing bike sharing in 2016 & 2017.
+4. Combining the data.
 
 # 20. Take a quick look at CSV file
 
