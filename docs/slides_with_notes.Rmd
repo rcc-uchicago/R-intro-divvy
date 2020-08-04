@@ -482,34 +482,37 @@ summary(stations$city)
 30. Create a map of the Divvy stations
 ======================================
 
-The "plot" function allows you to very simply create a scatterplot
-from two numeric vectors:
+A scatterplot can be created from two numeric vectors very simply
+using the "plot" function:
 
 ```{r plot-stations-1}
-plot(stations$longitude,stations$latitude,pch = 20)
+plot(stations$longitude,stations$latitude,
+     pch = 20)
 ```
 
-The plot function has many, many options, which we will not explore here.
-Let's add color to the plot according to the "city" column:
+The plot function has many, many options. We will not explore these
+options here. Let's add color to the plot according to the "city"
+column:
 
 ```{r plot-stations-2}
-plot(stations$longitude,stations$latitude,col = stations$city,pch = 20)
+plot(stations$longitude,stations$latitude,
+     col = stations$city,pch = 20)
 ```
 
 31. Create stations map using ggplot2
 =====================================
 
-Now let's recreate the stations map, this time using **ggplot2**. It
-is a powerful (though not immediately intuitive) plotting
-interface. First, install ggplot2 (and cowplot, and extension to
-ggplot2) if you have not already done so:
+Now let's recreate the stations map using **ggplot2**. It is a
+powerful (though not immediately intuitive) plotting interface. First,
+install ggplot2 if you have not already done so. (We will also use
+cowplot, an extension to ggplot2.)
 
 ```{r install-ggplot2, eval=FALSE}
 install.packages("ggplot2")
 install.packages("cowplot")
 ```
 
-As you can see, the code is a bit more complicated:
+As you can see, the ggplot2 code is a bit more complicated:
 
 ```{r plot-stations-3}
 library(ggplot2)
@@ -521,7 +524,7 @@ p1 <- ggplot(stations,
 print(p1)
 ```
 
-What is improved in the new plot? 
+What is better about the new plot? 
 
 32. More on ggplot2
 ===================
@@ -544,8 +547,8 @@ What is improved in the new plot?
 33. A better stations map
 =========================
 
-I fiddled around with the `geom_point` settings to improve the plot a
-bit:
+Not satisfied with this plot, I experimented with the `geom_point`
+settings to improve the plot a bit:
 
 ```{r plot-stations-4}
 p2 <- ggplot(stations,
@@ -560,8 +563,8 @@ print(p2)
 =========================
 
 The default colours in ggplot2 are not great; they can be overrided
-here with the "scale" function `scale_fill_manual`. Also, I'm partial
-to the theme from the cowplot package.
+here with the "scale" function `scale_fill_manual`. Also, I'm a big
+fan of the cowplot theme:
 
 ```{r plot-stations-5}
 library(cowplot)
@@ -569,12 +572,13 @@ p2 <- p2 +
   scale_fill_manual(values = c("dodgerblue",
                                "darkorange",
 							   "darkblue")) +
-  theme_cowplot()
+  theme_cowplot(font_size = 10)
 print(p2)
 ```
 
-Observe that adjustments to the plot are made by adding "layers". This
-is one of the distinctive features of ggplot2.
+We have only touched the surface of what ggplot2 can do. Observe that
+adjustments to the plot are made by adding "layers". This is one of
+the distinctive features of ggplot2.
 
 35. Save your code & session state
 ==================================
