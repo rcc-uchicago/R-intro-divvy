@@ -483,7 +483,8 @@ summary(stations$city)
 ======================================
 
 A scatterplot can be created from two numeric vectors very simply
-using the "plot" function:
+using the "plot" function. Let's see what happens if we plot the
+geographic co-ordinates (latitude & longitude) of the stations.
 
 ```{r plot-stations-1}
 plot(stations$longitude,stations$latitude,
@@ -498,6 +499,9 @@ column:
 plot(stations$longitude,stations$latitude,
      col = stations$city,pch = 20)
 ```
+
+> Instructor notes: What geographic features of Chicago are
+> recognizable from this plot?
 
 31. Create stations map using ggplot2
 =====================================
@@ -580,8 +584,21 @@ We have only touched the surface of what ggplot2 can do. Observe that
 adjustments to the plot are made by adding "layers". This is one of
 the distinctive features of ggplot2.
 
-35. Save your code & session state
-==================================
+35. Save & share your plot
+==========================
+
+Let's save this last plot as a file that can be shared with others.
+
+```{r save-station-map}
+ggsave("stations.png",p2,dpi = 200)
+ggsave("stations.pdf",p2)
+```
+
+> Instructor notes: How do the PDF and PNG formats differ? When should
+> you save the plot as a PDF, and when should you save as a PNG?
+
+36. Save your results
+=====================
 
 It is important to periodically save your code and results. (Remember
 there is no "undo" command in R!) To save your workspace, go to
@@ -598,7 +615,7 @@ Load Workspace...** in RStudio, or run this code:
 load("divvy_analysis.RData")
 ```
 
-36. Main concepts covered so far
+37. Main concepts covered so far
 ================================
 
 + The R workspace & working directory.
@@ -621,7 +638,7 @@ load("divvy_analysis.RData")
 
 + Saving your results.
 
-37. Outline of workshop
+38. Outline of workshop
 =======================
 
 1. Initial setup.
@@ -631,6 +648,12 @@ load("divvy_analysis.RData")
 3. **Analysis of Divvy trip data.**
 
 4. Combining the data.
+
+# 39. Automating the data preparation
+
+Preparing a data set for analysis can be tedious. I've simplified the
+preparation of the Divvy trip data for you by writing a *script* to do
+this.
 
 # 38. Import the Divvy trip data into R
 
@@ -770,157 +793,6 @@ summary(trips$from_station_name)
 
 > Instructor notes: What do these numbers give us?
 
-40. A note about dates & times
-==============================
-
-+ `summary(trips$start_time)` and `summary(trips$end_time)` are also
-  not informative.
-
-+ Processing dates & times is more complicated.
-
-+ See `help(strptime)` and the **lubridate** package.
-
-41. Combining trip data from two quarters
-=========================================
-
-Up to this point, we have only examined at the trip data from one
-quarter of one year. Suppose we wanted to analyze the trip
-data from both the 3rd and 4th quarters of 2017. How would we do that?
-First, we have to import both tables.
-
-```{r read-Q3-trip-data-readr}
-tripsQ4 <- trips
-tripsQ3 <- read_csv("Divvy_Trips_2017_Q3.csv")
-class(tripsQ3) <- "data.frame"
-```
-
-We can *merge* the two tables *by row*---that is, we put one table on
-top of the other. 
-
-```{r merge-trip-data}
-trips <- rbind(tripsQ4,tripsQ3)
-```
-
-> Instructor notes: Why did we list the Q4 trips first?
->
-> "rbind" only works if the columns in both tables are the same.
->
-
-42. Combining trip data from two quarters
-=========================================
-
-Let's double-check the result:
-
-```{r check-merge}
-dim(tripsQ3)
-dim(tripsQ4)
-dim(trips)
-head(trips)
-```
-
-> There are many, many ways different data sets can have
-> inconsistencies that need to be fixed prior to merging.
-
-43. Preparing data is tedious
-=============================
-
-Data preparation is sometimes >90% of the effort!
-
-+ *Many analysis mistakes are due to poor data preparation.*
-
-Common issues include:
-
-+ Formatting mistakes in CSV file.
-
-+ Converting table columns to the appropriate data type.
-
-+ Inconsistent data entry (e.g., additional spaces).
-
-+ Missing data.
-
-44. Moving beyond data preparation
-==================================
-
-+ So far, we have illustrated a few of the challenges of working with
-  large tabular data sets ("data frames").
-
-+ In order to proceed to fun stuff, I've automated the data
-  preparation steps by writing an R *function* to do this.
-
-45. Outline of workshop
-=======================
-
-1. Initial setup.
-
-2. Load & prepare the Divvy station data.
-
-3. Load & prepare the Divvy trip data.
-
-4. **Create a map of the Divvy stations.**
-
-5. Create plots comparing bike sharing in 2016 & 2017.
-
-# 46. Refresh your environment
-
-We will begin a new analysis, so let's refresh our environment:
-
-```{r clean-up-environment}
-rm(list = ls())
-```
-
-Or, in RStudio, go to **Session > Restart R**.
-
-47. Import the 2016 & 2017 Divvy data
-=====================================
-
-Load function `read.divvy.data` that automates the reading and
-processing of all the downloaded Divvy data:
-
-```{r load-functions}
-source("readdivvydata.R")
-```
-
-48. Import the 2016 & 2017 Divvy data
-=====================================
-
-The `read.divvy.data` takes the name of the station file to import,
-and the names of trip data files to import & merge.
-
-```{r import-divvy-data-1}
-stationfile <- "Divvy_Stations_2017_Q3Q4.csv"
-tripfiles <- list.files(pattern="Divvy_Trips_*") 
-```
-
-> Instructor notes: Variables `stationfile` and `tripfiles` contains
-> the names of the files to be imported. They do not actually contain
-> any data.
-
-49. Import the 2016 & 2017 Divvy data
-=====================================
-
-Load and process the station data:
-
-```{r import-divvy-data-2}
-stations <- read.station.data(stationfile)
-```
-
-Load and process the trip data:
-
-```{r import-divvy-data-3}
-trips <- read.trip.data(tripfiles,stations)
-```
-
-Loading the trip data may take a minute to run (or longer if you have
-not installed the readr package).
-
-> Instructor notes: If someone's computer does not have enough memory to
-> load all the trip data, they can load only the Q1 trip files instead:
-> 
-> ```{r import-divvy-data-1a, eval=FALSE}
-> tripfiles <- list.files(pattern = "*Q1.csv")
-> ```
->
-
 50. Inspect the 2016 & 2017 Divvy data
 ======================================
 
@@ -939,53 +811,6 @@ summary(trips)
 >   + Which columns were converted to factors?
 >   + Do you notice any other oddities from the summary?
 >
-
-51. Our first plot: a map of the Divvy stations
-===============================================
-
-We will use the
-[**ggplot2** package][ggplot2]. It is a
-powerful (though not immediately intuitive) set of plotting functions
-that extend the base plotting functions in R.
-
-```{r install-ggplot, eval=FALSE}
-install.packages("ggplot2")
-```
-
-I also recommend the **cowplot** package, an extension to ggplot2
-developed by Claus Wilke at UT Austin.
-
-```{r install-cowplot, eval=FALSE}
-install.packages("cowplot")
-```
-
-Load the ggplot2 and cowplot functions:
-
-```{r load-ggplot}
-library(ggplot2)
-library(cowplot)
-```
-
-52. Plot station longitude vs. latitude
-=======================================
-
-The "stations" data frame gives the geographic co-ordinates (latitude
-& longitude) for each station. With ggplot, we can create a station
-map from the "stations" data frame in only a few lines of code:
-
-```{r plot-station-map-1}
-a <- aes(x = longitude,y = latitude)
-p <- ggplot(stations,a)
-print(p)
-g  <- geom_point()
-p <- ggplot_add(g,p)
-print(p)
-```
-
-> Instructor notes: The "print" function tells R to draw the plot
-> object to the screen.
->
-> What geographic features of Chicago are recognizable from this plot?
 
 53. Adjusting the plot
 ======================
@@ -1083,130 +908,42 @@ Add points to your plot:
 >   print(p)
 >
 
-58. Save & share your plot
-==========================
-
-For exploratory analyses, GIF and PNG are great formats because the
-files are easy to attach to emails or webpages:
-
-```{r save-station-map-png}
-ggsave("station_map.png",p,dpi = 100)
-```
-
-For print or publication, save in a vector graphics format:
-
-```{r save-station-map-pdf}
-ggsave("station_map.pdf",p)
-```
-
-59. Save your code & session state
-==================================
-
-This is a good time to save your session.
-
-```{r save-session-2}
-save.image("divvyanalysis.RData")
-```
-
-60. Compare 2016 & 2017 biking activity
-=======================================
-
-Earlier, we saw that that were more trips in 2017 than 2016. Which
-stations experienced the largest increase in trips? To explore this
-question, we take the following steps:
-
-1. Count trips separately for 2016 and 2017.
-
-2. Add these counts to the "stations" data frame, similar to before.
-
-# 61. Count trips separately for 2016 & 2017
-
-We will use `subset` followed by `table` to do this:
-
-```{r count-trips-by-year}
-d1 <- subset(trips,start.year == 2016)
-d2 <- subset(trips,start.year == 2017)
-x1 <- table(d1$from_station_name)
-x2 <- table(d2$from_station_name)
-```
-
-62. Add counts to the stations data frame
-=========================================
-
-Remember we need to convert the "table" output to a vector:
-
-```{r add-counts-by-year-to-data-frame}
-stations$dep.2016 <- as.vector(x1)
-stations$dep.2017 <- as.vector(x2)
-head(stations)
-```
-
-63. Scatterplot of trips by station (2016 vs. 2017)
-===================================================
-
-As before, now that we have prepared a data frame, creating the plot
-should be straightforward.
-
-```{r plot-2016-vs-2017-trips-1}
-a <- aes(x = dep.2016,y = dep.2017)
-p <- ggplot(stations,a)
-g <- geom_point()
-p <- ggplot_add(g,p)
-print(p)
-```
-
-64. Scatterplot of trips by station
-===================================
-
-It is difficult to tell which stations had more trips in 2017---it
-would be helpful to compare against the diagonal (x = y) line.
-
-```{r plot-2016-vs-2017-trips-2}
-g2 <- geom_abline(slope = 1,color = "orange",
-                  linetype = "dashed")
-p  <- ggplot_add(g2,p)
-print(p)
-```
-
-> Instructor notes: One station stands out because it has had a much
-> larger increase in trips than other stations. Which station is this?
-
-65. Save your code & session state
-==================================
+65. Save your results
+=====================
 
 Save your final results for safekeeping.
 
 ```{r save-session-3}
-save.image("divvyanalysis.RData")
+save.image("divvy_analysis.RData")
 ```
 
 67. Why data analysis in R?
 ===========================
 
-+ In R, a spreadsheet ("data frame") is an *object* that can be inspected,
-  manipulated and summarized with code.
++ In R, a table or spreadsheet is stored in a "data frame". A data
+  frame is an *object* that can be explored, manipulated and analyzed
+  with code.
 
-+ Therefore, we can write an R script to *automate* the data
-  preparation and analysis steps.
++ Developing your R code into a script will allow you to *automate*
+  your data analyses.
 
 68. Parting thoughts
 ====================
 
-1. Always record your analysis steps in a file so you can reproduce
-   them later.
+1. Always keep track of your analysis code in a file (ideally, in a
+   script that can be run).
 
-2. Keep track of which packages (and the versions) you
-   used with `sessionInfo()`.
+2. Use "R Markdown" to document your analyses.
 
-3. Use "R Markdown" to document your analyses.
-
-4. Use packages---don’t reinvent the wheel.
+3. Use packages---don’t reinvent the wheel.
 
 5. Email help@rcc.uchicago.edu for advice on using R on the RCC
-   cluster.
+   cluster. See also
+   [https://github.com/rcc-uchicago/R-large-scale][R-large-scale].
 
-6. See the **workflowr** package for simplifying organizing & sharing
-   of data analyses; e.g., **stephenslab.github.io/wflow-divvy**.
+6. I recommend the **workflowr** package for streamlining your data
+   analyses and making them more reproducible, and easier to share:
+   [https://github.com/jdblischak/workflowr][workflowr]
 
 7. Thank you!
 
@@ -1214,4 +951,5 @@ save.image("divvyanalysis.RData")
 [divvy-data]: https://www.divvybikes.com/system-data
 [rstudio-cloud]: https://rstudio.cloud
 [ggplot2]: ggplot2.tidyverse.org
-
+[R-large-scale]: https://github.com/rcc-uchicago/R-large-scale
+[workflowr]: https://github.com/jdblischak/workflowr

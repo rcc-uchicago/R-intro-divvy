@@ -3,11 +3,9 @@ to do
 
 + Print out slides with instructor's notes.
 
-+ Send email to workshop participants.
++ Send email to workshop participants with Zoom info.
 
 + Create (very simple) script to read and process trip data.
-
-+ Create RStudio Cloud project.
 
 + Remove analyze_divvy_data.R.
 

@@ -6,9 +6,6 @@ class(trips) <- "data.frame"
 # Import and process trip data using script.
 source("read_trip_data.R")
 
-# Inspect trip data.
-# TO DO.
-
 # Create a bar chart using the "barplot" showing number of trips per
 # day.
 counts <- table(trips$dayofyear)
