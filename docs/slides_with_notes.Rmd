@@ -89,7 +89,7 @@ Your may choose to...
 
 # 8. Initial setup
 
-+ RStudio Cloud setup (optional).
++ Set up RStudio Cloud (optional).
 
 + Workshop packet.
 
@@ -99,17 +99,25 @@ Your may choose to...
 
 + Help.
 
-9. Setup RStudio Cloud (optional)
+9. Set up RStudio Cloud (optional)
 =================================
 
++ Go to [**https://rstudio.cloud**][rstudio-cloud].
 
++ If necessary, log in or create an account.
 
-9. Download or "clone" git repository
-=====================================
++ In Your Workspace, select **New Project > New Project From Git Repo**.
+
++ Enter this URL: 
+
+https://github.com/rcc-uchicago/R-intro-divvy
+
+10. Download or "clone" git repository
+======================================
 
 Download the workshop packet to your computer.
 
-+ Go to: [**http://github.com/rcc-uchicago/R-intro-divvy**][github-repo]
++ Go to [**http://github.com/rcc-uchicago/R-intro-divvy**][github-repo]
 
 + To download, click the green **"Clone or download"** button.
 
@@ -853,7 +861,7 @@ summary(trips)
 ===============================================
 
 We will use the
-[**ggplot2** package](https://github.com/tidyverse/ggplot2). It is a
+[**ggplot2** package][ggplot2]. It is a
 powerful (though not immediately intuitive) set of plotting functions
 that extend the base plotting functions in R.
 
@@ -1139,3 +1147,5 @@ save.image("divvyanalysis.RData")
 
 [github-repo]: https://github.com/rcc-uchicago/R-intro-divvy
 [divvy-data]: https://www.divvybikes.com/system-data
+[rstudio-cloud]: https://rstudio.cloud
+[ggplot2]: https://github.com/tidyverse/ggplot2

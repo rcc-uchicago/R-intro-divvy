@@ -71,7 +71,6 @@ These materials were developed by [Peter Carbonetto][peter] at the
 [University of Chicago][uchicago]. Thank you to
 [Matthew Stephens][matthew] for his support and guidance.
 
-[openstreetmap]: https://www.openstreetmap.org/way/143527369
 [R]: http://cran.r-project.org
 [rstudio]: http://rstudio.com
 [RCC]: http://rcc.uchicago.edu

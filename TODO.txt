@@ -8,3 +8,7 @@ to do
 + Create (very simple) script to read and process trip data.
 
 + Create RStudio Cloud project.
+
++ Remove analyze_divvy_data.R.
+
++ Remove this file.
