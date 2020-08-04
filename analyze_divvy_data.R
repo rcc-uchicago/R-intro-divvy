@@ -1,9 +1,8 @@
-# Create a bar chart using the "barplot" showing number of trips per
-# day.
+# Create a plot showing number of trips per day.
 counts <- table(trips$dayofyear)
 plot(274:365,counts,pch = 20)
 
-# Create a bar chart using ggplot.
+# Create a plot using ggplot.
 pdat <- data.frame(day = 274:365,counts = as.vector(counts))
 p3 <- ggplot(pdat,aes(x = day,y = counts)) +
   geom_point() +

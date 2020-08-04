@@ -12,6 +12,6 @@ trips$usertype          <- factor(trips$usertype)
 trips$from_station_name <- factor(trips$from_station_name)
 trips$to_station_name   <- factor(trips$to_station_name)
 
-# Create a "day of year" column.
+# Create a "day of year" column using the "format" function.
 trips$dayofyear <- as.numeric(format(trips$start_time,"%j"))
-trips$dayofyear <- factor(trips$dayofyear)
+

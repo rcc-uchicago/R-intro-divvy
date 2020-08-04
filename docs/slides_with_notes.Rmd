@@ -672,7 +672,7 @@ for this reason, I used `read_csv` from the **readr** package. I
 recommend both the **readr** and **data.table** packages for importing
 large data sets.
 
-36. A first glance at the trips data
+40. A first glance at the trips data
 ====================================
 
 Let's use some of the same commands we used earlier to quickly get an
@@ -685,28 +685,13 @@ head(trips)
 summary(trips)
 ```
 
-> Instructor notes: Unfortunately, the summary command isn't
-> particularly informative for many of the columns. What columns should
-> we convert to factors?
+What types of data are stored in this table?
 
-37. Convert "gender" to a factor
-================================
-
-Let's begin by converting the "gender" column to a factor:
-
-```{r convert-trip-data-1}
-trips$gender <- factor(trips$gender)
-summary(trips$gender)
-levels(trips$gender)
-```
-
-> Instructor notes: We see that many gender entries are missing.
-
-38. Missing data
+41. Missing data
 ================
 
-+ In R, "missing data" should be assigned the special value `NA` ("not
-  available").
++ In R, "missing data" has a special value, `NA` (short for
+  "not available" or "not assigned"). Most data types allow NAs.
 
 + Many functions in R will correctly handle missing data as long as
   they are encoded as `NA`.
@@ -715,139 +700,62 @@ levels(trips$gender)
   to figure out that blank entries in the CSV file should be converted
   to `NA`.
 
-39. Convert "station" columns to factors
-========================================
+42. Plot number of trips by day
+===============================
 
-Likewise, the "from station" column is also more useful as a factor:
+The days of the year are numbered:
 
-```{r summarize-from-station-data}
-summary(trips$from_station_name)
-trips$from_station_name <-
-  factor(trips$from_station_name)
-summary(trips$from_station_name)
+```{r summarize-dayofyear}
+summary(trips$dayofyear)
 ```
 
-> Instructor notes: What do these numbers give us?
+Let's count the number of trips by day. This is easily done if we
+first convert the "dayofyear" column to a factor:
 
-50. Inspect the 2016 & 2017 Divvy data
-======================================
-
-```{r inspect-divvy-data}
-head(stations)
-summary(stations)
-nrow(trips)
-head(trips)
-summary(trips)
+```{r count-trips-by-day}
+trips$dayofyear <- factor(trips$dayofyear)
+counts <- table(trips$dayofyear)
 ```
 
-> Instructor notes: Here are some questions to ask the students, time
-> permitting:
-> 
->   + Were more trips taken in 2016 or 2017? How many?
->   + Which columns were converted to factors?
->   + Do you notice any other oddities from the summary?
->
+Do you see a trend in the number of trips by daya? This trend may be
+more obvious if we plot the counts:
 
-53. Adjusting the plot
-======================
-
-ggplot has many options for changing the look of the plot elements:
-
-```{r plot-station-map-2}
-g <- geom_point(shape = 21,fill = "limegreen",
-                 color = "white",size = 3)
-p <- ggplot_add(g,p)
-print(p)
+```{r plot-trips-by-day-1}
+counts <- as.numeric(counts)
+plot(274:365,counts,pch = 20)
 ```
 
-54. Use color to highlight the largest stations
-===============================================
+One "trick" I used here was to first convert the output from `table`
+to a (numeric) vector, since `plot` expects numeric vectors as input.
 
-To do this, map the "dpcapacity" column to colour in the plot:
+43. Plot number of trips by day using ggplot2
+=============================================
 
-```{r plot-station-map-4}
-a <- aes(x    = longitude,
-         y    = latitude,
-         fill = dpcapacity)
-p <- ggplot(stations,a)
-g <- geom_point(shape = 21,color = "white",
-                size = 3)
-p <- ggplot_add(g,p)
-print(p)
+To recreate the same plot using ggplot2, we first need to construct a
+data frame for plotting:
+
+```{r plot-trips-by-day-2}
+pdat <- data.frame(day = 274:365,counts = counts)
 ```
 
-55. Use color to highlight the largest stations
-===============================================
+Now that we have a data frame for plotting, the ggplot2 code is
+rather straightforward:
 
-The colour scale is not great, so let's improve it:
-
-```{r plot-station-map-5}
-g <- scale_fill_gradient2(low = "dodgerblue",
-  mid = "darkblue",high = "red",midpoint = 25)
-p <- ggplot_add(g,p)
-print(p)
+```{r plot-trips-by-day-3}
+p3 <- ggplot(pdat,aes(x = day,y = counts)) +
+  geom_point() +
+  theme_cowplot()
 ```
+
+44. New slide
+=============
 
 > Instructor notes: Where are the largest Divvy stations?
-
-56. Scale points by number of departures
-========================================
-
-We need to add a new column to the "stations" data frame containing
-the total number departures. It can be calculated from the "trips"
-data frame:
-
-```{r count-trips-per-station}
-counts <- table(trips$from_station_name)
-```
-
-Because we used `read.divvy.data`, station counts should be the same
-order as the stations. Let's verify this:
-
-```{r check-station-trip-counts}
-all(names(counts) == stations$name)
-```
-
-> Instructor notes: The number of departures at each station, should
-> (roughly) correspond to population density.
-
-57. Scale stations by the number of departures
-==============================================
-
-Add the trip counts to the "stations" data frame:
-
-```{r add-counts-to-stations}
-stations$departures <- as.vector(counts)
-head(stations)
-```
-
-Now we can include the "departures" column in a plot:
-
-```{r plot-station-map-6}
-a <- aes(x    = longitude,
-         y    = latitude,
- 	     size = sqrt(departures))
-p <- ggplot(stations,a)
-```
-
-Add points to your plot:
-
-```{r plot-station-map-7}
-# Add code here
-```
-
-> One possible answer:
->
->   g <- geom_point(shape = 21,fill = "white",
->                   color = "blue")
->   p <- ggplot_add(g,p)
->   print(p)
->
 
 65. Save your results
 =====================
 
-Save your final results for safekeeping.
+Save the results of your analysis.
 
 ```{r save-session-3}
 save.image("divvy_analysis.RData")
