@@ -23,9 +23,9 @@ experience in the topic.
 
 ## Prerequisites
 
-All participants are expected to bring a laptop with a Mac, Linux, or
-Windows operating system that they have administrative privileges
-on. An RCC account is helpful, but not required.
+All participants are expected to have a laptop or desktop computer
+with a Mac, Linux, or Windows operating system that they have
+administrative privileges on. An RCC account is not required.
 
 ## What's included
 
@@ -44,7 +44,7 @@ repository (the "workshop packet"):
 + [slides.Rmd](slides.Rmd): R Markdown source used to generate these
   slides.
 
-+ [readdivvydata.R](readdivvydata.R): Some R code used in the hands-on
++ [read_trip_data.R](read_trip_data.R): Some R code used in the hands-on
   examples.
 
 + [Makefile](Makefile): GNU Makefile containing commands to
@@ -52,10 +52,9 @@ repository (the "workshop packet"):
 
 ## Other information
 
-+ This workshop attempts to apply elements of the
-[Software Carpentry approach][swc]. See also
-[this article][swc-lessons-learned]. Please also take a look at the
-[Code of Conduct](conduct.md), and the
++ This workshop attempts to apply elements of the [Software Carpentry
+approach][swc]. See also [this article][swc-lessons-learned]. Please
+also take a look at the [Code of Conduct](conduct.md), and the
 [license information](LICENSE.md).
 
 + To generate PDFs of the slides from the R Markdown source, run `make

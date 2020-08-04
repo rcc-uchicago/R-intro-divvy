@@ -38,8 +38,8 @@ knitr::opts_chunk$set(results = "hide",fig.show = "hide",
 
     - www.divvybikes.com/system-data
 
-+ Much of the effort will be spent importing the data, inspecting the
-  data, and preparing the data for analysis.
++ We will import and inspect the data, and take steps to prepare the
+  data for analysis and plotting.
 
 + Once we have carefully prepared the data, creating visualizations is
   (relatively) little effort.
@@ -51,9 +51,9 @@ knitr::opts_chunk$set(results = "hide",fig.show = "hide",
 
 + The *programmatic approach* to data analysis will allow you to...
 
-    - Quickly reproduce existing analyses.
+    - Automate your analysis.
 
-    - Quickly create new analyses by building on existing code.
+    - Quickly create a new analysis from existing code.
 
     - Expand capabilities with R packages.
 
@@ -62,20 +62,13 @@ knitr::opts_chunk$set(results = "hide",fig.show = "hide",
 
 Your may choose to...
 
-+ Use R on your laptop.
++ Use R on your computer.
 
-+ Use RStudio on your laptop.
++ Use RStudio on your computer.
 
-+ Use R or RStudio on the RCC cluster.
-
-+ Pair up with your neighbour.
++ Use RStudio Cloud.
 
 + Follow what I do on the projector.
-
-> Instructor notes: If you use the RCC cluster I'm assuming you know
-> how to set up an interactive computing session with appropriate
-> amount of compute time and memory, load R or RStudio, and display
-> graphics (e.g., using ThinLinc).
 
 6. Software we will use today
 =============================
@@ -84,28 +77,19 @@ Your may choose to...
 
 2. R packages **readr**, **ggplot2** & **cowplot**.
 
-> Instructor notes: I'm assuming you have already installed R and/or
-> RStudio on your laptop, or you are using the RCC cluster.
-
 # 7. Outline of workshop
 
 1. Initial setup.
 
-2. Load & prepare the Divvy station data.
+2. Analysis of Divvy station data.
 
-3. Load & prepare the Divvy trip data.
+3. Analysis of Divvy trip data.
 
-4. Create a map of the Divvy stations.
-
-5. Create plots comparing bike sharing in 2016 & 2017.
+4. Combining the data.
 
 # 8. Initial setup
 
-+ WiFi.
-
-+ Power outlets.
-
-+ Computer clutter.
++ RStudio Cloud setup (optional).
 
 + Workshop packet.
 
@@ -114,6 +98,11 @@ Your may choose to...
 + Pace, questions (e.g., keyboard shortcuts).
 
 + Help.
+
+9. Setup RStudio Cloud (optional)
+=================================
+
+
 
 9. Download or "clone" git repository
 =====================================

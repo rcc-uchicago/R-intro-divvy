@@ -6,3 +6,5 @@ to do
 + Send email to workshop participants.
 
 + Create (very simple) script to read and process trip data.
+
++ Create RStudio Cloud project.
