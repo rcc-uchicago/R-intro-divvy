@@ -93,7 +93,7 @@ Your may choose to...
 
 + Workshop packet.
 
-+ Reading what I type.
++ Arranging Zoom and RStudio on the screen.
 
 + Pace, questions (e.g., keyboard shortcuts).
 
@@ -525,7 +525,7 @@ The default colours in ggplot2 are not great; they can be overrided
 here with the "scale" function `scale_fill_manual`. Also, I'm a big
 fan of the cowplot theme:
 
-```{r plot-stations-5}
+```{r plot-stations-5, message=FALSE}
 library(cowplot)
 p2 <- p2 +
   scale_fill_manual(values = c("dodgerblue",
@@ -670,7 +670,7 @@ trips$dayofyear <- factor(trips$dayofyear)
 counts <- table(trips$dayofyear)
 ```
 
-Do you see a trend in the number of trips by daya? This trend may be
+Do you see a trend in the number of trips by day? This trend may be
 more obvious if we plot the counts:
 
 ```{r plot-trips-by-day-1}
@@ -700,11 +700,58 @@ p3 <- ggplot(pdat,aes(x = day,y = counts)) +
   theme_cowplot()
 ```
 
-44. New slide
-=============
+44. Where are the most frequently used Divvy stations?
+======================================================
+
+Here we will create a plot that uses both the stations and trip data:
+a map of the stations, in which the area of each station is
+proportional to the number of trips from that station. To create this
+plot, we will have to *combine* the stations data and trip data. The
+number of trips by station is easily counted because we have converted
+the "from_station_name" to a factor:
+
+```{r count-trips-by-station-1}
+counts <- table(trips$from_station_name)
+```
+
+The problem is that the stations in the trips table are not quite the
+same as the stations in the stations table:
+
+```{r count-trips-by-station-2}
+length(stations$name)
+length(names(counts))
+length(intersect(stations$name,names(counts)))
+```
+
+The key is to select the elements of `counts` by name:
+
+```{r count-trips-by-station-3}
+stations$trips <- as.numeric(counts[stations$name])
+```
+
+45. Where are the most frequently used Divvy stations?
+======================================================
+
+With this new "trips" column in the stations data frame, creating the
+plot using ggplot2 is now mostly straightforward:
+
+```{r plot-trips-by-station, warning=FALSE}
+p4 <- ggplot(stations,
+             aes(x = longitude,
+                 y = latitude,
+			     size = sqrt(trips))) +
+  geom_point(shape = 21,color = "white",
+             fill = "black") +
+  theme_cowplot()
+print(p4)
+```
+
+Notice that I scaled the size of the points by the *square root* of the
+number of trips so that the *area* of the points proportional to the
+number of trips.
 
 
-65. Save your results
+46. Save your results
 =====================
 
 Save the results of your analysis.
@@ -713,17 +760,7 @@ Save the results of your analysis.
 save.image("divvy_analysis.RData")
 ```
 
-67. Why data analysis in R?
-===========================
-
-+ In R, a table or spreadsheet is stored in a "data frame". A data
-  frame is an *object* that can be explored, manipulated and analyzed
-  with code.
-
-+ Developing your R code into a script will allow you to *automate*
-  your data analyses.
-
-68. Parting thoughts
+47. Parting thoughts
 ====================
 
 1. Always keep track of your analysis code in a file (ideally, in a
