@@ -440,7 +440,7 @@ summary(x)
 ```
 
 The summary is not very useful here! The key is to convert to a
-"factor" (*i.e.,* categorical variable):
+"factor":
 
 ```{r inspect-city-data-2}
 x <- factor(stations$city)
@@ -448,28 +448,30 @@ class(x)
 summary(x)
 ```
 
-> Instructor notes: What issue did we discover from running these
-> commands?
+> Instructor notes: What issue with the data did we uncover from
+> running these commands?
+>
+> What is a factor?
 
 29. Fixing the "city" column
 ============================
 
 Let's fix the problem of two "Chicago" categories. First, select the
-offending rows of the table:
+offending rows in the table:
 
 ```{r revise-city-data-1}
 rows <- which(stations$city == "Chicago ")
 ```
 
-Fix the "city" column by *overwriting* the "city" entries in the
-selected rows:
+Fix the "city" column by *overwriting* the selected rows:
 
 ```{r revise-city-data-2}
 stations[rows,"city"] <- "Chicago"
-summary(stations$city)
+x <- factor(stations$city)
+summary(x)
 ```
 
-The "city" column is more useful if it is a factor. Let's modify
+The "city" column is more useful if it is a factor, so let's modify
 this column *inside* the data frame:
 
 ```{r revise-city-data-3}
@@ -477,52 +479,29 @@ stations$city <- factor(stations$city)
 summary(stations$city)
 ```
 
-> Instructor notes: The "which" line of code is a pretty good example
-> of a more complicated (compound) expression.
-
-29. What is a factor?
-=====================
-
-Factors are often very useful in data analyses. Let's take another
-look at what a factor is.
-
-```{r inspect-factor}
-x <- stations$city
-attributes(x)
-unclass(x)
-```
-
-From the `unclass(x)` call, we see that a factor under-the-hood is an
-integer with values 1, 2, 3, *etc*, with which each integer value is
-associated with a *label* ("Chicago", "Evanston", "Oak Park").
-
 30. Save your code & session state
 ==================================
 
-It is important to periodically save:
+It is important to periodically save your code and results.
 
-1. your code,
-
-2. the state of your R environment.
-
-To save your environment, go to **Session > Save Workspace As...** in
+To save your workspace, go to **Session > Save Workspace As...** in
 RStudio, or run this code:
 
 ```{r save-session-1}
-save.image("divvyanalysis.RData")
+save.image("divvy_analysis.RData")
 ```
 
 Later, to restore your environment in a new session, select **Session >
 Load Workspace...** in RStudio, or run this code:
 
 ```{r load-session, eval=FALSE}
-load("divvyanalysis.RData")
+load("divvy_analysis.RData")
 ```
 
 31. Main concepts covered so far
 ================================
 
-+ The R environment & working directory.
++ The R workspace & working directory.
 
 + Read a data frame from a text (CSV) file.
 
@@ -530,27 +509,24 @@ load("divvyanalysis.RData")
 
 + Tools to manipulate a data frame.
 
-+ Selecting rows & columns.
++ Subviews and conditional subviews.
 
 + Ordering rows of a data frame.
 
-+ Factors == categorical variables.
++ Factors.
 
-+ Save state of R environment.
++ Saving your results.
 
 32. Outline of workshop
 =======================
 
 1. Initial setup.
 
-2. Load and prepare the Divvy station data.
+2. Analysis of Divvy station data.
 
-3. **Load and prepare the Divvy trip data.**
+3. **Analysis of Divvy trip data.**
 
-4. Create a map of the Divvy stations.
-
-5. Create a scatterplot comparing bike sharing activity in 2016
-   and 2017.
+4. Combining the data.
 
 # 33. Import the Divvy trip data into R
 
