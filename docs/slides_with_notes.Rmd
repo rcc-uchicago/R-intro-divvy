@@ -651,90 +651,26 @@ load("divvy_analysis.RData")
 
 # 39. Automating the data preparation
 
-Preparing a data set for analysis can be tedious. I've simplified the
-preparation of the Divvy trip data for you by writing a *script* to do
-this.
-
-# 38. Import the Divvy trip data into R
-
-Previously, we used `read.csv` to import station data into R. Let's
-now use `read.csv` to load the trip data from the 4th quarter of 2017:
-
-```{r read-trip-data}
-trips <-
-  read.csv("Divvy_Trips_2017_Q4.csv",
-           stringsAsFactors = FALSE)
-```
-
-You may find that this command look longer to run than before. The
-trips data frame is much larger:
-
-```{r trip-data-size}
-nrow(trips)
-ncol(trips)
-object.size(trips)
-```
-
-> Instructor notes: This gives an opportunity to demonstrate a faster
-> method implemented in a package.
-
-34. Import Divvy trip data using `readr` (optional)
-===================================================
-
-Install the **readr** package from CRAN:
+Now we will analyze the trip data. This is a much larger set of data.
+Since data preparation can be tedious, I've simplified the preparation
+of the trip data for you by writing a *script* to do this. Notice that
+the script loads the **readr** package. So you will need to install
+this package if you haven't already done so.
 
 ```{r install-readr, eval=FALSE}
 install.packages("readr")
 ```
 
-Load the package functions into your R environment:
+To run the script, simply type:
 
-```{r load-readr}
-library(readr)
+```{r read-trip-data}
+source("read_trip_data.R")
 ```
 
-Let's use the `read_csv` function from this package:
-
-```{r read-trip-data-readr}
-trips <- read_csv("Divvy_Trips_2017_Q4.csv")
-```
-
-> Instructor notes: How much faster is `read_csv`? `read_csv` is
-> similar to `read.csv`, but not the same.
-
-35. Import Divvy trip data using `readr` (optional)
-===================================================
-
-The `read_csv` output is *not* a data frame—it is a "tibble".
-
-```{r check-trip-data-class}
-class(trips)
-```
-
-Usually, I convert it to a data frame:
-
-```{r convert-trip-data}
-class(trips) <- "data.frame"
-```
-
-> Instructor notes:
->
->   + Explain that modifying the class of an object should only be
->     done very rarely, and only when you know what you are doing!
->     Here we know that "trips" is already a data frame (and also a
->     tibble).
->
->   + The readr package has many other features not covered here.
->
->   + Another fast method is `fread` from the "data.table" package.
->
->   + "Vignettes" are a great way to learn about a package:
->      `vignette("readr")
->
->   + How to learn more about a package? `help(package = readr)`
->
->   + Where are the packages installed to? `.libPaths()`
->
+You will find that `read.csv` is horribly slow for large CSV files;
+for this reason, I used `read_csv` from the **readr** package. I
+recommend both the **readr** and **data.table** packages for importing
+large data sets.
 
 36. A first glance at the trips data
 ====================================

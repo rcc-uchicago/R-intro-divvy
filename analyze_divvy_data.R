@@ -1,11 +1,3 @@
-# Load trip data.
-library(readr)
-trips <- read_csv("Divvy_Trips_2019_Q4.csv.gz")
-class(trips) <- "data.frame"
-
-# Import and process trip data using script.
-source("read_trip_data.R")
-
 # Create a bar chart using the "barplot" showing number of trips per
 # day.
 counts <- table(trips$dayofyear)

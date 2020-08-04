@@ -604,68 +604,27 @@ load("divvy_analysis.RData")
 
 # 39. Automating the data preparation
 
-Preparing a data set for analysis can be tedious. I've simplified the
-preparation of the Divvy trip data for you by writing a *script* to do
-this.
-
-# 38. Import the Divvy trip data into R
-
-Previously, we used `read.csv` to import station data into R. Let's
-now use `read.csv` to load the trip data from the 4th quarter of 2017:
-
-```{r read-trip-data}
-trips <-
-  read.csv("Divvy_Trips_2017_Q4.csv",
-           stringsAsFactors = FALSE)
-```
-
-You may find that this command look longer to run than before. The
-trips data frame is much larger:
-
-```{r trip-data-size}
-nrow(trips)
-ncol(trips)
-object.size(trips)
-```
-
-
-34. Import Divvy trip data using `readr` (optional)
-===================================================
-
-Install the **readr** package from CRAN:
+Now we will analyze the trip data. This is a much larger set of data.
+Since data preparation can be tedious, I've simplified the preparation
+of the trip data for you by writing a *script* to do this. Notice that
+the script loads the **readr** package. So you will need to install
+this package if you haven't already done so.
 
 ```{r install-readr, eval=FALSE}
 install.packages("readr")
 ```
 
-Load the package functions into your R environment:
+To run the script, simply type:
 
-```{r load-readr}
-library(readr)
+```{r read-trip-data}
+source("read_trip_data.R")
+stop("Blah!!!")
 ```
 
-Let's use the `read_csv` function from this package:
-
-```{r read-trip-data-readr}
-trips <- read_csv("Divvy_Trips_2017_Q4.csv")
-```
-
-
-35. Import Divvy trip data using `readr` (optional)
-===================================================
-
-The `read_csv` output is *not* a data frame—it is a "tibble".
-
-```{r check-trip-data-class}
-class(trips)
-```
-
-Usually, I convert it to a data frame:
-
-```{r convert-trip-data}
-class(trips) <- "data.frame"
-```
-
+You will find that `read.csv` is horribly slow for large CSV files;
+for this reason, I used `read_csv` from the **readr** package. I
+recommend both the **readr** and **data.table** packages for importing
+large data sets.
 
 36. A first glance at the trips data
 ====================================

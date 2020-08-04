@@ -1,3 +1,6 @@
+# Load the readr package.
+library(readr)
+
 # Read the Divvy trip data from the CSV file using the readr package.
 trips <- read_csv("Divvy_Trips_2019_Q4.csv.gz")
 class(trips) <- "data.frame"
