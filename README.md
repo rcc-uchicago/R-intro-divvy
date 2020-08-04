@@ -44,6 +44,12 @@ repository (the "workshop packet"):
 + [slides.Rmd](slides.Rmd): R Markdown source used to generate these
   slides.
 
++ [Divvy_Stations_2017_Q3Q4.csv](Divvy_Stations_2017_Q3Q4.csv): Divvy
+  station data downloaded from the [Divvy website][divvy-data].
+
++ [Divvy_Trips_2019_Q4.csv.gz](Divvy_Trips_2019_Q4.csv.gz): 2017 Divvy trip
+  data downloaded from the [Divvy website][divvy-data].
+
 + [read_trip_data.R](read_trip_data.R): Some R code used in the hands-on
   examples.
 
