@@ -436,7 +436,104 @@ stations$city <- factor(stations$city)
 summary(stations$city)
 ```
 
-30. Save your code & session state
+30. Create a map of the Divvy stations
+======================================
+
+The "plot" function allows you to very simply create a scatterplot
+from two numeric vectors:
+
+```{r plot-stations-1}
+plot(stations$longitude,stations$latitude,pch = 20)
+```
+
+The plot function has many, many options, which we will not explore here.
+Let's add color to the plot according to the "city" column:
+
+```{r plot-stations-2}
+plot(stations$longitude,stations$latitude,col = stations$city,pch = 20)
+```
+
+31. Create stations map using ggplot2
+=====================================
+
+Now let's recreate the stations map, this time using **ggplot2**. It
+is a powerful (though not immediately intuitive) plotting
+interface. First, install ggplot2 (and cowplot, and extension to
+ggplot2) if you have not already done so:
+
+```{r install-ggplot2, eval=FALSE}
+install.packages("ggplot2")
+install.packages("cowplot")
+```
+
+As you can see, the code is a bit more complicated:
+
+```{r plot-stations-3}
+library(ggplot2)
+p1 <- ggplot(stations,
+             aes(x = longitude,
+			     y = latitude,
+				 color = city)) +
+  geom_point()
+print(p1)
+```
+
+What is improved in the new plot? 
+
+32. More on ggplot2
+===================
+
++ All plots in ggplot2 require these three elements:
+
+    1. A data frame.
+
+    2. An "aesthetic mapping" that maps columns to plot features
+       (axes, shapes, colors, *etc.*).
+
+    3. A "geom", short for “geometric object,” that specifies the type
+        of plot.
+
++ All plots are created by *adding layers.*
+
++ ggplot2 has an excellent website where you can learn more:
+  [ggplot2.tidyverse.org][ggplot2]
+
+33. A better stations map
+=========================
+
+I fiddled around with the `geom_point` settings to improve the plot a
+bit:
+
+```{r plot-stations-4}
+p2 <- ggplot(stations,
+             aes(x = longitude,
+			     y = latitude,
+				 fill = city)) +
+  geom_point(shape = 21,size = 2,color = "white")
+print(p2)
+```
+
+34. A better stations map
+=========================
+
+The default colours in ggplot2 are not great; they can be overrided
+here with the "scale" function `scale_fill_manual`. Also, I'm partial
+to the theme from the cowplot package.
+
+```{r plot-stations-5}
+library(cowplot)
+p2 <- p2 +
+  scale_fill_manual(values = c("dodgerblue",
+                               "darkorange",
+							   "darkblue")) +
+  theme_cowplot()
+print(p2)
+```
+
+Observe that adjustments to the plot are made by adding "layers". This
+is one of the distinctive features of ggplot2.
+
+35. Save your code & session state
 ==================================
 
 It is important to periodically save your code and results.
@@ -455,7 +552,7 @@ Load Workspace...** in RStudio, or run this code:
 load("divvy_analysis.RData")
 ```
 
-31. Main concepts covered so far
+36. Main concepts covered so far
 ================================
 
 + The R workspace & working directory.
@@ -472,9 +569,13 @@ load("divvy_analysis.RData")
 
 + Factors.
 
++ Creating a plot using "plot".
+
++ Creating a plot using ggplot2.
+
 + Saving your results.
 
-32. Outline of workshop
+37. Outline of workshop
 =======================
 
 1. Initial setup.
@@ -485,7 +586,7 @@ load("divvy_analysis.RData")
 
 4. Combining the data.
 
-# 33. Import the Divvy trip data into R
+# 38. Import the Divvy trip data into R
 
 Previously, we used `read.csv` to import station data into R. Let's
 now use `read.csv` to load the trip data from the 4th quarter of 2017:
@@ -967,24 +1068,6 @@ Save your final results for safekeeping.
 save.image("divvyanalysis.RData")
 ```
 
-66. ggplot: Take home points
-============================
-
-+ Creating sophisticated plots requires relatively little effort
-*provided the data are in the right form.*
-
-+ All plots in ggplot2 require these three elements:
-
-    1. A data frame.
-
-    2. An "aesthetic mapping" that declares how columns are mapped to
-       plot features (axes, shapes, colors, *etc.*).
-
-    3. A "geom", short for “geometric object,” that specifies the type
-        of plot.
-
-+ All plots are created by *adding layers.*
-
 67. Why data analysis in R?
 ===========================
 
@@ -1018,4 +1101,5 @@ save.image("divvyanalysis.RData")
 [github-repo]: https://github.com/rcc-uchicago/R-intro-divvy
 [divvy-data]: https://www.divvybikes.com/system-data
 [rstudio-cloud]: https://rstudio.cloud
-[ggplot2]: https://github.com/tidyverse/ggplot2
+[ggplot2]: ggplot2.tidyverse.org
+
