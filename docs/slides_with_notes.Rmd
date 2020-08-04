@@ -234,11 +234,10 @@ the right working directory before continuing.
 
 4. Combining the data.
 
-# 20. Take a quick look at CSV file
+# 19. View CSV file
 
-Open the CSV file **Divvy_Stations_2017_Q1Q2.csv** in RStudio, or in
-your favourite text editor (e.g., Notepad in Windows, TextEdit on
-Mac).
+Open the CSV file **Divvy_Stations_2017_Q3Q4.csv** in RStudio or your
+favourite text editor (e.g., Notepad in Windows, TextEdit on Mac).
 
 > Instructor notes:
 > 
@@ -249,17 +248,17 @@ Mac).
 >   + Entries in each line (table row) are separated by commas.
 >
 
-21. Import the station data into R
-==================================
+20. Import station data into R
+==============================
 
-Load 2017 third & fourth quarter station data into an R "data frame":
+Read the station data into a "data frame":
 
 ```{r read-station-data}
 stations<-read.csv("Divvy_Stations_2017_Q3Q4.csv",
                    stringsAsFactors = FALSE)
 ```
 
-This will define a new object, "stations", in your environment:
+This will create a new object, "stations", in your environment:
 
 ```{r inspect-station-data-1}
 ls()
@@ -279,7 +278,7 @@ class(stations)
 > help(data.frame)
 > ```
 
-22. Inspect the station data
+21. Inspect the station data
 ============================
 
 Check that the data were read correctly, and inspect the table:
@@ -293,7 +292,7 @@ summary(stations)
 str(stations)
 ```
 
-Inspect the data in more detail:
+Inspect the data further:
 
 ```{r inspect-station-data-4}
 sapply(stations,class)
@@ -304,92 +303,135 @@ object.size(stations)
 > let them figure out what sort of data is contained in this table.
 > Does this reveal any issues with the data?
 >
-> What happens if we run `summary("stations")` instead of
-> `summary(stations)`?
+> Some of these commands, like "head", "str" and "summary", are
+> “generic” functions, meaning that they work for a wide variety of
+> object types, not just data frames.
 
-23. Take a closer look at the "dpcapacity" column
+22. Take a closer look at the "dpcapacity" column
 =================================================
 
-Select only the "dpcapacity" column, and assign it to a new variable:
+Make a copy of the "dpcapacity" column:
 
 ```{r inspect-dpcapacity-data-1}
 x <- stations$dpcapacity
 ```
 
-Run these commands to take a closer look at the "dpcapacity" column:
+Run a few commands to take a closer look at the "dpcapacity" column:
 
 ```{r inspect-dpcapacity-data-2}
 class(x)
 length(x)
 summary(x)
+min(x)
+max(x)
+mean(x)
+median(x)
+quantile(x,0.5)
 table(x)
 ```
 
-> Instructor notes: Did any of these commands give us additional
-> insight into these data?
+> Instructor notes: What do the results of running these commands tell
+> us about "dpcapacity"?
 
-24. More on selecting rows & columns
-====================================
+23. Data subviews
+=================
 
-Select first 4 rows of "name" column:
+When you are working with large data sets, you need a strategy to
+inspect manageable subsets of the data. Here are some examples of
+printing subsets of the data:
+
+```{r head-tail}
+head(stations,n = 4)
+tail(stations,n = 4)
+```
+
+More examples:
 
 ```{r select-rows}
+stations[1:4,]
 stations$name[1:4]
 stations[1:4,2]
 stations[1:4,"name"]
 ```
 
-Select first 4 rows of several columns:
+24. Data subviews
+=================
+
+Yet more examples:
 
 ```{r select-columns}
 stations[1:4,c(2,3,6)]
 stations[1:4,c("name","city","dpcapacity")]
 ```
 
-Getting the row and column names:
+> Instructor notes: Once you are comfortable with the basic elements
+> of selecting subsets, you can combine these elements in an endless
+> variety of ways.
 
-```{r station-names}
-colnames(stations)
-rownames(stations)
+25. Conditional subviews
+========================
+
+One powerful way to inspect subsets is by condition. For example, to
+view all the stations with more than 40 docks, do
+
+```{r subset-1}
+subset(stations,dpcapacity > 40)
 ```
 
-25. Take an even closer look at "dpcapacity"
-============================================
+or, equivalently,
+
+```{r subset-2}
+stations[stations$dpcapacity > 40,]
+```
 
 It is interesting that a couple of the Divvy bike stations have no
 docks. What are these stations?
 
-```{r inspect-dpcapacity-data-3}
-subset(stations,dpcapacity == 0)
+```{r subset-3}
+# Add code here.
 ```
 
-How would we view the largest stations?
+> Answer: subset(stations,dpcapacity == 0)
 
-```{r inspect-dpcapacity-data-4}
-# Add code here
+26. Conditional subviews
+========================
+
+Once you have generated a subview that you want to explore further,
+you can create a new data set from a subview, e.g.,
+
+```{r subset-4}
+largest_stations<-subset(stations,dpcapacity > 40)
 ```
 
-> Answer: subset(stations,dpcapacity >= 40)
+This object is also a data frame:
 
-26. Ordering the stations by number of docks
+```{r subset-5}
+class(largest_stations)
+```
+
+> Instructor notes: It isn’t unusual to have half a dozen different
+> copies of a data set over the course of an analysis. This is where
+> it is important to keep track of what you are doing, and name things
+> well! This is where the `rm` function also comes in handy for cleaning
+> up your workspace.
+
+27. Ordering the stations by number of docks
 ============================================
 
-Here's another look at the smallest and largest stations:
+Here's way to access data on the smallest and largest stations:
 
-```{r inspect-dpcapcity-data-4}
+```{r inspect-dpcapacity-data-5}
 rows <- order(stations$dpcapacity)
 stations2 <- stations[rows,]
 head(stations2)
 tail(stations2)
 ```
 
-> Instructor notes: How were the rows originally ordered in `stations`?
-
-27. Take a closer look at the "city" column
+28. Take a closer look at the "city" column
 ===========================================
 
-Previously, we inspected *numeric* data. Next's, let's look at an
-example of non-numeric data.
+Above, we examined numeric data. Now let's take a close look at
+another type of data.
 
 ```{r inspect-city-data-1}
 x <- stations$city
@@ -409,7 +451,7 @@ summary(x)
 > Instructor notes: What issue did we discover from running these
 > commands?
 
-28. Fixing the "city" column
+29. Fixing the "city" column
 ============================
 
 Let's fix the problem of two "Chicago" categories. First, select the
