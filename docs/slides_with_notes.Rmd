@@ -30,7 +30,7 @@ knitr::opts_chunk$set(results = "hide",fig.show = "hide",
 
 6. Learn through "live coding".
 
-# 3. Our goal: Analyze Divvy data from 2016 & 2017
+# 3. Our goal: Analyze Divvy data
 
 + Investigate bike sharing trends in Chicago.
 
