@@ -198,8 +198,8 @@ empty and you should restart R with a clean environment. Do either:
 > This is also a good opportunity to point out some of the RStudio
 > options that should be turned off.
 
-16. The Console is where the action is
-======================================
+16. RStudio: a workspace for data analysis
+==========================================
 
 ![](docs/images/rstudio.jpg)
 
@@ -237,7 +237,7 @@ the right working directory before continuing.
 # 19. View CSV file
 
 Open the CSV file **Divvy_Stations_2017_Q3Q4.csv** in RStudio or your
-favourite text editor (e.g., Notepad in Windows, TextEdit on Mac).
+favourite text editor.
 
 > Instructor notes:
 > 
@@ -520,12 +520,12 @@ As you can see, the ggplot2 code is a bit more complicated:
 
 ```{r plot-stations-3}
 library(ggplot2)
-p1 <- ggplot(stations,
-             aes(x = longitude,
-			     y = latitude,
-				 color = city)) +
+p <- ggplot(stations,
+            aes(x = longitude,
+		        y = latitude,
+			    color = city)) +
   geom_point()
-print(p1)
+print(p)
 ```
 
 What is better about the new plot? 
@@ -555,12 +555,12 @@ Not satisfied with this plot, I experimented with the `geom_point`
 settings to improve the plot a bit:
 
 ```{r plot-stations-4}
-p2 <- ggplot(stations,
-             aes(x = longitude,
-			     y = latitude,
-				 fill = city)) +
+p <- ggplot(stations,
+            aes(x = longitude,
+		        y = latitude,
+				fill = city)) +
   geom_point(shape = 21,size = 2,color = "white")
-print(p2)
+print(p)
 ```
 
 34. A better stations map
@@ -572,12 +572,12 @@ fan of the cowplot theme:
 
 ```{r plot-stations-5, message=FALSE}
 library(cowplot)
-p2 <- p2 +
+p <- p +
   scale_fill_manual(values = c("dodgerblue",
                                "darkorange",
 							   "darkblue")) +
   theme_cowplot(font_size = 10)
-print(p2)
+print(p)
 ```
 
 We have only touched the surface of what ggplot2 can do. Observe that
@@ -590,8 +590,8 @@ the distinctive features of ggplot2.
 Let's save this last plot as a file that can be shared with others.
 
 ```{r save-station-map}
-ggsave("stations.png",p2,dpi = 200)
-ggsave("stations.pdf",p2)
+ggsave("stations.png",p,dpi = 200)
+ggsave("stations.pdf",p)
 ```
 
 > Instructor notes: How do the PDF and PNG formats differ? When should
@@ -742,7 +742,7 @@ Now that we have a data frame for plotting, the ggplot2 code is
 rather straightforward:
 
 ```{r plot-trips-by-day-3}
-p3 <- ggplot(pdat,aes(x = day,y = counts)) +
+p <- ggplot(pdat,aes(x = day,y = counts)) +
   geom_point() +
   theme_cowplot()
 ```
@@ -783,14 +783,14 @@ With this new "trips" column in the stations data frame, creating the
 plot using ggplot2 is now mostly straightforward:
 
 ```{r plot-trips-by-station, warning=FALSE}
-p4 <- ggplot(stations,
-             aes(x = longitude,
-                 y = latitude,
-			     size = sqrt(trips))) +
+p <- ggplot(stations,
+            aes(x = longitude,
+                y = latitude,
+			    size = sqrt(trips))) +
   geom_point(shape = 21,color = "white",
              fill = "black") +
   theme_cowplot()
-print(p4)
+print(p)
 ```
 
 Notice that I scaled the size of the points by the *square root* of the
